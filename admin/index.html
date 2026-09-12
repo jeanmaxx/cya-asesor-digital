@@ -63,6 +63,9 @@
           <label>Empresa / respaldo
             <input id="company-name" type="text" maxlength="120" value="Casillas & Asociados" required />
           </label>
+          <label>Texto junto al logo
+            <input id="ally-label" type="text" maxlength="60" value="Asesor Aliado" placeholder="Asesor Aliado" />
+          </label>
           <label>Texto breve
             <textarea id="bio" rows="3" maxlength="260" placeholder="Una frase breve sobre tu atención y especialidad."></textarea>
           </label>
@@ -125,6 +128,19 @@
               <option value="system">Sistema</option>
             </select>
           </label>
+          <label>Modo de color predeterminado
+            <select id="theme-mode">
+              <option value="system">Seguir sistema del dispositivo</option>
+              <option value="light">Claro</option>
+              <option value="dark">Oscuro</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Servicios</legend>
+          <p class="hint service-editor-help">Edita los textos visibles de cada tarjeta. Escribe un requisito por línea.</p>
+          <div id="services-editor" class="services-editor"></div>
         </fieldset>
 
         <fieldset>
