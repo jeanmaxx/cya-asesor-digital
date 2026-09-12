@@ -61,7 +61,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: relative;
   overflow: hidden;
   min-height: 100svh;
-  padding: 24px 22px 38px;
+  padding: 34px 24px 40px;
   color: var(--white);
   background:
     radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 32%),
@@ -76,14 +76,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero__glow--one { width: 230px; height: 230px; right: -120px; top: 25%; background: color-mix(in srgb, var(--gold) 11%, transparent); }
 .hero__glow--two { width: 190px; height: 190px; left: -120px; bottom: 12%; background: rgba(255,255,255,.05); }
 
-.hero-top { width: min(100%, 520px); display: flex; align-items: center; justify-content: space-between; gap: 14px; z-index: 2; }
-.brand-lockup { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.78); font-size: .72rem; letter-spacing: .10em; text-transform: uppercase; text-align: left; }
-.brand-lockup img { width: 112px; height: 58px; object-fit: contain; }
+.hero-top { width: min(100%, 540px); display: flex; align-items: center; justify-content: space-between; gap: 18px; z-index: 2; padding-inline: 2px; }
+.brand-lockup { display: flex; align-items: center; gap: 15px; min-width: 0; color: rgba(255,255,255,.84); font-size: .84rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; text-align: left; }
+.brand-lockup img { width: 138px; height: 72px; object-fit: contain; flex: 0 0 auto; }
 .theme-toggle { width: 42px; height: 42px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.16); border-radius: 13px; background: rgba(255,255,255,.07); color: #fff; font-size: 1.15rem; cursor: pointer; }
 .theme-toggle:hover { background: rgba(255,255,255,.11); }
 
 .portrait-wrap {
-  margin-top: 28px;
+  margin-top: 36px;
   width: 176px;
   height: 176px;
   border-radius: 50%;
@@ -168,6 +168,15 @@ footer strong { color: white; }
 
 .floating-whatsapp { position: fixed; z-index: 30; right: 14px; bottom: 14px; background: #25d366; color: #ffffff; font-size: .82rem; font-weight: 850; text-decoration: none; padding: 10px 14px 10px 11px; border-radius: 999px; box-shadow: 0 12px 30px rgba(0,0,0,.22); display: inline-flex; align-items: center; gap: 7px; }
 .floating-whatsapp img { width: 22px; height: 22px; object-fit: contain; }
+
+@media (max-width: 480px) {
+  .hero { padding-top: 32px; padding-inline: 20px; }
+  .hero-top { width: 100%; gap: 12px; }
+  .brand-lockup { gap: 12px; font-size: .78rem; letter-spacing: .095em; }
+  .brand-lockup img { width: 126px; height: 68px; }
+  .theme-toggle { width: 44px; height: 44px; }
+  .portrait-wrap { margin-top: 34px; }
+}
 
 @media (min-width: 720px) {
   .hero { min-height: 760px; padding-top: 34px; }
