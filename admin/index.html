@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>Panel de Tarjetas Digitales · Casillas & Asociados</title>
-  <link rel="stylesheet" href="../assets/admin.css" />
+  <link rel="stylesheet" href="../assets/admin.css?v=20260912-packages" />
 </head>
 <body>
   <main class="admin-shell">
@@ -13,9 +13,10 @@
       <div>
         <p class="kicker">Casillas & Asociados</p>
         <h1>Panel de Tarjetas Digitales</h1>
-        <p>Administra cuentas, personalización y respaldos desde un solo lugar.</p>
+        <p>Administra cuentas, personalización, paquetes y respaldos desde un solo lugar.</p>
       </div>
       <div class="admin-header-actions">
+        <span id="admin-role-badge" class="badge badge--plan is-hidden"></span>
         <button id="admin-theme-toggle" class="admin-theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar tema"><span id="admin-theme-icon" aria-hidden="true">☾</span></button>
         <a class="ghost-link" href="../" target="_blank" rel="noopener">Ver demo pública ↗</a>
         <button id="global-signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button>
@@ -33,7 +34,7 @@
         <button id="auth-submit" class="primary-btn" type="submit">Ingresar</button>
       </form>
       <p id="auth-message" class="message" aria-live="polite"></p>
-      <p class="hint">La seguridad del panel depende del inicio de sesión y de las políticas RLS de Supabase.</p>
+      <p class="hint">Un acceso de cliente solo puede ver las cuentas que el administrador principal le haya asignado.</p>
     </section>
 
     <section id="hub-panel" class="is-hidden">
@@ -45,16 +46,16 @@
 
       <section class="panel accounts-panel">
         <div class="section-toolbar">
-          <div><p class="kicker">Cuentas</p><h2>Tarjetas digitales de asesores</h2><p class="subtle">Cada cuenta conserva de forma independiente sus datos, foto, servicios y apariencia.</p></div>
+          <div><p class="kicker">Cuentas</p><h2>Tarjetas digitales de asesores</h2><p class="subtle">Cada cuenta conserva de forma independiente sus datos, paquete, servicios y apariencia.</p></div>
           <button id="new-account" class="primary-btn" type="button">+ Nueva tarjeta</button>
         </div>
         <div id="accounts-list" class="accounts-grid"></div>
         <p id="accounts-message" class="message" aria-live="polite"></p>
       </section>
 
-      <section class="panel backups-panel">
+      <section id="backups-panel" class="panel backups-panel">
         <div class="section-toolbar">
-          <div><p class="kicker">Seguridad</p><h2>Respaldos de todas las cuentas</h2><p class="subtle">Cada respaldo incluye asesores, negocios y configuraciones de servicios.</p></div>
+          <div><p class="kicker">Seguridad</p><h2>Respaldos de todas las cuentas</h2><p class="subtle">Disponible únicamente para el administrador principal.</p></div>
           <button id="manual-backup" class="secondary-btn" type="button">Crear respaldo manual</button>
         </div>
         <div class="backup-settings">
@@ -74,6 +75,17 @@
       </div>
 
       <form id="profile-form" class="form-grid">
+        <fieldset id="plan-fieldset">
+          <legend>Paquete contratado</legend>
+          <div class="two-col">
+            <label>Paquete<select id="package-key"></select></label>
+            <label>Estado<select id="package-status"><option value="trial">Prueba</option><option value="active">Activo</option><option value="suspended">Suspendido</option><option value="cancelled">Cancelado</option></select></label>
+          </div>
+          <p id="package-description" class="package-description"></p>
+          <div id="package-features" class="feature-chips" aria-label="Funciones incluidas"></div>
+          <p id="package-permission-note" class="hint"></p>
+        </fieldset>
+
         <fieldset>
           <legend>Identidad</legend>
           <div class="two-col"><label>Nombre(s)<input id="first-names" type="text" maxlength="80" required /></label><label>Apellidos<input id="last-names" type="text" maxlength="80" required /></label></div>
@@ -100,7 +112,7 @@
       </form>
     </section>
   </main>
-  <script src="../assets/config.js?v=20260912-1"></script>
-  <script type="module" src="../assets/admin.js?v=20260912-1"></script>
+  <script src="../assets/config.js?v=20260912-packages"></script>
+  <script type="module" src="../assets/admin-v2.js?v=20260912-packages"></script>
 </body>
 </html>
