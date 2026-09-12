@@ -55,7 +55,7 @@ function whatsappUrl(profile, message) {
 function whatsappBaseMessage(profile) {
   const custom = String(profile.whatsapp_message || '').trim();
   if (custom) return custom;
-  const first = (profile.first_names || fallback.first_names || '').split(' ')[0];
+  const first = String(profile.first_names || '').split(' ')[0];
   return `Hola ${first || ''}, vi tu tarjeta digital y me gustaría recibir asesoría previsional.`;
 }
 
@@ -88,21 +88,21 @@ function applyTheme(profile) {
 }
 
 function applyProfile(profile) {
-  const first = profile.first_names || fallback.first_names || '';
-  const last = profile.last_names || fallback.last_names || '';
+  const first = profile.first_names || '';
+  const last = profile.last_names || '';
   const fullName = `${first} ${last}`.trim();
-  const role = profile.title || fallback.title || 'Asesor Previsional';
-  const photo = profile.photo_path ? storagePublicUrl(profile.photo_path) : (profile.photoUrl || fallback.photoUrl);
-  const logo = profile.logo_path ? storagePublicUrl(profile.logo_path) : (profile.logoUrl || fallback.logoUrl);
+  const role = profile.title || 'Asesor Previsional';
+  const photo = profile.photo_path ? storagePublicUrl(profile.photo_path) : (profile.photoUrl || fallback.photoUrl || 'assets/profile-placeholder.svg');
+  const logo = profile.logo_path ? storagePublicUrl(profile.logo_path) : (profile.logoUrl || fallback.logoUrl || 'assets/logo-placeholder.svg');
 
-  document.title = profile.page_title || fallback.page_title || `${fullName} · ${role}`;
+  document.title = profile.page_title || (fullName ? `${fullName} · ${role}` : 'Tarjeta Digital · Asesor Previsional');
   $('advisor-first').textContent = first;
   $('advisor-last').textContent = last;
   $('advisor-role').textContent = role;
-  $('ally-label').textContent = profile.ally_label || fallback.ally_label || 'Asesor Aliado';
-  $('advisor-bio').textContent = profile.bio || fallback.bio || '';
+  $('ally-label').textContent = profile.ally_label || 'Asesor Aliado';
+  $('advisor-bio').textContent = profile.bio || '';
   $('advisor-photo').src = photo;
-  $('advisor-photo').alt = `Fotografía de ${fullName}`;
+  $('advisor-photo').alt = fullName ? `Fotografía de ${fullName}` : 'Fotografía de perfil';
   $('brand-logo').src = logo;
   $('footer-logo').src = logo;
   $('footer-name').textContent = fullName;
@@ -110,15 +110,15 @@ function applyProfile(profile) {
 
   const trustItems = Array.isArray(profile.trust_items) && profile.trust_items.length
     ? profile.trust_items
-    : (Array.isArray(fallback.trust_items) ? fallback.trust_items : ['Atención personalizada', 'Acompañamiento', 'Información clara']);
+    : ['Atención personalizada', 'Acompañamiento', 'Información clara'];
   ['trust-item-1', 'trust-item-2', 'trust-item-3'].forEach((id, index) => {
     const el = $(id);
     if (el) el.textContent = trustItems[index] || '';
   });
-  if ($('closing-kicker')) $('closing-kicker').textContent = profile.closing_kicker || fallback.closing_kicker || 'Orientación inicial';
-  if ($('closing-title')) $('closing-title').textContent = profile.closing_title || fallback.closing_title || 'Cuéntame tu caso';
-  if ($('closing-text')) $('closing-text').textContent = profile.closing_text || fallback.closing_text || '';
-  if ($('whatsapp-closing')) $('whatsapp-closing').textContent = profile.closing_cta || fallback.closing_cta || 'Escribirme por WhatsApp';
+  if ($('closing-kicker')) $('closing-kicker').textContent = profile.closing_kicker || 'Orientación inicial';
+  if ($('closing-title')) $('closing-title').textContent = profile.closing_title || 'Cuéntame tu caso';
+  if ($('closing-text')) $('closing-text').textContent = profile.closing_text || '';
+  if ($('whatsapp-closing')) $('whatsapp-closing').textContent = profile.closing_cta || 'Escribirme por WhatsApp';
 
   if (whatsappIconData) {
     $('whatsapp-icon').src = whatsappIconData;
@@ -206,9 +206,9 @@ function renderServices(services, profile) {
 }
 
 function formatServiceTitle(title) {
-  const clean = String(title || "");
+  const clean = String(title || '');
   if (/Ley 73\s*\/\s*Ley 97/i.test(clean)) {
-    return `${escapeHtml(clean.replace(/\s*[·\-]?\s*Ley 73\s*\/\s*Ley 97/i, "").trim())}<br><span class="service-title-nowrap">Ley 73 / Ley 97</span>`;
+    return `${escapeHtml(clean.replace(/\s*[·\-]?\s*Ley 73\s*\/\s*Ley 97/i, '').trim())}<br><span class="service-title-nowrap">Ley 73 / Ley 97</span>`;
   }
   return escapeHtml(clean);
 }
@@ -234,13 +234,14 @@ async function loadRemoteProfile() {
 
   if (error || !profile) return null;
 
-  const { data: services } = await supabase
+  const { data: services, error: servicesError } = await supabase
     .from('advisor_services')
     .select('*')
     .eq('advisor_id', profile.id)
     .eq('is_visible', true)
     .order('sort_order', { ascending: true });
 
+  if (servicesError) console.warn('No fue posible cargar los servicios del perfil.', servicesError);
   return { profile, services: services || [] };
 }
 
@@ -255,19 +256,29 @@ if (window.matchMedia) {
   });
 }
 
+function revealProfile() {
+  document.body.classList.remove('profile-loading');
+}
+
 async function init() {
   const fallbackProfile = { ...fallback };
-  applyProfile(fallbackProfile);
-  renderServices(fallbackServices, fallbackProfile);
 
   try {
     const remote = await loadRemoteProfile();
-    if (!remote) return;
-    const merged = { ...fallbackProfile, ...remote.profile };
-    applyProfile(merged);
-    renderServices(remote.services.length ? remote.services : fallbackServices, merged);
+    if (remote) {
+      applyProfile(remote.profile);
+      renderServices(remote.services, remote.profile);
+      return;
+    }
+
+    applyProfile(fallbackProfile);
+    renderServices(fallbackServices, fallbackProfile);
   } catch (error) {
     console.warn('Se usará la configuración local de respaldo.', error);
+    applyProfile(fallbackProfile);
+    renderServices(fallbackServices, fallbackProfile);
+  } finally {
+    revealProfile();
   }
 }
 
