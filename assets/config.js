@@ -11,6 +11,7 @@ window.ADVISOR_FALLBACK = {
   last_names: "Álvarez Nieto",
   title: "Asesor Previsional",
   company_name: "Casillas & Asociados",
+  ally_label: "Asesor Aliado",
   phone: "4422867965",
   whatsapp: "4422867965",
   instagram_url: "https://www.instagram.com/consultoriacya/",
@@ -22,7 +23,8 @@ window.ADVISOR_FALLBACK = {
   accent_color: "#C9A96E",
   background_color: "#F7F5F0",
   surface_color: "#FFFFFF",
-  font_family: "helvetica"
+  font_family: "helvetica",
+  theme_mode: "system"
 };
 
 window.ADVISOR_FALLBACK_SERVICES = [
