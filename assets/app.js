@@ -88,7 +88,7 @@ function applyProfile(profile) {
   const photo = profile.photo_path ? storagePublicUrl(profile.photo_path) : (profile.photoUrl || fallback.photoUrl);
   const logo = profile.logo_path ? storagePublicUrl(profile.logo_path) : (profile.logoUrl || fallback.logoUrl);
 
-  document.title = `${fullName} · ${role}`;
+  document.title = profile.page_title || fallback.page_title || `${fullName} · ${role}`;
   $('advisor-first').textContent = first;
   $('advisor-last').textContent = last;
   $('advisor-role').textContent = role;
@@ -119,13 +119,27 @@ function applyProfile(profile) {
   }
 
   const defaultMessage = `Hola ${first.split(' ')[0] || ''}, vi tu tarjeta digital y me gustaría recibir asesoría previsional.`;
-  $('whatsapp-primary').href = whatsappUrl(profile, defaultMessage);
-  $('whatsapp-closing').href = whatsappUrl(profile, defaultMessage);
-  $('floating-whatsapp').href = whatsappUrl(profile, defaultMessage);
-
+  const whatsappDigits = toMxE164(profile.whatsapp || profile.phone);
   const phoneDigits = toMxE164(profile.phone);
-  $('call-link').href = phoneDigits ? `tel:+${phoneDigits}` : '#';
-  $('call-link').title = displayPhone(profile.phone);
+  const whatsappTargets = [$('whatsapp-primary'), $('whatsapp-closing'), $('floating-whatsapp')];
+  whatsappTargets.forEach((el) => {
+    if (!el) return;
+    if (whatsappDigits) {
+      el.href = whatsappUrl(profile, defaultMessage);
+      el.classList.remove('is-hidden');
+    } else {
+      el.href = '#';
+      el.classList.add('is-hidden');
+    }
+  });
+  if (phoneDigits) {
+    $('call-link').href = `tel:+${phoneDigits}`;
+    $('call-link').title = displayPhone(profile.phone);
+    $('call-link').classList.remove('is-hidden');
+  } else {
+    $('call-link').href = '#';
+    $('call-link').classList.add('is-hidden');
+  }
 
   const instagram = $('instagram-link');
   if (profile.instagram_url) {
@@ -142,6 +156,10 @@ function applyProfile(profile) {
   } else {
     facebook.classList.add('is-hidden');
   }
+
+  const socialButtons = [$('call-link'), instagram, facebook].filter((el) => el && !el.classList.contains('is-hidden'));
+  const socialRow = document.querySelector('.social-row');
+  if (socialRow) socialRow.style.gridTemplateColumns = `repeat(${Math.max(1, socialButtons.length)}, 1fr)`;
 
   applyTheme(profile);
 }
@@ -175,16 +193,16 @@ function renderServices(services, profile) {
             ${notice}
           </div>
         </details>
-        <a class="service-cta" href="${whatsappUrl(profile, waMessage)}" target="_blank" rel="noopener">${escapeHtml(cta)} →</a>
+        ${toMxE164(profile.whatsapp || profile.phone) ? `<a class="service-cta" href="${whatsappUrl(profile, waMessage)}" target="_blank" rel="noopener">${escapeHtml(cta)} →</a>` : ''}
       `;
       grid.appendChild(article);
     });
 }
 
 function formatServiceTitle(title) {
-  const clean = String(title || '');
+  const clean = String(title || "");
   if (/Ley 73\s*\/\s*Ley 97/i.test(clean)) {
-    return `${escapeHtml(clean.replace(/\s*[·\-]?\s*Ley 73\s*\/\s*Ley 97/i, '').trim())}<br><span class="service-title-nowrap">Ley 73 / Ley 97</span>`;
+    return `${escapeHtml(clean.replace(/\s*[·\-]?\s*Ley 73\s*\/\s*Ley 97/i, "").trim())}<br><span class="service-title-nowrap">Ley 73 / Ley 97</span>`;
   }
   return escapeHtml(clean);
 }
