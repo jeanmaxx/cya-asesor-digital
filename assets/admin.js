@@ -1,11 +1,13 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const cfg = window.SUPABASE_CONFIG || {};
+const fallback = window.ADVISOR_FALLBACK || {};
 const $ = (id) => document.getElementById(id);
 const supabase = createClient(cfg.url, cfg.publishableKey);
 let authMode = 'login';
 let currentUser = null;
 let currentProfile = null;
+let currentServices = [];
 
 function setMessage(id, text = '', type = '') {
   const el = $(id);
@@ -82,6 +84,7 @@ async function loadOwnProfile() {
   if (error) throw error;
   currentProfile = data;
   fillForm(data);
+  await loadOwnServices();
 }
 
 function fillForm(profile) {
@@ -89,6 +92,7 @@ function fillForm(profile) {
   $('last-names').value = profile.last_names || '';
   $('title').value = profile.title || 'Asesor Previsional';
   $('company-name').value = profile.company_name || 'Casillas & Asociados';
+  $('ally-label').value = profile.ally_label || 'Asesor Aliado';
   $('bio').value = profile.bio || '';
   $('slug').value = profile.slug?.startsWith('advisor-') ? '' : (profile.slug || '');
   $('phone').value = profile.phone || '';
@@ -100,10 +104,85 @@ function fillForm(profile) {
   $('background-color').value = profile.background_color || '#F7F5F0';
   $('surface-color').value = profile.surface_color || '#FFFFFF';
   $('font-family').value = profile.font_family || 'helvetica';
+  $('theme-mode').value = profile.theme_mode || 'system';
   $('is-published').checked = Boolean(profile.is_published);
   $('photo-preview').src = profile.photo_path ? storagePublicUrl(profile.photo_path) : '../assets/profile-placeholder.svg';
   $('logo-preview').src = profile.logo_path ? storagePublicUrl(profile.logo_path) : '../assets/logo-placeholder.svg';
   updatePreviewLink();
+}
+
+async function loadOwnServices() {
+  const { data, error } = await supabase
+    .from('advisor_services')
+    .select('*')
+    .eq('advisor_id', currentProfile.id)
+    .order('sort_order', { ascending: true });
+  if (error) throw error;
+  currentServices = data || [];
+  renderServicesEditor(currentServices);
+}
+
+function escapeText(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function renderServicesEditor(services) {
+  const editor = $('services-editor');
+  editor.replaceChildren();
+  services.forEach((service, index) => {
+    const card = document.createElement('section');
+    card.className = 'service-editor-card';
+    card.dataset.id = service.id;
+    const requirements = Array.isArray(service.requirements) ? service.requirements.join('\n') : '';
+    card.innerHTML = `
+      <div class="service-editor-card__header">
+        <strong>Servicio ${index + 1}</strong>
+        <label class="mini-switch"><input class="service-visible" type="checkbox" ${service.is_visible !== false ? 'checked' : ''}/> Visible</label>
+      </div>
+      <label>Título
+        <input class="service-title" type="text" maxlength="140" value="${escapeText(service.title)}" />
+      </label>
+      <label>Descripción breve
+        <textarea class="service-summary" rows="3" maxlength="320">${escapeText(service.summary)}</textarea>
+      </label>
+      <label>Requisitos / puntos básicos
+        <textarea class="service-requirements" rows="5">${escapeText(requirements)}</textarea>
+      </label>
+      <label>Nota adicional
+        <textarea class="service-notice" rows="2" maxlength="320">${escapeText(service.notice || '')}</textarea>
+      </label>
+      <label>Texto del botón
+        <input class="service-cta-input" type="text" maxlength="100" value="${escapeText(service.cta || 'Quiero recibir información')}" />
+      </label>
+    `;
+    editor.appendChild(card);
+  });
+}
+
+async function saveServices() {
+  const cards = [...document.querySelectorAll('.service-editor-card')];
+  for (const card of cards) {
+    const requirements = card.querySelector('.service-requirements').value
+      .split('\n').map((line) => line.trim()).filter(Boolean);
+    const payload = {
+      title: card.querySelector('.service-title').value.trim(),
+      summary: card.querySelector('.service-summary').value.trim(),
+      requirements,
+      notice: card.querySelector('.service-notice').value.trim() || null,
+      cta: card.querySelector('.service-cta-input').value.trim() || 'Quiero recibir información',
+      is_visible: card.querySelector('.service-visible').checked
+    };
+    const { error } = await supabase
+      .from('advisor_services')
+      .update(payload)
+      .eq('id', card.dataset.id)
+      .eq('advisor_id', currentProfile.id);
+    if (error) throw error;
+  }
 }
 
 function updatePreviewLink() {
@@ -113,17 +192,23 @@ function updatePreviewLink() {
 
 $('slug').addEventListener('input', updatePreviewLink);
 
-function setSuggestedSlug() {
+$('first-names').addEventListener('blur', () => {
   if ($('slug').value.trim()) return;
   const candidate = slugify(`${$('first-names').value} ${$('last-names').value}`);
   if (candidate) {
     $('slug').value = candidate;
     updatePreviewLink();
   }
-}
+});
+$('last-names').addEventListener('blur', () => {
+  if ($('slug').value.trim()) return;
+  const candidate = slugify(`${$('first-names').value} ${$('last-names').value}`);
+  if (candidate) {
+    $('slug').value = candidate;
+    updatePreviewLink();
+  }
+});
 
-$('first-names').addEventListener('blur', setSuggestedSlug);
-$('last-names').addEventListener('blur', setSuggestedSlug);
 $('photo-file').addEventListener('change', (event) => previewLocalFile(event.target.files?.[0], $('photo-preview')));
 $('logo-file').addEventListener('change', (event) => previewLocalFile(event.target.files?.[0], $('logo-preview')));
 
@@ -172,6 +257,7 @@ $('profile-form').addEventListener('submit', async (event) => {
       last_names: lastNames,
       title: $('title').value.trim(),
       company_name: $('company-name').value.trim(),
+      ally_label: $('ally-label').value.trim() || 'Asesor Aliado',
       phone: $('phone').value.trim(),
       whatsapp: $('whatsapp').value.trim(),
       instagram_url: $('instagram').value.trim() || null,
@@ -182,6 +268,7 @@ $('profile-form').addEventListener('submit', async (event) => {
       background_color: $('background-color').value,
       surface_color: $('surface-color').value,
       font_family: $('font-family').value,
+      theme_mode: $('theme-mode').value,
       is_published: $('is-published').checked,
       ...(photoPath ? { photo_path: photoPath } : {}),
       ...(logoPath ? { logo_path: logoPath } : {})
@@ -196,7 +283,9 @@ $('profile-form').addEventListener('submit', async (event) => {
     if (error) throw error;
 
     currentProfile = data;
+    await saveServices();
     fillForm(data);
+    await loadOwnServices();
     $('photo-file').value = '';
     $('logo-file').value = '';
     setMessage('save-message', 'Cambios guardados correctamente.', 'success');
