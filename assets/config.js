@@ -1,21 +1,21 @@
 window.SUPABASE_CONFIG = {
   url: "https://lliedfgeegkqeopxvtze.supabase.co",
   publishableKey: "sb_publishable_dvGaagv6ZhJ2GChDinyfBQ_VISGCW62",
-  defaultSlug: "jose-emmanuel-alvarez-nieto",
+  defaultSlug: "juan-perez-hernandez",
   storageBucket: "advisor-assets"
 };
 
 window.ADVISOR_FALLBACK = {
-  slug: "jose-emmanuel-alvarez-nieto",
-  first_names: "José Emmanuel",
-  last_names: "Álvarez Nieto",
+  slug: "juan-perez-hernandez",
+  first_names: "Juan",
+  last_names: "Perez Hernandez",
   title: "Asesor Previsional",
   company_name: "Casillas & Asociados",
   ally_label: "Asesor Aliado",
   phone: "4422867965",
   whatsapp: "4422867965",
-  instagram_url: "https://www.instagram.com/consultoriacya/",
-  facebook_url: "https://www.facebook.com/profile.php?id=61592812772906",
+  instagram_url: "https://www.instagram.com/",
+  facebook_url: "https://www.facebook.com/",
   bio: "Orientación clara para tomar mejores decisiones sobre tu retiro y seguridad social.",
   photoUrl: "assets/profile-placeholder.svg",
   logoUrl: "assets/logo-placeholder.svg",
@@ -24,7 +24,12 @@ window.ADVISOR_FALLBACK = {
   background_color: "#F7F5F0",
   surface_color: "#FFFFFF",
   font_family: "helvetica",
-  theme_mode: "system"
+  theme_mode: "system",
+  trust_items: ["Atención personalizada", "Acompañamiento", "Información clara"],
+  closing_kicker: "Orientación inicial",
+  closing_title: "Cuéntame tu caso",
+  closing_text: "Envíame un mensaje y te indico qué información necesitamos revisar para dar el siguiente paso.",
+  closing_cta: "Escribirme por WhatsApp"
 };
 
 window.ADVISOR_FALLBACK_SERVICES = [
