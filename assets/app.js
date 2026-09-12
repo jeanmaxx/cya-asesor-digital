@@ -101,6 +101,18 @@ function applyProfile(profile) {
   $('footer-name').textContent = fullName;
   $('footer-role').textContent = role;
 
+  const trustItems = Array.isArray(profile.trust_items) && profile.trust_items.length
+    ? profile.trust_items
+    : (Array.isArray(fallback.trust_items) ? fallback.trust_items : ['Atención personalizada', 'Acompañamiento', 'Información clara']);
+  ['trust-item-1', 'trust-item-2', 'trust-item-3'].forEach((id, index) => {
+    const el = $(id);
+    if (el) el.textContent = trustItems[index] || '';
+  });
+  if ($('closing-kicker')) $('closing-kicker').textContent = profile.closing_kicker || fallback.closing_kicker || 'Orientación inicial';
+  if ($('closing-title')) $('closing-title').textContent = profile.closing_title || fallback.closing_title || 'Cuéntame tu caso';
+  if ($('closing-text')) $('closing-text').textContent = profile.closing_text || fallback.closing_text || '';
+  if ($('whatsapp-closing')) $('whatsapp-closing').textContent = profile.closing_cta || fallback.closing_cta || 'Escribirme por WhatsApp';
+
   if (whatsappIconData) {
     $('whatsapp-icon').src = whatsappIconData;
     $('floating-whatsapp-icon').src = whatsappIconData;
