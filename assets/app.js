@@ -52,6 +52,13 @@ function whatsappUrl(profile, message) {
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
+function whatsappBaseMessage(profile) {
+  const custom = String(profile.whatsapp_message || '').trim();
+  if (custom) return custom;
+  const first = (profile.first_names || fallback.first_names || '').split(' ')[0];
+  return `Hola ${first || ''}, vi tu tarjeta digital y me gustaría recibir asesoría previsional.`;
+}
+
 function systemTheme() {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
@@ -118,7 +125,7 @@ function applyProfile(profile) {
     $('floating-whatsapp-icon').src = whatsappIconData;
   }
 
-  const defaultMessage = `Hola ${first.split(' ')[0] || ''}, vi tu tarjeta digital y me gustaría recibir asesoría previsional.`;
+  const defaultMessage = whatsappBaseMessage(profile);
   const whatsappDigits = toMxE164(profile.whatsapp || profile.phone);
   const phoneDigits = toMxE164(profile.phone);
   const whatsappTargets = [$('whatsapp-primary'), $('whatsapp-closing'), $('floating-whatsapp')];
@@ -180,8 +187,7 @@ function renderServices(services, profile) {
       const list = requirements.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
       const notice = service.notice ? `<p class="notice">${escapeHtml(service.notice)}</p>` : '';
       const cta = service.cta || 'Quiero recibir información';
-      const firstName = (profile.first_names || fallback.first_names || '').split(' ')[0];
-      const waMessage = `Hola ${firstName}, vi tu tarjeta digital y me interesa recibir información sobre: ${service.title}.`;
+      const waMessage = `${whatsappBaseMessage(profile)}\n\nMe interesa recibir información sobre: ${service.title}.`;
 
       article.innerHTML = `
         <h3>${formatServiceTitle(service.title)}</h3>
