@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="220" viewBox="0 0 560 220">
+  <rect width="560" height="220" rx="28" fill="none"/>
+  <text x="48" y="126" font-family="Georgia,serif" font-size="82" font-weight="700" fill="#0e223d">C&amp;A</text>
+  <text x="235" y="92" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#0e223d">CASILLAS</text>
+  <text x="235" y="132" font-family="Arial,sans-serif" font-size="28" fill="#0e223d">&amp; ASOCIADOS</text>
+  <line x1="235" x2="475" y1="151" y2="151" stroke="#c6a15b" stroke-width="4"/>
+</svg>
