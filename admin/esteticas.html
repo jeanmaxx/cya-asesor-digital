@@ -1,38 +1,11 @@
 <!doctype html>
-<html lang="es-MX">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex,nofollow,noarchive" />
-  <title>Estéticas y Barberías · Panel de Tarjetas Digitales</title>
-  <link rel="stylesheet" href="../assets/admin.css" />
-</head>
-<body>
-<main class="admin-shell">
-  <header class="admin-header"><div><p class="kicker">Plataforma de tarjetas digitales</p><h1>Estéticas y Barberías</h1><p>Administra negocios, servicios, agenda, ubicación, identidad y publicación.</p></div><div class="admin-header-actions"><button id="admin-theme-toggle" class="admin-theme-toggle" type="button"><span id="admin-theme-icon">☾</span></button><a class="ghost-link" href="../esteticas/?negocio=studio-cavalier" target="_blank" rel="noopener">Ver Studio Cavalier ↗</a><button id="signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button></div></header>
-
-  <section id="auth-panel" class="panel auth-panel">
-    <form id="auth-form" class="form-grid form-grid--single"><label>Correo electrónico<input id="auth-email" type="email" required autocomplete="email"></label><label>Contraseña<input id="auth-password" type="password" minlength="8" required autocomplete="current-password"></label><button class="primary-btn" type="submit">Ingresar</button></form><p id="auth-message" class="message"></p>
-  </section>
-
-  <section id="hub-panel" class="is-hidden">
-    <nav class="product-tabs"><a class="product-tab" href="./">TARJETAS DIGITALES ASESORES</a><button class="product-tab" type="button" disabled>TRANSPORTE <span>Próximamente</span></button><a class="product-tab is-active" href="esteticas.html">ESTÉTICAS Y BARBERÍAS</a></nav>
-    <section class="panel accounts-panel"><div class="section-toolbar"><div><p class="kicker">Cuentas</p><h2>Negocios de belleza</h2><p class="subtle">Cada negocio conserva sus servicios, logo, redes, colores y agenda de forma independiente.</p></div><button id="new-business" class="primary-btn" type="button">+ Nueva tarjeta</button></div><div id="business-list" class="accounts-grid"></div><p id="accounts-message" class="message"></p></section>
-  </section>
-
-  <section id="editor-panel" class="panel is-hidden">
-    <div class="editor-toolbar"><div class="editor-title-row"><button id="back-to-hub" class="back-btn" type="button">←</button><div><p class="kicker">Editar negocio</p><h2 id="editor-name">Configuración</h2></div></div><a id="preview-link" class="secondary-link" href="../esteticas/" target="_blank" rel="noopener">Abrir tarjeta ↗</a></div>
-    <form id="business-form" class="form-grid">
-      <fieldset><legend>Identidad</legend><div class="two-col"><label>Nombre del negocio<input id="business-name" type="text" maxlength="120" required></label><label>Categoría<select id="category"><option>Barbería</option><option>Estética</option><option>Salón de belleza</option><option>Spa</option><option>Uñas</option><option>Masajes</option><option>Otro</option></select></label></div><label>Título de pestaña<input id="page-title" type="text" maxlength="140"></label><label>Tagline / categoría visible<input id="tagline" type="text" maxlength="100"></label><label>Slogan<input id="slogan" type="text" maxlength="180"></label><label>Identificador de página<div class="slug-row"><span>?negocio=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required></div></label></fieldset>
-      <fieldset><legend>Contacto y ubicación</legend><label>WhatsApp<input id="whatsapp" type="tel" inputmode="tel"></label><label>Instagram<input id="instagram" type="url"></label><label>Facebook<input id="facebook" type="url"></label><label>Ciudad / ubicación corta<input id="location-short" type="text"></label><label>Dirección completa<input id="address" type="text"></label><label>Google Maps<input id="maps-url" type="url"></label><label>Enlace para reseñas Google<input id="review-url" type="url"></label></fieldset>
-      <fieldset><legend>Logo y apariencia</legend><div class="asset-grid"><div><div class="asset-preview asset-preview--logo"><img id="logo-preview" alt="Logo"></div><label>Cambiar logo<input id="logo-file" type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml"></label></div><div><div class="color-grid"><label>Color principal<input id="primary-color" type="color"></label><label>Color de acento<input id="accent-color" type="color"></label><label>Fondo<input id="background-color" type="color"></label><label>Tarjetas<input id="surface-color" type="color"></label></div><label>Modo inicial<select id="theme-mode"><option value="system">Seguir sistema</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></div></div></fieldset>
-      <fieldset><legend>Elementos destacados</legend><p class="hint">Cuatro beneficios cortos que aparecen debajo de las redes.</p><div id="features-editor" class="services-editor"></div></fieldset>
-      <fieldset><legend>Agenda</legend><label class="switch-row"><input id="booking-enabled" type="checkbox"><span>Mostrar agenda de citas</span></label><div class="two-col"><label>Hora de apertura<input id="booking-start" type="time"></label><label>Hora de cierre<input id="booking-end" type="time"></label></div><div class="two-col"><label>Inicio de pausa<input id="break-start" type="time"></label><label>Fin de pausa<input id="break-end" type="time"></label></div><div class="two-col"><label>Intervalo entre horarios<select id="slot-minutes"><option value="15">15 min</option><option value="20">20 min</option><option value="30">30 min</option><option value="60">60 min</option></select></label><label>Duración predeterminada<input id="default-duration" type="number" min="10" step="5"></label></div><label class="switch-row"><input id="closed-sunday" type="checkbox"><span>Domingo cerrado</span></label></fieldset>
-      <fieldset><legend>Servicios</legend><div id="business-services" class="services-editor"></div><button id="add-service" class="secondary-btn" type="button">+ Agregar servicio</button></fieldset>
-      <fieldset><legend>Publicación</legend><label class="switch-row"><input id="is-published" type="checkbox"><span>Publicar esta tarjeta</span></label></fieldset>
-      <div class="save-row"><button id="save-business" class="primary-btn" type="submit">Guardar cambios</button><button id="cancel-edit" class="secondary-btn" type="button">Volver a cuentas</button></div><p id="save-message" class="message"></p>
-    </form>
-  </section>
-</main>
-<script src="../assets/config.js"></script><script type="module" src="../assets/business-admin.js"></script>
-</body></html>
+<html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><title>Estéticas y Barberías · Panel de Tarjetas Digitales</title><link rel="stylesheet" href="../assets/admin.css"></head>
+<body><main class="admin-shell">
+<header class="admin-header"><div><p class="kicker">Plataforma de tarjetas digitales</p><h1>Estéticas y Barberías</h1><p>Administra negocios, servicios, agenda, ubicación e identidad desde un solo lugar.</p></div><div class="admin-header-actions"><button id="admin-theme-toggle" class="admin-theme-toggle" type="button"><span id="admin-theme-icon">☾</span></button><a class="ghost-link" href="../esteticas/?negocio=studio-cavalier" target="_blank" rel="noopener">Ver Studio Cavalier ↗</a><button id="signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button></div></header>
+<section id="auth-panel" class="panel auth-panel"><form id="auth-form" class="form-grid form-grid--single"><label>Correo electrónico<input id="auth-email" type="email" required autocomplete="email"></label><label>Contraseña<input id="auth-password" type="password" minlength="8" required autocomplete="current-password"></label><button class="primary-btn" type="submit">Ingresar</button></form><p id="auth-message" class="message"></p></section>
+<section id="hub-panel" class="is-hidden">
+<nav class="product-tabs"><a class="product-tab" href="./">TARJETAS DIGITALES ASESORES</a><button class="product-tab" type="button" disabled>TRANSPORTE <span>Próximamente</span></button><a class="product-tab is-active" href="esteticas.html">ESTÉTICAS Y BARBERÍAS</a></nav>
+<section class="panel accounts-panel"><div class="section-toolbar"><div><p class="kicker">Cuentas</p><h2>Negocios de belleza</h2><p class="subtle">Barberías, estéticas, spa y otros servicios de belleza con tarjeta, agenda y catálogo propios.</p></div><button id="new-business" class="primary-btn" type="button">+ Nueva tarjeta</button></div><div id="business-list" class="accounts-grid"></div><p id="accounts-message" class="message"></p></section>
+<section class="panel" style="margin-top:18px"><div class="section-toolbar"><div><p class="kicker">Respaldos</p><h2>Protección de configuraciones</h2><p class="subtle">Los respaldos globales ya incluyen asesores, negocios y sus servicios.</p></div><a class="secondary-link" href="./">Administrar respaldos globales →</a></div></section>
+</section>
+</main><script src="../assets/config.js"></script><script type="module" src="../assets/business-hub.js"></script></body></html>
