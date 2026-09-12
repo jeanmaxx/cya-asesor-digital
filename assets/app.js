@@ -17,8 +17,10 @@ function safeHex(value, backup) {
 function fontStack(key) {
   const stacks = {
     helvetica: '"Helvetica Neue", Helvetica, Arial, Tahoma, sans-serif',
-    tahoma: 'Tahoma, Verdana, Arial, sans-serif',
     arial: 'Arial, Helvetica, sans-serif',
+    tahoma: 'Tahoma, Verdana, Arial, sans-serif',
+    verdana: 'Verdana, Geneva, Tahoma, sans-serif',
+    trebuchet: '"Trebuchet MS", Helvetica, Arial, sans-serif',
     system: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
   };
   return stacks[key] || stacks.helvetica;
@@ -114,7 +116,7 @@ function renderServices(services, profile) {
   services
     .filter((service) => service.is_visible !== false)
     .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0))
-    .forEach((service, index) => {
+    .forEach((service) => {
       const article = document.createElement('article');
       article.className = 'service-card';
       article.id = service.service_key;
@@ -127,8 +129,7 @@ function renderServices(services, profile) {
       const waMessage = `Hola ${firstName}, vi tu tarjeta digital y me interesa recibir información sobre: ${service.title}.`;
 
       article.innerHTML = `
-        <div class="service-card__number">${String(index + 1).padStart(2, '0')}</div>
-        <h3>${escapeHtml(service.title)}</h3>
+        <h3>${formatServiceTitle(service.title)}</h3>
         <p>${escapeHtml(service.summary || '')}</p>
         <details>
           <summary>Ver información básica</summary>
@@ -141,6 +142,14 @@ function renderServices(services, profile) {
       `;
       grid.appendChild(article);
     });
+}
+
+function formatServiceTitle(title) {
+  const clean = String(title || '');
+  if (/Ley 73\s*\/\s*Ley 97/i.test(clean)) {
+    return `${escapeHtml(clean.replace(/\s*[·\-]?\s*Ley 73\s*\/\s*Ley 97/i, '').trim())}<br><span class="service-title-nowrap">Ley 73 / Ley 97</span>`;
+  }
+  return escapeHtml(clean);
 }
 
 function escapeHtml(value) {
