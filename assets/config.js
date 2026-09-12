@@ -15,6 +15,7 @@ window.ADVISOR_FALLBACK = {
   ally_label: "Asesor Aliado",
   phone: "",
   whatsapp: "",
+  whatsapp_message: "Hola Juan, vi tu tarjeta digital y me gustaría recibir asesoría previsional.",
   instagram_url: "https://www.instagram.com/",
   facebook_url: "https://www.facebook.com/",
   bio: "Tarjeta digital demostrativa para presentar servicios de asesoría previsional.",
