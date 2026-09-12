@@ -15,7 +15,10 @@
         <h1>Administrador de tarjeta digital</h1>
         <p>Actualiza tus datos básicos, redes, fotografía y apariencia sin editar código.</p>
       </div>
-      <a class="ghost-link" href="../" target="_blank" rel="noopener">Ver página pública ↗</a>
+      <div class="admin-header-actions">
+        <button id="admin-theme-toggle" class="admin-theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar tema"><span id="admin-theme-icon" aria-hidden="true">☾</span></button>
+        <a class="ghost-link" href="../" target="_blank" rel="noopener">Ver página pública ↗</a>
+      </div>
     </header>
 
     <section id="auth-panel" class="panel auth-panel">
@@ -134,6 +137,34 @@
               <option value="light">Claro</option>
               <option value="dark">Oscuro</option>
             </select>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Contenido destacado</legend>
+          <p class="hint">Estos textos aparecen en las etiquetas de confianza y en el bloque final de contacto.</p>
+          <div class="three-col">
+            <label>Etiqueta 1
+              <input id="trust-item-1" type="text" maxlength="80" placeholder="Atención personalizada" />
+            </label>
+            <label>Etiqueta 2
+              <input id="trust-item-2" type="text" maxlength="80" placeholder="Acompañamiento" />
+            </label>
+            <label>Etiqueta 3
+              <input id="trust-item-3" type="text" maxlength="80" placeholder="Información clara" />
+            </label>
+          </div>
+          <label>Encabezado pequeño del cierre
+            <input id="closing-kicker-input" type="text" maxlength="80" placeholder="Orientación inicial" />
+          </label>
+          <label>Título del cierre
+            <input id="closing-title-input" type="text" maxlength="120" placeholder="Cuéntame tu caso" />
+          </label>
+          <label>Texto del cierre
+            <textarea id="closing-text-input" rows="3" maxlength="320" placeholder="Envíame un mensaje y te indico qué información necesitamos revisar para dar el siguiente paso."></textarea>
+          </label>
+          <label>Texto del botón final
+            <input id="closing-cta-input" type="text" maxlength="100" placeholder="Escribirme por WhatsApp" />
           </label>
         </fieldset>
 
