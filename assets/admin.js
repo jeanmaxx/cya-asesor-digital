@@ -9,6 +9,28 @@ let currentUser = null;
 let currentProfile = null;
 let currentServices = [];
 
+function systemAdminTheme() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function setAdminTheme(theme, persist = false) {
+  const effective = theme === 'dark' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = effective;
+  const icon = $('admin-theme-icon');
+  const button = $('admin-theme-toggle');
+  if (icon) icon.textContent = effective === 'dark' ? '☀' : '☾';
+  if (button) button.setAttribute('aria-label', effective === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+  if (persist) localStorage.setItem('cya-admin-theme', effective);
+}
+
+const initialAdminTheme = localStorage.getItem('cya-admin-theme') || systemAdminTheme();
+setAdminTheme(initialAdminTheme);
+
+$('admin-theme-toggle')?.addEventListener('click', () => {
+  const current = document.documentElement.dataset.theme || systemAdminTheme();
+  setAdminTheme(current === 'dark' ? 'light' : 'dark', true);
+});
+
 function setMessage(id, text = '', type = '') {
   const el = $(id);
   el.textContent = text;
@@ -105,6 +127,14 @@ function fillForm(profile) {
   $('surface-color').value = profile.surface_color || '#FFFFFF';
   $('font-family').value = profile.font_family || 'helvetica';
   $('theme-mode').value = profile.theme_mode || 'system';
+  const trustItems = Array.isArray(profile.trust_items) ? profile.trust_items : ['Atención personalizada', 'Acompañamiento', 'Información clara'];
+  $('trust-item-1').value = trustItems[0] || '';
+  $('trust-item-2').value = trustItems[1] || '';
+  $('trust-item-3').value = trustItems[2] || '';
+  $('closing-kicker-input').value = profile.closing_kicker || 'Orientación inicial';
+  $('closing-title-input').value = profile.closing_title || 'Cuéntame tu caso';
+  $('closing-text-input').value = profile.closing_text || '';
+  $('closing-cta-input').value = profile.closing_cta || 'Escribirme por WhatsApp';
   $('is-published').checked = Boolean(profile.is_published);
   $('photo-preview').src = profile.photo_path ? storagePublicUrl(profile.photo_path) : '../assets/profile-placeholder.svg';
   $('logo-preview').src = profile.logo_path ? storagePublicUrl(profile.logo_path) : '../assets/logo-placeholder.svg';
@@ -269,6 +299,15 @@ $('profile-form').addEventListener('submit', async (event) => {
       surface_color: $('surface-color').value,
       font_family: $('font-family').value,
       theme_mode: $('theme-mode').value,
+      trust_items: [
+        $('trust-item-1').value.trim(),
+        $('trust-item-2').value.trim(),
+        $('trust-item-3').value.trim()
+      ].filter(Boolean),
+      closing_kicker: $('closing-kicker-input').value.trim() || 'Orientación inicial',
+      closing_title: $('closing-title-input').value.trim() || 'Cuéntame tu caso',
+      closing_text: $('closing-text-input').value.trim(),
+      closing_cta: $('closing-cta-input').value.trim() || 'Escribirme por WhatsApp',
       is_published: $('is-published').checked,
       ...(photoPath ? { photo_path: photoPath } : {}),
       ...(logoPath ? { logo_path: logoPath } : {})
