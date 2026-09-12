@@ -4,6 +4,8 @@ const sbCfg = window.SUPABASE_CONFIG || {};
 const fallback = window.ADVISOR_FALLBACK || {};
 const fallbackServices = window.ADVISOR_FALLBACK_SERVICES || [];
 const $ = (id) => document.getElementById(id);
+const whatsappIconData = window.WHATSAPP_ICON_DATA || '';
+let profileThemeMode = 'system';
 
 const requestedSlug = new URLSearchParams(window.location.search).get('asesor') || sbCfg.defaultSlug || fallback.slug;
 const supabase = sbCfg.url && sbCfg.publishableKey
@@ -50,13 +52,30 @@ function whatsappUrl(profile, message) {
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
+function systemTheme() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function setTheme(theme, persist = false) {
+  const effective = theme === 'system' ? systemTheme() : theme;
+  document.documentElement.dataset.theme = effective;
+  const toggle = $('theme-toggle');
+  const icon = $('theme-toggle-icon');
+  if (icon) icon.textContent = effective === 'dark' ? '☀' : '☾';
+  if (toggle) toggle.setAttribute('aria-label', effective === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+  if (persist) localStorage.setItem('cya-theme', effective);
+}
+
 function applyTheme(profile) {
   const root = document.documentElement;
   root.style.setProperty('--navy', safeHex(profile.primary_color, '#0E223D'));
   root.style.setProperty('--gold', safeHex(profile.accent_color, '#C9A96E'));
-  root.style.setProperty('--paper', safeHex(profile.background_color, '#F7F5F0'));
-  root.style.setProperty('--white', safeHex(profile.surface_color, '#FFFFFF'));
+  root.style.setProperty('--paper-light', safeHex(profile.background_color, '#F7F5F0'));
+  root.style.setProperty('--surface-light', safeHex(profile.surface_color, '#FFFFFF'));
   root.style.setProperty('--font-ui', fontStack(profile.font_family));
+  profileThemeMode = profile.theme_mode || 'system';
+  const saved = localStorage.getItem('cya-theme');
+  setTheme(saved === 'light' || saved === 'dark' ? saved : profileThemeMode);
   const themeMeta = $('theme-color-meta');
   if (themeMeta) themeMeta.setAttribute('content', safeHex(profile.primary_color, '#0E223D'));
 }
@@ -73,6 +92,7 @@ function applyProfile(profile) {
   $('advisor-first').textContent = first;
   $('advisor-last').textContent = last;
   $('advisor-role').textContent = role;
+  $('ally-label').textContent = profile.ally_label || fallback.ally_label || 'Asesor Aliado';
   $('advisor-bio').textContent = profile.bio || fallback.bio || '';
   $('advisor-photo').src = photo;
   $('advisor-photo').alt = `Fotografía de ${fullName}`;
@@ -80,6 +100,11 @@ function applyProfile(profile) {
   $('footer-logo').src = logo;
   $('footer-name').textContent = fullName;
   $('footer-role').textContent = role;
+
+  if (whatsappIconData) {
+    $('whatsapp-icon').src = whatsappIconData;
+    $('floating-whatsapp-icon').src = whatsappIconData;
+  }
 
   const defaultMessage = `Hola ${first.split(' ')[0] || ''}, vi tu tarjeta digital y me gustaría recibir asesoría previsional.`;
   $('whatsapp-primary').href = whatsappUrl(profile, defaultMessage);
@@ -181,6 +206,17 @@ async function loadRemoteProfile() {
     .order('sort_order', { ascending: true });
 
   return { profile, services: services || [] };
+}
+
+$('theme-toggle')?.addEventListener('click', () => {
+  const current = document.documentElement.dataset.theme || systemTheme();
+  setTheme(current === 'dark' ? 'light' : 'dark', true);
+});
+
+if (window.matchMedia) {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => {
+    if (!localStorage.getItem('cya-theme') && profileThemeMode === 'system') setTheme('system');
+  });
 }
 
 async function init() {
