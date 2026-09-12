@@ -50,8 +50,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero__glow--one { width: 230px; height: 230px; right: -120px; top: 25%; background: color-mix(in srgb, var(--gold) 11%, transparent); }
 .hero__glow--two { width: 190px; height: 190px; left: -120px; bottom: 12%; background: rgba(255,255,255,.05); }
 
-.brand-lockup { display: flex; align-items: center; gap: 10px; z-index: 1; color: rgba(255,255,255,.74); font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; }
-.brand-lockup img { width: 118px; height: 64px; object-fit: contain; }
+.brand-lockup { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 1; color: rgba(255,255,255,.82); font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; text-align: center; }
+.brand-lockup img { width: 110px; height: auto; object-fit: contain; filter: brightness(0) invert(1); }
 
 .portrait-wrap {
   margin-top: 28px;
@@ -94,9 +94,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 .btn:active { transform: scale(.985); }
-.btn--whatsapp { background: #25d366; color: #071c0e; box-shadow: 0 14px 34px rgba(37,211,102,.20); }
+.btn--whatsapp { background: #25d366; color: #ffffff; box-shadow: 0 14px 34px rgba(37,211,102,.20); }
+.btn--whatsapp .icon { width: 22px; height: 22px; display: inline-block; }
+.btn--whatsapp .icon svg { width: 100%; height: 100%; fill: currentColor; display: block; }
 .btn--navy { background: var(--navy); color: white; }
-.wa-mark { display:inline-grid; place-items:center; width:25px; height:25px; border-radius:50%; border:2px solid currentColor; font-size:.58rem; font-weight:900; }
 
 .social-row { display: grid; grid-template-columns: repeat(3, 1fr); width: min(100%, 440px); gap: 10px; margin-top: 12px; }
 .social-btn { min-height: 66px; padding: 10px 8px; border: 1px solid rgba(255,255,255,.15); border-radius: 15px; background: rgba(255,255,255,.06); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-decoration: none; font-size: .73rem; }
@@ -113,7 +114,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .service-grid { display: grid; gap: 14px; }
 .service-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: 0 7px 25px rgba(14,34,61,.045); }
-.service-card__number { color: #9a7431; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.service-card__number { display: none; }
+.service-title-nowrap { white-space: nowrap; }
 .service-card h3 { margin: 5px 0 8px; color: var(--navy); font-size: 1.16rem; line-height:1.28; }
 .service-card > p { margin: 0 0 14px; color: var(--muted); font-size: .93rem; }
 
