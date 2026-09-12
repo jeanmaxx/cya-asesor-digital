@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>Panel de Tarjetas Digitales · Casillas & Asociados</title>
-  <link rel="stylesheet" href="../assets/admin.css?v=20260912-phase1" />
-  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260912-phase1" />
+  <link rel="stylesheet" href="../assets/admin.css?v=20260912-phase1b" />
+  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260912-phase1b" />
 </head>
 <body>
   <main class="admin-shell">
@@ -113,8 +113,34 @@
       </form>
     </section>
   </main>
-  <script src="../assets/config.js?v=20260912-phase1"></script>
-  <script type="module" src="../assets/admin-v2.js?v=20260912-phase1"></script>
-  <script type="module" src="../assets/admin-phase1.js?v=20260912-phase1"></script>
+  <script src="../assets/config.js?v=20260912-phase1b"></script>
+  <script type="module" src="../assets/admin-v2.js?v=20260912-phase1b"></script>
+  <script type="module" src="../assets/admin-phase1.js?v=20260912-phase1b"></script>
+  <script>
+    window.addEventListener('load', () => {
+      const original = document.getElementById('package-key');
+      if (!original || original.dataset.packageFix === '1') return;
+      const select = original.cloneNode(true);
+      select.id = 'package-key';
+      select.dataset.packageFix = '1';
+      original.replaceWith(select);
+
+      const refreshPackagePreview = () => {
+        const option = select.options[select.selectedIndex];
+        const desc = document.getElementById('package-description');
+        const note = document.getElementById('package-permission-note');
+        if (desc && option) desc.textContent = `Paquete seleccionado: ${option.textContent}. Los cambios se aplican al guardar la tarjeta.`;
+        if (note && document.getElementById('admin-role-badge')?.textContent === 'Administrador principal') note.textContent = 'Como administrador principal puedes cambiar el paquete y su estado. Guarda la tarjeta para aplicar el cambio.';
+      };
+
+      const roleBadge = document.getElementById('admin-role-badge');
+      if (roleBadge?.textContent === 'Administrador principal') {
+        select.disabled = false;
+        const status = document.getElementById('package-status');
+        if (status) status.disabled = false;
+      }
+      select.addEventListener('change', refreshPackagePreview);
+    });
+  </script>
 </body>
 </html>
