@@ -1,22 +1,23 @@
 window.SUPABASE_CONFIG = {
   url: "https://lliedfgeegkqeopxvtze.supabase.co",
   publishableKey: "sb_publishable_dvGaagv6ZhJ2GChDinyfBQ_VISGCW62",
-  defaultSlug: "juan-perez-hernandez",
+  defaultSlug: "demo-publica",
   storageBucket: "advisor-assets"
 };
 
 window.ADVISOR_FALLBACK = {
-  slug: "juan-perez-hernandez",
+  slug: "demo-publica",
   first_names: "Juan",
   last_names: "Perez Hernandez",
   title: "Asesor Previsional",
+  page_title: "Tarjeta Digital Demo - Asesor Previsional",
   company_name: "Casillas & Asociados",
   ally_label: "Asesor Aliado",
-  phone: "4422867965",
-  whatsapp: "4422867965",
+  phone: "",
+  whatsapp: "",
   instagram_url: "https://www.instagram.com/",
   facebook_url: "https://www.facebook.com/",
-  bio: "Orientación clara para tomar mejores decisiones sobre tu retiro y seguridad social.",
+  bio: "Tarjeta digital demostrativa para presentar servicios de asesoría previsional.",
   photoUrl: "assets/profile-placeholder.svg",
   logoUrl: "assets/logo-placeholder.svg",
   primary_color: "#0E223D",
