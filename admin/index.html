@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
-  <title>Administrar tarjeta digital · Casillas & Asociados</title>
+  <title>Panel de Tarjetas Digitales · Casillas & Asociados</title>
   <link rel="stylesheet" href="../assets/admin.css" />
 </head>
 <body>
@@ -12,12 +12,13 @@
     <header class="admin-header">
       <div>
         <p class="kicker">Casillas & Asociados</p>
-        <h1>Administrador de tarjeta digital</h1>
-        <p>Actualiza tus datos básicos, redes, fotografía y apariencia sin editar código.</p>
+        <h1>Panel de Tarjetas Digitales</h1>
+        <p>Administra cuentas, personalización y respaldos desde un solo lugar.</p>
       </div>
       <div class="admin-header-actions">
         <button id="admin-theme-toggle" class="admin-theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar tema"><span id="admin-theme-icon" aria-hidden="true">☾</span></button>
-        <a class="ghost-link" href="../" target="_blank" rel="noopener">Ver página pública ↗</a>
+        <a class="ghost-link" href="../" target="_blank" rel="noopener">Ver demo pública ↗</a>
+        <button id="global-signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button>
       </div>
     </header>
 
@@ -26,172 +27,79 @@
         <button id="tab-login" class="tab is-active" type="button">Ingresar</button>
         <button id="tab-signup" class="tab" type="button">Crear acceso</button>
       </div>
-
       <form id="auth-form" class="form-grid form-grid--single">
-        <label>Correo electrónico
-          <input id="auth-email" type="email" autocomplete="email" required />
-        </label>
-        <label>Contraseña
-          <input id="auth-password" type="password" autocomplete="current-password" minlength="8" required />
-        </label>
+        <label>Correo electrónico<input id="auth-email" type="email" autocomplete="email" required /></label>
+        <label>Contraseña<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required /></label>
         <button id="auth-submit" class="primary-btn" type="submit">Ingresar</button>
       </form>
       <p id="auth-message" class="message" aria-live="polite"></p>
-      <p class="hint">La ruta <code>/admin</code> puede conocerse; la seguridad depende del inicio de sesión y de las políticas RLS de Supabase.</p>
+      <p class="hint">La seguridad del panel depende del inicio de sesión y de las políticas RLS de Supabase.</p>
+    </section>
+
+    <section id="hub-panel" class="is-hidden">
+      <nav class="product-tabs" aria-label="Tipos de tarjetas digitales">
+        <button class="product-tab is-active" type="button">TARJETAS DIGITALES ASESORES</button>
+        <button class="product-tab" type="button" disabled>TRANSPORTE <span>Próximamente</span></button>
+        <button class="product-tab" type="button" disabled>ESTÉTICAS <span>Próximamente</span></button>
+      </nav>
+
+      <section class="panel accounts-panel">
+        <div class="section-toolbar">
+          <div><p class="kicker">Cuentas</p><h2>Tarjetas digitales de asesores</h2><p class="subtle">Cada cuenta conserva de forma independiente sus datos, foto, servicios y apariencia.</p></div>
+          <button id="new-account" class="primary-btn" type="button">+ Nueva tarjeta</button>
+        </div>
+        <div id="accounts-list" class="accounts-grid"></div>
+        <p id="accounts-message" class="message" aria-live="polite"></p>
+      </section>
+
+      <section class="panel backups-panel">
+        <div class="section-toolbar">
+          <div><p class="kicker">Seguridad</p><h2>Respaldos de todas las cuentas</h2><p class="subtle">Cada respaldo incluye perfiles y configuraciones de servicios de todas tus tarjetas.</p></div>
+          <button id="manual-backup" class="secondary-btn" type="button">Crear respaldo manual</button>
+        </div>
+        <div class="backup-settings">
+          <label class="switch-row"><input id="automatic-backups" type="checkbox" /><span>Crear respaldo automático después de cada guardado</span></label>
+          <label>Conservar los últimos<select id="backup-keep-count"><option value="10">10 respaldos</option><option value="20">20 respaldos</option><option value="30">30 respaldos</option><option value="50">50 respaldos</option><option value="100">100 respaldos</option></select></label>
+        </div>
+        <div class="backup-list-head"><strong>Respaldos recientes</strong><button id="refresh-backups" class="text-btn" type="button">Actualizar</button></div>
+        <div id="backups-list" class="backups-list"></div>
+        <p id="backup-message" class="message" aria-live="polite"></p>
+      </section>
     </section>
 
     <section id="editor-panel" class="panel is-hidden">
       <div class="editor-toolbar">
-        <div>
-          <p class="kicker">Mi perfil</p>
-          <h2>Configuración básica</h2>
-        </div>
-        <button id="signout" class="secondary-btn" type="button">Cerrar sesión</button>
+        <div class="editor-title-row"><button id="back-to-accounts" class="back-btn" type="button" aria-label="Volver al panel de cuentas">←</button><div><p class="kicker">Editar tarjeta</p><h2 id="editor-account-name">Configuración</h2></div></div>
+        <a id="profile-preview-link" class="secondary-link" href="../" target="_blank" rel="noopener">Abrir tarjeta ↗</a>
       </div>
 
       <form id="profile-form" class="form-grid">
         <fieldset>
           <legend>Identidad</legend>
-          <div class="two-col">
-            <label>Nombre(s)
-              <input id="first-names" type="text" maxlength="80" required />
-            </label>
-            <label>Apellidos
-              <input id="last-names" type="text" maxlength="80" required />
-            </label>
-          </div>
-          <label>Cargo
-            <input id="title" type="text" maxlength="100" value="Asesor Previsional" required />
-          </label>
-          <label>Empresa / respaldo
-            <input id="company-name" type="text" maxlength="120" value="Casillas & Asociados" required />
-          </label>
-          <label>Texto junto al logo
-            <input id="ally-label" type="text" maxlength="60" value="Asesor Aliado" placeholder="Asesor Aliado" />
-          </label>
-          <label>Texto breve
-            <textarea id="bio" rows="3" maxlength="260" placeholder="Una frase breve sobre tu atención y especialidad."></textarea>
-          </label>
-          <label>Identificador de página
-            <div class="slug-row"><span>?asesor=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div>
-          </label>
+          <div class="two-col"><label>Nombre(s)<input id="first-names" type="text" maxlength="80" required /></label><label>Apellidos<input id="last-names" type="text" maxlength="80" required /></label></div>
+          <label>Título de la pestaña del navegador<input id="page-title" type="text" maxlength="120" placeholder="JEAN - Asesor Previsional" /></label>
+          <label>Cargo<input id="title" type="text" maxlength="100" value="Asesor Previsional" required /></label>
+          <label>Empresa / respaldo<input id="company-name" type="text" maxlength="120" value="Casillas & Asociados" required /></label>
+          <label>Texto junto al logo<input id="ally-label" type="text" maxlength="60" value="Asesor Aliado" /></label>
+          <label>Texto breve<textarea id="bio" rows="3" maxlength="260"></textarea></label>
+          <label>Identificador de página<div class="slug-row"><span>?asesor=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div></label>
         </fieldset>
 
-        <fieldset>
-          <legend>Contacto</legend>
-          <div class="two-col">
-            <label>Teléfono
-              <input id="phone" type="tel" inputmode="tel" placeholder="4422867965" />
-            </label>
-            <label>WhatsApp
-              <input id="whatsapp" type="tel" inputmode="tel" placeholder="4422867965" />
-            </label>
-          </div>
-          <label>Instagram
-            <input id="instagram" type="url" placeholder="https://instagram.com/..." />
-          </label>
-          <label>Facebook
-            <input id="facebook" type="url" placeholder="https://facebook.com/..." />
-          </label>
-        </fieldset>
+        <fieldset><legend>Contacto</legend><div class="two-col"><label>Teléfono<input id="phone" type="tel" inputmode="tel" /></label><label>WhatsApp<input id="whatsapp" type="tel" inputmode="tel" /></label></div><label>Instagram<input id="instagram" type="url" placeholder="https://instagram.com/..." /></label><label>Facebook<input id="facebook" type="url" placeholder="https://facebook.com/..." /></label></fieldset>
 
-        <fieldset>
-          <legend>Fotografía y logo</legend>
-          <div class="asset-grid">
-            <div>
-              <div class="asset-preview"><img id="photo-preview" src="../assets/profile-placeholder.svg" alt="Vista previa de fotografía" /></div>
-              <label>Fotografía de perfil
-                <input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" />
-              </label>
-            </div>
-            <div>
-              <div class="asset-preview asset-preview--logo"><img id="logo-preview" src="../assets/logo-placeholder.svg" alt="Vista previa del logo" /></div>
-              <label>Logo
-                <input id="logo-file" type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml" />
-              </label>
-            </div>
-          </div>
-        </fieldset>
+        <fieldset><legend>Fotografía y logo</legend><div class="asset-grid"><div><div class="asset-preview"><img id="photo-preview" src="../assets/profile-placeholder.svg" alt="Vista previa de fotografía" /></div><label>Fotografía de perfil<input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" /></label></div><div><div class="asset-preview asset-preview--logo"><img id="logo-preview" src="../assets/logo-placeholder.svg" alt="Vista previa del logo" /></div><label>Logo<input id="logo-file" type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml" /></label></div></div></fieldset>
 
-        <fieldset>
-          <legend>Apariencia</legend>
-          <div class="color-grid">
-            <label>Color principal <input id="primary-color" type="color" value="#0E223D" /></label>
-            <label>Dorado / acento <input id="accent-color" type="color" value="#C9A96E" /></label>
-            <label>Fondo <input id="background-color" type="color" value="#F7F5F0" /></label>
-            <label>Tarjetas <input id="surface-color" type="color" value="#FFFFFF" /></label>
-          </div>
-          <label>Tipografía
-            <select id="font-family">
-              <option value="helvetica">Helvetica / Helvetica Neue</option>
-              <option value="arial">Arial</option>
-              <option value="tahoma">Tahoma</option>
-              <option value="verdana">Verdana</option>
-              <option value="trebuchet">Trebuchet MS</option>
-              <option value="system">Sistema</option>
-            </select>
-          </label>
-          <label>Modo de color predeterminado
-            <select id="theme-mode">
-              <option value="system">Seguir sistema del dispositivo</option>
-              <option value="light">Claro</option>
-              <option value="dark">Oscuro</option>
-            </select>
-          </label>
-        </fieldset>
+        <fieldset><legend>Apariencia</legend><div class="color-grid"><label>Color principal <input id="primary-color" type="color" value="#0E223D" /></label><label>Dorado / acento <input id="accent-color" type="color" value="#C9A96E" /></label><label>Fondo <input id="background-color" type="color" value="#F7F5F0" /></label><label>Tarjetas <input id="surface-color" type="color" value="#FFFFFF" /></label></div><label>Tipografía<select id="font-family"><option value="helvetica">Helvetica / Helvetica Neue</option><option value="arial">Arial</option><option value="tahoma">Tahoma</option><option value="verdana">Verdana</option><option value="trebuchet">Trebuchet MS</option><option value="system">Sistema</option></select></label><label>Modo de color predeterminado<select id="theme-mode"><option value="system">Seguir sistema del dispositivo</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></fieldset>
 
-        <fieldset>
-          <legend>Contenido destacado</legend>
-          <p class="hint">Estos textos aparecen en las etiquetas de confianza y en el bloque final de contacto.</p>
-          <div class="three-col">
-            <label>Etiqueta 1
-              <input id="trust-item-1" type="text" maxlength="80" placeholder="Atención personalizada" />
-            </label>
-            <label>Etiqueta 2
-              <input id="trust-item-2" type="text" maxlength="80" placeholder="Acompañamiento" />
-            </label>
-            <label>Etiqueta 3
-              <input id="trust-item-3" type="text" maxlength="80" placeholder="Información clara" />
-            </label>
-          </div>
-          <label>Encabezado pequeño del cierre
-            <input id="closing-kicker-input" type="text" maxlength="80" placeholder="Orientación inicial" />
-          </label>
-          <label>Título del cierre
-            <input id="closing-title-input" type="text" maxlength="120" placeholder="Cuéntame tu caso" />
-          </label>
-          <label>Texto del cierre
-            <textarea id="closing-text-input" rows="3" maxlength="320" placeholder="Envíame un mensaje y te indico qué información necesitamos revisar para dar el siguiente paso."></textarea>
-          </label>
-          <label>Texto del botón final
-            <input id="closing-cta-input" type="text" maxlength="100" placeholder="Escribirme por WhatsApp" />
-          </label>
-        </fieldset>
+        <fieldset><legend>Contenido destacado</legend><p class="hint">Textos de confianza y bloque final de contacto.</p><div class="three-col"><label>Etiqueta 1<input id="trust-item-1" type="text" maxlength="80" /></label><label>Etiqueta 2<input id="trust-item-2" type="text" maxlength="80" /></label><label>Etiqueta 3<input id="trust-item-3" type="text" maxlength="80" /></label></div><label>Encabezado pequeño del cierre<input id="closing-kicker-input" type="text" maxlength="80" /></label><label>Título del cierre<input id="closing-title-input" type="text" maxlength="120" /></label><label>Texto del cierre<textarea id="closing-text-input" rows="3" maxlength="320"></textarea></label><label>Texto del botón final<input id="closing-cta-input" type="text" maxlength="100" /></label></fieldset>
 
-        <fieldset>
-          <legend>Servicios</legend>
-          <p class="hint service-editor-help">Edita los textos visibles de cada tarjeta. Escribe un requisito por línea.</p>
-          <div id="services-editor" class="services-editor"></div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Publicación</legend>
-          <label class="switch-row">
-            <input id="is-published" type="checkbox" />
-            <span>Publicar este perfil para que la landing pueda leerlo.</span>
-          </label>
-          <p class="hint">Mientras esté desactivado, la página pública seguirá usando los datos locales de respaldo.</p>
-        </fieldset>
-
-        <div class="save-row">
-          <button id="save-profile" class="primary-btn" type="submit">Guardar cambios</button>
-          <a id="profile-preview-link" class="secondary-link" href="../" target="_blank" rel="noopener">Abrir mi tarjeta ↗</a>
-        </div>
+        <fieldset><legend>Servicios</legend><p class="hint service-editor-help">Edita los textos visibles de cada tarjeta. Escribe un requisito por línea.</p><div id="services-editor" class="services-editor"></div></fieldset>
+        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="is-published" type="checkbox" /><span>Publicar este perfil para que la landing pueda leerlo.</span></label><p class="hint">La cuenta demo puede usarse en la URL raíz; las demás se abren con <code>?asesor=identificador</code>.</p></fieldset>
+        <div class="save-row"><button id="save-profile" class="primary-btn" type="submit">Guardar cambios</button><button id="cancel-edit" class="secondary-btn" type="button">Volver a cuentas</button></div>
         <p id="save-message" class="message" aria-live="polite"></p>
       </form>
     </section>
   </main>
-
   <script src="../assets/config.js"></script>
   <script type="module" src="../assets/admin.js"></script>
 </body>
