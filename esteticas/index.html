@@ -3,62 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="index,follow" />
-  <meta id="theme-color-meta" name="theme-color" content="#111111" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="theme-color" content="#111111" id="theme-color-meta" />
   <title>Tarjeta Digital · Estética / Barbería</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/business.css" />
 </head>
 <body>
-  <main class="business-shell">
-    <header class="business-hero">
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Cambiar tema"><span id="theme-icon">☾</span></button>
-      <div class="hero-glow hero-glow--one"></div><div class="hero-glow hero-glow--two"></div>
+  <main id="business-card" class="business-card">
+    <header class="hero">
+      <button id="theme-toggle" class="theme-toggle" type="button"><span id="theme-icon">☾</span><span id="theme-label">Tema</span></button>
       <img id="business-logo" class="business-logo" alt="Logo del negocio" />
-      <p id="business-tagline" class="eyebrow">Barbería</p>
-      <h1 id="business-name">Studio Cavalier</h1>
-      <p id="business-location" class="hero-location">Tequisquiapan, Querétaro</p>
-      <p id="business-slogan" class="hero-slogan">Precisión, estilo y carácter — en cada visita.</p>
-      <a id="hero-booking" class="primary-cta" href="#agenda">Agendar mi cita</a>
-      <p class="cta-note">Elige día y hora · confirma por WhatsApp</p>
+      <p id="business-tagline" class="tagline"></p>
+      <h1 id="business-name"></h1>
+      <p id="business-location" class="location"></p>
+      <p id="business-slogan" class="slogan"></p>
     </header>
-
-    <section id="social-actions" class="social-actions"></section>
-
-    <section class="section section--features"><div id="features-grid" class="features-grid"></div></section>
-
-    <section class="section">
-      <div class="section-head"><p class="eyebrow">Servicios</p><h2>Elige tu estilo</h2><p>Precios y servicios disponibles.</p></div>
-      <div id="services-grid" class="services-grid"></div>
+    <section class="cta-section"><button id="booking-cta" class="btn btn--primary" type="button">Agendar mi cita</button><p class="microcopy">Elige servicio, día y hora · sujeto a confirmación</p></section>
+    <section id="links-section" class="links-section"></section>
+    <section id="features-section" class="features-grid"></section>
+    <section class="section"><div class="section-head"><p>Servicios</p><h2>Elige tu servicio</h2></div><div id="services-container" class="services-list"></div></section>
+    <section id="booking-section" class="section booking-section">
+      <div class="section-head"><p>Agenda</p><h2>Solicita tu cita</h2><span id="booking-hours-copy"></span></div>
+      <div class="calendar-card"><div class="calendar-head"><button id="prev-month" type="button">‹</button><strong id="month-label"></strong><button id="next-month" type="button">›</button></div><div class="weekdays"><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span></div><div id="calendar-grid" class="calendar-grid"></div></div>
+      <div id="times-wrap" class="times-wrap is-hidden"><h3>Selecciona una hora</h3><div id="times-grid" class="times-grid"></div></div>
+      <div id="booking-actions" class="booking-actions is-hidden"><p id="booking-summary"></p><a id="booking-whatsapp" class="btn btn--primary" target="_blank" rel="noopener">Solicitar cita por WhatsApp</a><a id="booking-calendar" class="btn btn--outline" target="_blank" rel="noopener">Agregar a Google Calendar</a><small>WhatsApp confirma tu lugar; Calendar funciona como recordatorio.</small></div>
     </section>
-
-    <section id="agenda" class="section booking-section">
-      <div class="section-head"><p class="eyebrow">Agenda</p><h2>Reserva tu horario</h2><p id="booking-summary">Selecciona una fecha disponible.</p></div>
-      <div class="calendar-card">
-        <div class="calendar-head"><button id="prev-month" type="button" aria-label="Mes anterior">‹</button><strong id="month-label"></strong><button id="next-month" type="button" aria-label="Mes siguiente">›</button></div>
-        <div class="weekdays"><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span></div>
-        <div id="calendar-grid" class="calendar-grid"></div>
-      </div>
-      <div id="slots-wrap" class="slots-wrap is-hidden"><h3>Selecciona una hora</h3><div id="slots-grid" class="slots-grid"></div></div>
-      <div id="booking-actions" class="booking-actions is-hidden">
-        <p id="selected-booking"></p>
-        <a id="booking-whatsapp" class="primary-cta" target="_blank" rel="noopener">Solicitar cita por WhatsApp</a>
-        <a id="booking-calendar" class="secondary-cta" target="_blank" rel="noopener">Agregar a Google Calendar</a>
-        <small>WhatsApp confirma tu lugar · Calendar funciona como recordatorio.</small>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head"><p class="eyebrow">Ubicación</p><h2>Encuéntranos</h2></div>
-      <div class="location-grid">
-        <a id="maps-link" class="info-card" target="_blank" rel="noopener"><span class="info-icon">⌖</span><span><strong>Cómo llegar</strong><small id="business-address"></small></span><b>›</b></a>
-        <a id="review-link" class="info-card" target="_blank" rel="noopener"><span class="info-icon">★</span><span><strong>Déjanos una reseña</strong><small>Comparte tu experiencia en Google</small></span><b>›</b></a>
-      </div>
-    </section>
-
-    <footer class="business-footer"><div class="footer-rule"></div><strong id="footer-name">Studio Cavalier</strong><span id="footer-category">Barbería</span></footer>
+    <section class="section"><div class="section-head"><p>Ubicación</p><h2>Encuéntranos</h2></div><a id="maps-link" class="info-card" target="_blank" rel="noopener"><span class="info-icon">⌖</span><span><strong>Cómo llegar</strong><small id="business-address"></small></span><span>›</span></a><a id="review-link" class="info-card" target="_blank" rel="noopener"><span class="info-icon">★</span><span><strong>Déjanos una reseña</strong><small>Comparte tu experiencia en Google</small></span><span>›</span></a></section>
+    <footer><div class="footer-line"><span></span><strong id="footer-name"></strong><span></span></div><p id="footer-category"></p></footer>
   </main>
   <script src="../assets/config.js"></script>
   <script type="module" src="../assets/business.js"></script>
