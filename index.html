@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0E223D" id="theme-color-meta" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
-  <meta name="description" content="Tarjeta digital demostrativa de asesoría previsional con respaldo de Casillas & Asociados." />
-  <meta property="og:title" content="Tarjeta Digital Demo · Asesor Previsional" />
-  <meta property="og:description" content="Demostración de tarjeta digital para asesores de Casillas & Asociados." />
+  <meta name="description" content="Tarjeta digital de asesoría previsional con respaldo de Casillas & Asociados." />
+  <meta property="og:title" content="Tarjeta Digital · Asesor Previsional" />
+  <meta property="og:description" content="Tarjeta digital para asesores de Casillas & Asociados." />
   <meta property="og:type" content="website" />
-  <title>Tarjeta Digital Demo - Asesor Previsional</title>
+  <title>Tarjeta Digital · Asesor Previsional</title>
   <link rel="icon" href="assets/logo-placeholder.svg" type="image/png" />
-  <link rel="stylesheet" href="assets/styles.css?v=20260912-phase1b" />
-  <link rel="stylesheet" href="assets/phase1.css?v=20260912-phase1b" />
+  <link rel="stylesheet" href="assets/styles.css?v=20260912-profileload" />
+  <link rel="stylesheet" href="assets/phase1.css?v=20260912-qrfix" />
   <style>
     html[data-theme="dark"] .qr-actions .qr-secondary{background:#173353;color:#fff;border:1px solid rgba(255,255,255,.16)}
     html[data-theme="dark"] .qr-actions .qr-primary{background:var(--navy,#0e223d);color:#fff;border:1px solid rgba(255,255,255,.12)}
@@ -20,7 +20,7 @@
     html[data-theme="light"] .qr-actions .qr-secondary{background:#eef1f4;color:var(--navy,#0e223d);border:1px solid rgba(14,34,61,.10)}
   </style>
 </head>
-<body>
+<body class="profile-loading">
   <a class="skip-link" href="#servicios">Ir a servicios</a>
 
   <main>
@@ -39,15 +39,15 @@
       </div>
 
       <div class="portrait-wrap">
-        <img id="advisor-photo" class="portrait" src="assets/profile-placeholder.svg" alt="Fotografía de Juan Perez Hernandez" />
+        <img id="advisor-photo" class="portrait" src="assets/profile-placeholder.svg" alt="Fotografía de perfil" />
       </div>
 
       <p id="advisor-role" class="eyebrow">Asesor Previsional</p>
       <h1 id="advisor-name">
-        <span id="advisor-first">Juan</span>
-        <span id="advisor-last">Perez Hernandez</span>
+        <span id="advisor-first"></span>
+        <span id="advisor-last"></span>
       </h1>
-      <p id="advisor-bio" class="hero__subtitle">Tarjeta digital demostrativa para presentar servicios de asesoría previsional.</p>
+      <p id="advisor-bio" class="hero__subtitle"></p>
 
       <a id="whatsapp-primary" class="btn btn--whatsapp" href="#" target="_blank" rel="noopener">
         <img id="whatsapp-icon" class="whatsapp-icon" alt="" aria-hidden="true" />
@@ -90,7 +90,7 @@
       <div>
         <p id="closing-kicker" class="eyebrow eyebrow--dark">Orientación inicial</p>
         <h2 id="closing-title">Cuéntame tu caso</h2>
-        <p id="closing-text">Envíame un mensaje y te indico qué información necesitamos revisar para dar el siguiente paso.</p>
+        <p id="closing-text"></p>
       </div>
       <a id="whatsapp-closing" class="btn btn--navy" href="#" target="_blank" rel="noopener">Escribirme por WhatsApp</a>
     </section>
@@ -98,15 +98,15 @@
 
   <footer>
     <img id="footer-logo" src="assets/logo-placeholder.svg" alt="Casillas & Asociados" />
-    <p><strong id="footer-name">Juan Perez Hernandez</strong><br /><span id="footer-role">Asesor Previsional</span></p>
+    <p><strong id="footer-name"></strong><br /><span id="footer-role">Asesor Previsional</span></p>
     <p class="legal">La información de este sitio es de carácter general y de orientación. La procedencia, documentación y resolución final de cada trámite corresponde al IMSS, AFORE o institución competente. No se garantizan montos, tiempos ni resoluciones.</p>
   </footer>
 
   <a id="floating-whatsapp" class="floating-whatsapp" href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp"><img id="floating-whatsapp-icon" alt="" aria-hidden="true" /><span>WhatsApp</span></a>
 
-  <script src="assets/config.js?v=20260912-phase1b"></script>
+  <script src="assets/config.js?v=20260912-profileload"></script>
   <script src="assets/whatsapp-icon.js"></script>
-  <script type="module" src="assets/app.js?v=20260912-phase1b"></script>
-  <script type="module" src="assets/phase1.js?v=20260912-phase1b"></script>
+  <script type="module" src="assets/app.js?v=20260912-profileload"></script>
+  <script type="module" src="assets/phase1.js?v=20260912-qrfix"></script>
 </body>
 </html>
