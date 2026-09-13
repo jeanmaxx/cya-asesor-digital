@@ -48,12 +48,12 @@ window.ADVISOR_FALLBACK_SERVICES = [
   const addModule=(name,id)=>{if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.type='module';s.src=assetUrl(name);document.head.appendChild(s)};
   const admin=location.pathname.includes('/admin/'),otros=location.pathname.includes('/otros/');
   if(admin){
-    addCss('visual-identity-admin-v4.css?v=20260913-vi5','vi5-admin-css');
+    addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail3','editor-action-rail-css');
-    addModule('visual-identity-admin-v5.js?v=20260913-vi5','vi5-admin-js');
+    addModule('visual-identity-admin-v5.js?v=20260913-vi6','vi5-admin-js');
     addModule('editor-floating-actions.js?v=20260913-rail3','editor-action-rail-js');
   }else if(!otros){
-    addCss('visual-identity-public-v4.css?v=20260913-vi4','vi4-public-css');
-    addModule('visual-identity-public-v4.js?v=20260913-vi4','vi4-public-js');
+    addCss('visual-identity-public-v4.css?v=20260913-vi6','vi4-public-css');
+    addModule('visual-identity-public-v4.js?v=20260913-vi6','vi4-public-js');
   }
 })();
