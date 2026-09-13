@@ -1,0 +1,5 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const cfg=window.SUPABASE_CONFIG||{},supabase=createClient(cfg.url,cfg.publishableKey),$=id=>document.getElementById(id);
+let catalog=[];
+async function init(){const select=$('package-key');if(!select)return;const {data}=await supabase.from('package_catalog').select('package_key,name,features').eq('is_active',true).order('level');catalog=data||[];const sync=()=>{const p=catalog.find(x=>x.package_key===select.value),f=new Set(Array.isArray(p?.features)?p.features:[]);if($('phase1-download-qr'))$('phase1-download-qr').disabled=!f.has('nfc_qr');if($('phase1-download-vcard'))$('phase1-download-vcard').disabled=!f.has('vcard');const note=$('phase1-tools-note');if(note)note.textContent=`${p?.name||'Paquete actual'} · ${f.has('vcard')?'vCard habilitada':'vCard disponible desde Pro'} · ${f.has('analytics')?'Analíticas habilitadas':'Analíticas disponibles en Premium'}`};select.addEventListener('change',sync);sync()}
+window.addEventListener('load',()=>setTimeout(init,350));
