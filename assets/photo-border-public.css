@@ -1,0 +1,7 @@
+body.vi-photo-border.vi4-advisor .portrait-wrap{box-sizing:border-box!important;width:var(--vi4-photo-d)!important;height:var(--vi4-photo-d)!important;padding:var(--vi-photo-border-width,0px)!important;background:var(--vi-photo-border-color,transparent)!important;overflow:hidden!important;box-shadow:0 24px 70px rgba(0,0,0,.28)!important}
+body.vi-photo-border.vi4-advisor .portrait-wrap.vi-photo-border-circle{border-radius:50%!important}
+body.vi-photo-border.vi4-advisor .portrait-wrap.vi-photo-border-rounded{border-radius:18%!important}
+body.vi-photo-border.vi4-advisor .portrait-wrap .portrait{box-sizing:border-box!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;border:0!important;padding:0!important;margin:0!important;border-radius:inherit!important;object-fit:var(--vi4-photo-fit,cover)!important}
+body.vi-photo-border.vi4-beauty #vi4-beauty-photo{box-sizing:border-box!important;border:var(--vi-photo-border-width,0px) solid var(--vi-photo-border-color,transparent)!important}
+body.vi-photo-border.vi-other .identity-photo-frame{box-sizing:border-box!important;border:var(--vi-photo-border-width,0px) solid var(--vi-photo-border-color,transparent)!important}
+@media(max-width:760px){body.vi-photo-border.vi4-advisor .portrait-wrap{width:var(--vi4-photo-m)!important;height:var(--vi4-photo-m)!important}}
