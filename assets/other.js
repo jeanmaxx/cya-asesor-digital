@@ -7,7 +7,7 @@ const supabase=createClient(cfg.url,cfg.publishableKey);
 const qs=new URLSearchParams(location.search);
 const slug=qs.get('negocio')||'tu-tarjeta-digital';
 
-let profile=null,services=[];
+let profile=null,services=[],identityRenderSeq=0;
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const storageUrl=p=>p?`${cfg.url}/storage/v1/object/public/${cfg.storageBucket}/${p}`:'';
 const trimmedCache=new Map();
@@ -53,8 +53,11 @@ function selectedLogoRaw(theme=currentTheme()){const vi=identityConfig();if(vi.l
 
 async function renderIdentity(){
   if(!profile)return;const row=$('brand-row');if(!row)return;
-  const vi=identityConfig(),layout=normalizeLayout(vi.logo_position),rawLogo=selectedLogoRaw(),logo=vi.show_logo&&rawLogo?await trimTransparent(rawLogo):'',photo=vi.show_photo&&photoUrl()?photoUrl():'';
-  row.className=`brand-row identity-header identity-layout-${layout} identity-logo-${vi.logo_size||'medium'} identity-photo-${vi.photo_size||'medium'}`;row.replaceChildren();
+  const seq=++identityRenderSeq,theme=currentTheme(),vi=identityConfig(),layout=normalizeLayout(vi.logo_position),rawLogo=selectedLogoRaw(theme),photo=vi.show_photo&&photoUrl()?photoUrl():'';
+  const logo=vi.show_logo&&rawLogo?await trimTransparent(rawLogo):'';
+  if(seq!==identityRenderSeq)return;
+  row.className=`brand-row identity-header identity-layout-${layout} identity-logo-${vi.logo_size||'medium'} identity-photo-${vi.photo_size||'medium'}`;
+  row.dataset.layout=layout;row.dataset.logoSize=vi.logo_size||'medium';row.dataset.logoShape=vi.logo_shape||'none';row.replaceChildren();
   const media=document.createElement('div');media.className='identity-media';
   if(photo){const frame=document.createElement('div');frame.className=`identity-photo-frame identity-photo-shape-${vi.photo_shape||'circle'}`;const img=document.createElement('img');img.src=photo;img.alt=`Fotografía de ${profile.business_name||''}`;img.style.objectFit=vi.photo_fit==='contain'?'contain':'cover';frame.appendChild(img);media.appendChild(frame)}
   if(logo){const frame=document.createElement('div');frame.className=`identity-logo-frame identity-logo-shape-${vi.logo_shape||'none'}`;const img=document.createElement('img');img.src=logo;img.alt=`Logo de ${profile.business_name||''}`;img.style.objectFit=vi.logo_fit==='cover'?'cover':'contain';frame.appendChild(img);media.appendChild(frame)}
@@ -68,9 +71,10 @@ function setTheme(t,persist=false,rerender=true){
   t=t==='dark'?'dark':'light';document.documentElement.dataset.theme=t;
   const toggle=$('theme-toggle'),icon=$('theme-icon');if(icon)icon.textContent=t==='dark'?'☀':'☾';if(toggle){const label=t==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro';toggle.setAttribute('aria-label',label);toggle.setAttribute('title',label)}
   if(profile){document.documentElement.style.setProperty('--brand',profile.primary_color||'#0B1F36');document.documentElement.style.setProperty('--accent',profile.accent_color||'#27C2C7');if(t==='light'){document.documentElement.style.setProperty('--bg',profile.background_color||'#F5F8FB');document.documentElement.style.setProperty('--surface',profile.surface_color||'#FFFFFF')}else{document.documentElement.style.removeProperty('--bg');document.documentElement.style.removeProperty('--surface')}}
-  if(persist)localStorage.setItem(`other-theme:${slug}`,t);if(rerender&&profile)renderIdentity();
+  const meta=$('theme-color-meta');if(meta)meta.setAttribute('content',t==='dark'?'#07111D':(profile?.background_color||'#F5F8FB'));
+  if(persist)localStorage.setItem(`other-theme:${slug}`,t);return rerender&&profile?renderIdentity():Promise.resolve();
 }
-$('theme-toggle')?.addEventListener('click',()=>setTheme(currentTheme()==='dark'?'light':'dark',true,true));
+$('theme-toggle')?.addEventListener('click',async()=>{await setTheme(currentTheme()==='dark'?'light':'dark',true,true)});
 
 function baseMessage(extra=''){const b=String(profile?.whatsapp_message||`Hola, quiero información sobre ${profile?.business_name||'sus servicios'}.`).trim();return extra?`${b}\n\n${extra}`:b}
 function waLink(message=''){const n=waNumber(profile?.whatsapp);return n?`https://wa.me/${n}?text=${encodeURIComponent(message||baseMessage())}`:'#'}
@@ -89,7 +93,7 @@ async function openQr(){const d=$('qr-dialog'),c=$('qr-canvas'),url=publicUrl('q
 function bindTools(){$('share-card').onclick=async()=>{const url=publicUrl('share');try{if(navigator.share)await navigator.share({title:document.title,text:profile.slogan||profile.tagline||'',url});else{await navigator.clipboard.writeText(url);alert('Enlace copiado.')}}catch{}};$('save-contact').onclick=()=>downloadBlob(vcard(),'text/vcard;charset=utf-8','tu-tarjeta-digital.vcf');$('show-qr').onclick=openQr;$('qr-close').onclick=()=>$('qr-dialog').close();$('qr-dialog').addEventListener('click',e=>{if(e.target===$('qr-dialog'))$('qr-dialog').close()});$('qr-copy').onclick=async()=>{await navigator.clipboard.writeText(publicUrl('qr'));$('qr-copy').textContent='Copiado ✓';setTimeout(()=>$('qr-copy').textContent='Copiar enlace',1200)};$('qr-download').onclick=()=>{const a=document.createElement('a');a.download=`qr-${slug}.png`;a.href=$('qr-canvas').toDataURL('image/png');a.click()}}
 
 async function render(){
-  const c=profile.content_config||{};document.title=profile.page_title||`${profile.business_name} · Tarjeta Digital`;document.documentElement.style.setProperty('--brand',profile.primary_color||'#0B1F36');document.documentElement.style.setProperty('--accent',profile.accent_color||'#27C2C7');const saved=localStorage.getItem(`other-theme:${slug}`),initial=saved||(profile.theme_mode==='system'?systemTheme():profile.theme_mode||'light');setTheme(initial,false,false);
+  const c=profile.content_config||{};document.title=profile.page_title||`${profile.business_name} · Tarjeta Digital`;document.documentElement.style.setProperty('--brand',profile.primary_color||'#0B1F36');document.documentElement.style.setProperty('--accent',profile.accent_color||'#27C2C7');const saved=localStorage.getItem(`other-theme:${slug}`),initial=saved||(profile.theme_mode==='system'?systemTheme():profile.theme_mode||'light');await setTheme(initial,false,false);
   $('hero-badge').textContent=c.hero_badge||profile.category||'';$('hero-title').textContent=c.hero_title||profile.business_name;$('hero-text').textContent=c.hero_text||profile.slogan||'';$('hero-whatsapp').textContent=c.primary_cta||'Escríbeme por WhatsApp';$('hero-whatsapp').href=waLink();$('hero-secondary').textContent=c.secondary_cta||'Ver servicios';$('about-title').textContent=c.about_title||`Conoce ${profile.business_name}`;$('about-text').textContent=c.about_text||profile.slogan||'';$('proof-title').textContent=c.proof_title||'';$('proof-text').textContent=c.proof_text||'';$('proof-section').classList.toggle('is-hidden',!c.proof_title);$('final-title').textContent=c.final_title||'¿Quieres más información?';$('final-text').textContent=c.final_text||'Escríbenos por WhatsApp y con gusto te atendemos.';$('final-whatsapp').textContent=c.final_cta||'Solicitar información por WhatsApp';$('final-whatsapp').href=waLink();$('footer-name').textContent=profile.business_name;$('footer-category').textContent=profile.category||'';
   await Promise.all([renderIdentity(),renderProofLogo()]);renderFeatures();renderExamples(c);renderPackages(c);renderProcess(c);renderAudiences(c);renderComparison(c);renderFaq(c);bindTools();$('other-card').classList.remove('is-loading');
 }
