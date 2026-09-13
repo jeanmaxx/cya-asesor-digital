@@ -41,7 +41,7 @@
   };
 
   const watchMessages = () => {
-    const candidates = ['save-message', 'business-save-message'];
+    const candidates = ['save-message', 'business-save-message', 'other-save-message'];
     candidates.forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
@@ -59,6 +59,19 @@
     });
   };
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchMessages, { once: true });
-  else watchMessages();
+  const loadVisualIdentity = () => {
+    if (!document.querySelector('#profile-form,#business-form,#other-form')) return;
+    if (!document.querySelector('link[data-visual-identity-admin]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '../assets/visual-identity-admin.css?v=20260913-vi1';
+      link.dataset.visualIdentityAdmin = '1';
+      document.head.appendChild(link);
+    }
+    import('../assets/visual-identity-admin.js?v=20260913-vi1').catch(err => console.error('No fue posible cargar Identidad visual', err));
+  };
+
+  const boot = () => { watchMessages(); loadVisualIdentity(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else boot();
 })();
