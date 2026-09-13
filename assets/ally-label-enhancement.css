@@ -1,3 +1,52 @@
-#ally-label{display:inline-block;min-width:124px;max-width:178px;white-space:pre-line;text-align:center;line-height:1.28}
-#ally-label.is-multiline{line-height:1.2}
-@media(max-width:480px){#ally-label{min-width:108px;max-width:150px}}
+/* Encabezado superior de asesores: el conjunto logo + texto se centra sobre el eje de la fotografía. */
+.hero-top{
+  position:relative;
+  width:min(100%,620px);
+  justify-content:center;
+  padding-inline:58px;
+}
+.brand-lockup{
+  display:grid;
+  grid-template-columns:150px max-content;
+  align-items:center;
+  justify-content:center;
+  column-gap:24px;
+  width:max-content;
+  max-width:100%;
+  margin-inline:auto;
+  text-align:left;
+}
+.brand-lockup img{
+  width:150px;
+  height:76px;
+  object-fit:contain;
+}
+#ally-label{
+  display:block;
+  min-width:0;
+  max-width:none;
+  white-space:pre;
+  text-align:left;
+  line-height:1.26;
+  font-size:clamp(.72rem,1.2vw,.86rem);
+  letter-spacing:.105em;
+}
+#ally-label.is-multiline{line-height:1.25}
+.hero-top .theme-toggle{
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+}
+@media(max-width:560px){
+  .hero-top{padding-inline:46px}
+  .brand-lockup{grid-template-columns:116px max-content;column-gap:14px}
+  .brand-lockup img{width:116px;height:64px}
+  #ally-label{font-size:.68rem;letter-spacing:.078em;line-height:1.24}
+}
+@media(max-width:390px){
+  .hero-top{padding-inline:42px}
+  .brand-lockup{grid-template-columns:104px max-content;column-gap:11px}
+  .brand-lockup img{width:104px;height:60px}
+  #ally-label{font-size:.62rem;letter-spacing:.065em}
+}
