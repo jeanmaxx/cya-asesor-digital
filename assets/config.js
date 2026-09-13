@@ -96,3 +96,14 @@ window.ADVISOR_FALLBACK_SERVICES = [
     is_visible: true
   }
 ];
+
+(() => {
+  if (location.pathname.includes('/admin/')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = location.pathname.includes('/esteticas/') || location.pathname.includes('/otros/') ? '../assets/visual-identity-public.css?v=20260913-vi1' : 'assets/visual-identity-public.css?v=20260913-vi1';
+  link.dataset.visualIdentityPublic = '1';
+  document.head.appendChild(link);
+  const modulePath = location.pathname.includes('/esteticas/') || location.pathname.includes('/otros/') ? '../assets/visual-identity-public.js?v=20260913-vi1' : 'assets/visual-identity-public.js?v=20260913-vi1';
+  import(modulePath).catch(() => {});
+})();
