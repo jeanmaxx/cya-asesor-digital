@@ -1,0 +1,39 @@
+body.vi5-enabled{--vi5-logo-w-d:380px;--vi5-logo-h-d:180px;--vi5-logo-sq-d:180px;--vi5-photo-d:180px;--vi5-logo-w-m:220px;--vi5-logo-h-m:104px;--vi5-logo-sq-m:104px;--vi5-photo-m:126px;--vi5-logo-fit:contain;--vi5-photo-fit:cover}
+.vi5-header-stage,.vi5-other .brand-row{position:relative;z-index:3;width:100%;min-width:0}
+.vi5-media-group{display:flex;align-items:center;gap:18px;min-width:0}
+.vi5-text-block{min-width:0}
+.vi5-layout-distributed{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(220px,1fr)!important;align-items:center!important;column-gap:clamp(30px,7vw,96px)!important}
+.vi5-layout-distributed>.vi5-media-group{justify-self:start!important}
+.vi5-layout-distributed>.vi5-text-block{justify-self:end!important;text-align:right!important}
+.vi5-layout-grouped-left{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:24px!important}
+.vi5-layout-grouped-left>.vi5-text-block{text-align:left!important}
+.vi5-layout-stacked{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:14px!important}
+.vi5-layout-stacked>.vi5-text-block{text-align:center!important}
+.vi5-logo-shell{display:grid!important;place-items:center!important;flex:0 0 auto!important;overflow:hidden!important;box-sizing:border-box!important}
+.vi5-logo-shell.vi5-logo-shape-none{width:min(var(--vi5-logo-w-d),48vw)!important;height:var(--vi5-logo-h-d)!important;max-width:100%!important;background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important}
+.vi5-logo-shell.vi5-logo-shape-circle,.vi5-logo-shell.vi5-logo-shape-rounded{width:var(--vi5-logo-sq-d)!important;height:var(--vi5-logo-sq-d)!important;max-width:var(--vi5-logo-sq-d)!important;padding:12px!important;background:color-mix(in srgb,var(--surface,#fff) 94%,transparent)!important;border:1px solid var(--line,rgba(255,255,255,.14))!important}
+.vi5-logo-shell.vi5-logo-shape-circle{border-radius:50%!important}.vi5-logo-shell.vi5-logo-shape-rounded{border-radius:20%!important}
+.vi5-logo-shell>img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:var(--vi5-logo-fit)!important;object-position:center!important;padding:0!important;margin:0!important;border:0!important;border-radius:inherit!important;background:transparent!important}
+.vi5-photo-box{display:block!important;flex:0 0 auto!important;width:var(--vi5-photo-d)!important;height:var(--vi5-photo-d)!important;max-width:var(--vi5-photo-d)!important;object-fit:var(--vi5-photo-fit)!important;object-position:center!important;overflow:hidden!important}
+.vi5-photo-shape-circle{border-radius:50%!important}.vi5-photo-shape-rounded{border-radius:20%!important}
+.vi5-absent{display:none!important;width:0!important;height:0!important;min-width:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important}
+.vi5-other .brand-row{margin-bottom:56px!important;padding:0!important}
+.vi5-other .brand-tagline{margin:0 0 5px!important}.vi5-other .brand-name{font-size:1.15rem!important}
+.vi5-other .theme-toggle{z-index:20!important}.vi5-other .theme-toggle>*{pointer-events:none!important}
+.vi5-proof-logo{display:block;width:100%;height:100%;object-fit:contain;padding:10px}
+.vi5-other .proof-mark{overflow:hidden;place-items:center}
+.vi5-advisor .hero-top{justify-content:flex-end!important}.vi5-advisor #vi5-advisor-stage{margin:18px auto 26px}.vi5-advisor .brand-lockup{margin:0!important;display:flex!important;align-items:center!important;gap:14px!important}.vi5-advisor .portrait-wrap{margin:0!important}.vi5-advisor .brand-lockup #brand-logo{width:min(var(--vi5-logo-w-d),42vw)!important;height:var(--vi5-logo-h-d)!important;object-fit:var(--vi5-logo-fit)!important}.vi5-advisor .portrait-wrap .portrait{width:var(--vi5-photo-d)!important;height:var(--vi5-photo-d)!important;object-fit:var(--vi5-photo-fit)!important}
+.vi5-beauty #vi5-beauty-stage{margin:12px auto 22px}.vi5-beauty #business-logo{width:min(var(--vi5-logo-w-d),42vw)!important;height:var(--vi5-logo-h-d)!important;object-fit:var(--vi5-logo-fit)!important;margin:0!important}.vi5-beauty #vi5-beauty-text{max-width:560px}
+@media(max-width:760px){
+  .vi5-header-stage,.vi5-other .brand-row,.vi5-layout-distributed,.vi5-layout-grouped-left,.vi5-layout-stacked{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;width:100%!important;max-width:100%!important;gap:12px!important;padding-left:0!important;padding-right:0!important;margin-left:auto!important;margin-right:auto!important}
+  .vi5-media-group{justify-content:center!important;margin-inline:auto!important;width:100%!important;max-width:100%!important;gap:12px!important}
+  .vi5-text-block,.vi5-layout-distributed>.vi5-text-block,.vi5-layout-grouped-left>.vi5-text-block,.vi5-layout-stacked>.vi5-text-block{justify-self:auto!important;text-align:center!important;margin:0 auto!important;width:100%!important}
+  .vi5-logo-shell.vi5-logo-shape-none{width:min(var(--vi5-logo-w-m),78vw)!important;height:var(--vi5-logo-h-m)!important;max-width:min(var(--vi5-logo-w-m),78vw)!important}
+  .vi5-logo-shell.vi5-logo-shape-circle,.vi5-logo-shell.vi5-logo-shape-rounded{width:var(--vi5-logo-sq-m)!important;height:var(--vi5-logo-sq-m)!important;max-width:var(--vi5-logo-sq-m)!important;padding:8px!important}
+  .vi5-photo-box{width:var(--vi5-photo-m)!important;height:var(--vi5-photo-m)!important;max-width:var(--vi5-photo-m)!important}
+  .vi5-other .brand-row{margin-bottom:46px!important}
+  .vi5-other .hero-badge{text-align:center!important;margin-left:auto!important;margin-right:auto!important;max-width:100%!important}
+  .vi5-other .feature-mini{text-align:center!important}.vi5-other .feature-mini span,.vi5-other .feature-mini strong,.vi5-other .feature-mini small{text-align:center!important}
+  .vi5-other .proof-card{text-align:center!important}.vi5-other .proof-mark{margin-inline:auto!important}.vi5-other .proof-card .eyebrow{text-align:center!important}
+  .vi5-advisor .brand-lockup #brand-logo,.vi5-beauty #business-logo{width:min(var(--vi5-logo-w-m),78vw)!important;height:var(--vi5-logo-h-m)!important}.vi5-advisor .portrait-wrap .portrait{width:var(--vi5-photo-m)!important;height:var(--vi5-photo-m)!important}
+}
