@@ -11,12 +11,17 @@ function init(){
   document.body.appendChild(rail);
   const save=rail.querySelector('.rail-save'),open=rail.querySelector('.rail-open'),back=rail.querySelector('.rail-back');
   save.addEventListener('click',()=>ctx.form.requestSubmit());
-  open.addEventListener('click',e=>{const href=ctx.preview?.href||ctx.preview?.getAttribute?.('href');if(!href||href==='#'){e.preventDefault();return}open.href=href});
+  open.addEventListener('click',e=>{if(open.getAttribute('aria-disabled')==='true'){e.preventDefault();return}});
   back.addEventListener('click',()=>{if(ctx.back?.tagName==='A'&&ctx.back.href){location.href=ctx.back.href;return}ctx.back?.click()});
-  const sync=()=>{const visible=!ctx.panel||!ctx.panel.classList.contains('is-hidden');rail.classList.toggle('is-hidden',!visible);const href=ctx.preview?.href||ctx.preview?.getAttribute?.('href')||'#';open.href=href;save.disabled=!!ctx.save?.disabled};
+  const sync=()=>{
+    const visible=!ctx.panel||!ctx.panel.classList.contains('is-hidden');rail.classList.toggle('is-hidden',!visible);
+    const href=ctx.preview?.href||ctx.preview?.getAttribute?.('href')||'';const usable=!!href&&href!=='#'&&!href.endsWith('#');open.href=usable?href:'#';open.setAttribute('aria-disabled',usable?'false':'true');
+    save.disabled=!!ctx.save?.disabled;
+  };
   sync();
   if(ctx.panel)new MutationObserver(sync).observe(ctx.panel,{attributes:true,attributeFilter:['class']});
   if(ctx.preview)new MutationObserver(sync).observe(ctx.preview,{attributes:true,attributeFilter:['href']});
   if(ctx.save)new MutationObserver(sync).observe(ctx.save,{attributes:true,attributeFilter:['disabled']});
+  setInterval(sync,800);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
