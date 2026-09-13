@@ -1,3 +1,78 @@
-.vi-saved-asset{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;border:1px dashed var(--border,#d8e0e8);border-radius:12px;background:color-mix(in srgb,var(--surface,#fff) 96%,var(--accent,#27c2c7) 4%)}.vi-saved-asset img{width:54px;height:54px;object-fit:contain;border-radius:10px;background:rgba(255,255,255,.72);padding:5px}.vi-saved-asset span{font-size:.8rem;color:var(--muted,#697789);font-weight:700}.vi-preview-stage{justify-content:center!important;align-items:center!important;text-align:center}.vi-preview-logo{margin-inline:auto}.vi-preview-stage:not(.is-stack) .vi-preview-logo:only-child{margin-inline:auto}
-body.vi-other .brand-row{width:100%;justify-content:center!important}.vi-other .brand-row.vi-public-center{flex-direction:column!important;text-align:center}.vi-other .brand-row.vi-public-center>div:not(#brand-mark):not(.vi-business-photo){text-align:center}.vi-other .brand-row.vi-public-center #brand-mark{margin-inline:auto}.vi-other .brand-row.vi-public-side{justify-content:center!important}.vi-other #brand-mark{place-items:center!important;overflow:visible!important}.vi-other.vi-logo-shape-none #brand-mark{max-width:min(76vw,460px)!important;width:min(76vw,460px)!important;min-width:0!important}.vi-other.vi-logo-shape-none #brand-mark img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;object-fit:var(--vi-logo-fit,contain)!important;padding:0!important;margin:auto!important}.vi-other .brand-row .brand-tagline,.vi-other .brand-row .brand-name{max-width:100%}
-@media(max-width:620px){.vi-other.vi-logo-shape-none #brand-mark{width:min(78vw,360px)!important;max-width:min(78vw,360px)!important}.vi-other .brand-row{padding-right:0!important}}
+/* Shared preview / saved assets */
+.vi-saved-asset{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px;border:1px dashed var(--border,#d8e0e8);border-radius:12px;background:color-mix(in srgb,var(--surface,#fff) 96%,var(--accent,#27c2c7) 4%)}
+.vi-saved-asset img{width:54px;height:54px;object-fit:contain;border-radius:10px;background:rgba(255,255,255,.72);padding:5px}
+.vi-saved-asset span{font-size:.8rem;color:var(--muted,#697789);font-weight:700}
+.vi-preview-stage{justify-content:center!important;align-items:center!important;text-align:center;overflow:hidden!important}
+.vi-preview-logo{margin-inline:auto;max-width:100%!important}
+
+/* OTROS: one bounded identity area. Nothing may escape this slot. */
+body.vi-other .other-hero>.brand-row.vi3-identity-slot{
+  position:relative!important;
+  z-index:3!important;
+  width:100%!important;
+  min-height:72px!important;
+  margin:0 0 52px!important;
+  padding:0 58px 0 0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:16px!important;
+  overflow:visible!important;
+}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot.vi3-left{flex-direction:row!important}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot.vi3-center,
+body.vi-other .other-hero>.brand-row.vi3-identity-slot.vi3-above{flex-direction:column!important;gap:10px!important}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-brand-copy{flex:0 1 auto!important;max-width:360px!important}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-logo-box{
+  position:relative!important;
+  inset:auto!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0!important;
+  transform:none!important;
+  isolation:isolate!important;
+  place-items:center!important;
+  overflow:hidden!important;
+  background:transparent;
+}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-logo-box.vi3-shape-circle,
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-logo-box.vi3-shape-rounded{
+  background:color-mix(in srgb,var(--surface,#fff) 94%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--line,#dce4ec) 82%,transparent)!important;
+}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-logo-box.vi3-shape-circle{border-radius:50%!important}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-logo-box.vi3-shape-rounded{border-radius:20%!important}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-logo-image{
+  position:static!important;
+  inset:auto!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  transform:none!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-position:center!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi-business-photo{
+  position:static!important;
+  inset:auto!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  transform:none!important;
+  max-width:var(--vi3-photo,104px)!important;
+  max-height:var(--vi3-photo,104px)!important;
+}
+body.vi-other .other-hero #brand-mark,
+body.vi-other .other-hero #brand-mark img{position:static!important;inset:auto!important;transform:none!important}
+
+@media(max-width:620px){
+  body.vi-other .other-hero>.brand-row.vi3-identity-slot{padding-right:48px!important;margin-bottom:38px!important;gap:10px!important}
+  body.vi-other .other-hero>.brand-row.vi3-identity-slot.vi3-left{flex-direction:column!important}
+  body.vi-other .other-hero>.brand-row.vi3-identity-slot .vi3-brand-copy{text-align:center!important;max-width:100%!important}
+}
