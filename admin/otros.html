@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <title>Otros Negocios · Panel de Tarjetas Digitales</title>
+  <link rel="stylesheet" href="../assets/admin.css?v=20260913-other1" />
+  <link rel="stylesheet" href="../assets/admin-packages.css?v=20260913-other1" />
+</head>
+<body>
+<main class="admin-shell">
+  <header class="admin-header">
+    <div><p class="kicker">Plataforma de tarjetas digitales</p><h1>Otros Negocios</h1><p>Administra tarjetas para comercios, restaurantes, transporte, talleres, inmobiliarias y otros giros.</p></div>
+    <div class="admin-header-actions"><span id="other-role-badge" class="badge badge--plan is-hidden"></span><button id="admin-theme-toggle" class="admin-theme-toggle" type="button" aria-label="Cambiar tema"><span id="admin-theme-icon">☾</span></button><a class="ghost-link" href="../otros/?negocio=tu-tarjeta-digital" target="_blank" rel="noopener">Ver TTD ↗</a><button id="signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button></div>
+  </header>
+  <section id="auth-panel" class="panel auth-panel is-hidden"><form id="auth-form" class="form-grid form-grid--single"><label>Correo electrónico<input id="auth-email" type="email" required autocomplete="email"></label><label>Contraseña<input id="auth-password" type="password" minlength="8" required autocomplete="current-password"></label><button class="primary-btn" type="submit">Ingresar</button></form><p id="auth-message" class="message"></p></section>
+  <section id="hub-panel" class="is-hidden">
+    <nav class="product-tabs" aria-label="Tipos de tarjetas digitales"><a class="product-tab" href="./">TARJETAS DIGITALES ASESORES</a><a class="product-tab" href="esteticas.html">ESTÉTICAS Y BARBERÍAS</a><a class="product-tab is-active" href="otros.html">OTROS NEGOCIOS</a></nav>
+    <section class="panel accounts-panel"><div class="section-toolbar"><div><p class="kicker">Cuentas</p><h2>Negocios generales</h2><p class="subtle">Perfiles flexibles para actividades que no necesitan un vertical especializado.</p></div><button id="new-other-business" class="primary-btn" type="button">+ Nueva tarjeta</button></div><div id="other-business-list" class="accounts-grid"></div><p id="accounts-message" class="message"></p></section>
+    <section id="other-backups-link" class="panel" style="margin-top:18px"><div class="section-toolbar"><div><p class="kicker">Respaldos</p><h2>Protección de configuraciones</h2><p class="subtle">Los respaldos globales incluyen asesores, estéticas y otros negocios.</p></div><a class="secondary-link" href="./">Administrar respaldos globales →</a></div></section>
+  </section>
+</main>
+<script src="../assets/config.js?v=20260913-other1"></script>
+<script type="module" src="../assets/admin-session-shell.js?v=20260913-other1"></script>
+<script type="module" src="../assets/other-hub.js?v=20260913-other1"></script>
+</body>
+</html>
