@@ -1,0 +1,2 @@
+footer .other-footer-brand{display:block;width:min(150px,42vw);height:82px;object-fit:contain;margin:0 auto 8px}footer .other-footer-brand+strong{margin-top:0}
+@media(max-width:620px){footer .other-footer-brand{width:min(132px,46vw);height:72px}}
