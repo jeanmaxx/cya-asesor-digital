@@ -109,14 +109,17 @@ window.ADVISOR_FALLBACK_SERVICES = [
     const script=document.createElement('script');script.id=id;script.type='module';script.src=assetUrl(name);document.head.appendChild(script);
   };
   const admin=location.pathname.includes('/admin/');
+  const otros=location.pathname.includes('/otros/');
   if(admin){
-    addCss('visual-identity-admin-v4.css?v=20260913-vi4','vi4-admin-css');
+    addCss('visual-identity-admin-v4.css?v=20260913-vi4b','vi4-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail2','editor-action-rail-css');
-    addModule('visual-identity-admin-v4.js?v=20260913-vi4','vi4-admin-js');
+    addModule('visual-identity-admin-v4.js?v=20260913-vi4b','vi4-admin-js');
     addModule('editor-floating-actions.js?v=20260913-rail2','editor-action-rail-js');
+  }else if(otros){
+    addCss('visual-identity-public-v5.css?v=20260913-vi5','vi5-public-css');
+    addModule('visual-identity-public-v5.js?v=20260913-vi5','vi5-public-js');
   }else{
     addCss('visual-identity-public-v4.css?v=20260913-vi4','vi4-public-css');
     addModule('visual-identity-public-v4.js?v=20260913-vi4','vi4-public-js');
-    if(location.pathname.includes('/otros/'))addModule('other-theme-v4.js?v=20260913-theme4','other-theme-v4-js');
   }
 })();
