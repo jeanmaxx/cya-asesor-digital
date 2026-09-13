@@ -7,7 +7,9 @@ const $ = (id) => document.getElementById(id);
 const whatsappIconData = window.WHATSAPP_ICON_DATA || '';
 let profileThemeMode = 'system';
 
-const requestedSlug = new URLSearchParams(window.location.search).get('asesor') || sbCfg.defaultSlug || fallback.slug;
+const searchParams = new URLSearchParams(window.location.search);
+const hasExplicitSlug = searchParams.has('asesor');
+const requestedSlug = searchParams.get('asesor') || sbCfg.defaultSlug || fallback.slug;
 const supabase = sbCfg.url && sbCfg.publishableKey
   ? createClient(sbCfg.url, sbCfg.publishableKey)
   : null;
@@ -85,6 +87,21 @@ function applyTheme(profile) {
   setTheme(saved === 'light' || saved === 'dark' ? saved : profileThemeMode);
   const themeMeta = $('theme-color-meta');
   if (themeMeta) themeMeta.setAttribute('content', safeHex(profile.primary_color, '#0E223D'));
+}
+
+function renderUnavailable(kind = 'inactive') {
+  const isDraft = kind === 'draft';
+  document.title = isDraft ? 'Tarjeta no disponible' : 'Tarjeta temporalmente no disponible';
+  document.body.classList.remove('profile-loading');
+  document.body.innerHTML = `
+    <main style="min-height:100svh;display:grid;place-items:center;padding:28px;background:radial-gradient(circle at 18% 12%,rgba(201,169,110,.13),transparent 30%),linear-gradient(155deg,#09182b 0%,#0e223d 55%,#132d4a 100%);font-family:\"Helvetica Neue\",Helvetica,Arial,sans-serif;color:#fff;text-align:center">
+      <section style="width:min(100%,520px);padding:42px 30px;border:1px solid rgba(255,255,255,.12);border-radius:28px;background:rgba(255,255,255,.055);box-shadow:0 26px 80px rgba(0,0,0,.24);backdrop-filter:blur(8px)">
+        <div style="width:72px;height:72px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(201,169,110,.75);box-shadow:0 0 0 5px rgba(201,169,110,.08);color:#ead8ae;font-size:1.7rem">◇</div>
+        <p style="margin:0 0 9px;color:#c9a96e;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase">Tarjeta digital</p>
+        <h1 style="margin:0;font-size:clamp(1.9rem,7vw,2.65rem);line-height:1.08;letter-spacing:-.035em">${isDraft ? 'Tarjeta no disponible' : 'Tarjeta temporalmente no disponible'}</h1>
+        <p style="margin:18px auto 0;max-width:400px;color:rgba(255,255,255,.72);line-height:1.65">${isDraft ? 'Esta tarjeta todavía no se encuentra publicada.' : 'Esta tarjeta digital se encuentra actualmente inactiva. Intenta nuevamente más adelante.'}</p>
+      </section>
+    </main>`;
 }
 
 function applyProfile(profile) {
@@ -234,6 +251,19 @@ async function loadRemoteProfile() {
 
   if (error || !profile) return null;
 
+  let accountStatus = 'active';
+  try {
+    const { data: context } = await supabase.rpc('get_public_card_features', {
+      p_account_type: 'advisor',
+      p_slug: requestedSlug
+    });
+    if (context?.status) accountStatus = context.status;
+  } catch {}
+
+  if (accountStatus === 'suspended' || accountStatus === 'cancelled') {
+    return { profile, services: [], status: accountStatus };
+  }
+
   const { data: services, error: servicesError } = await supabase
     .from('advisor_services')
     .select('*')
@@ -242,7 +272,7 @@ async function loadRemoteProfile() {
     .order('sort_order', { ascending: true });
 
   if (servicesError) console.warn('No fue posible cargar los servicios del perfil.', servicesError);
-  return { profile, services: services || [] };
+  return { profile, services: services || [], status: accountStatus };
 }
 
 $('theme-toggle')?.addEventListener('click', () => {
@@ -266,8 +296,17 @@ async function init() {
   try {
     const remote = await loadRemoteProfile();
     if (remote) {
+      if (remote.status === 'suspended' || remote.status === 'cancelled') {
+        renderUnavailable('inactive');
+        return;
+      }
       applyProfile(remote.profile);
       renderServices(remote.services, remote.profile);
+      return;
+    }
+
+    if (hasExplicitSlug) {
+      renderUnavailable('draft');
       return;
     }
 
@@ -275,6 +314,10 @@ async function init() {
     renderServices(fallbackServices, fallbackProfile);
   } catch (error) {
     console.warn('Se usará la configuración local de respaldo.', error);
+    if (hasExplicitSlug) {
+      renderUnavailable('draft');
+      return;
+    }
     applyProfile(fallbackProfile);
     renderServices(fallbackServices, fallbackProfile);
   } finally {
