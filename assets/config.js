@@ -98,12 +98,25 @@ window.ADVISOR_FALLBACK_SERVICES = [
 ];
 
 (() => {
-  if (location.pathname.includes('/admin/')) return;
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = location.pathname.includes('/esteticas/') || location.pathname.includes('/otros/') ? '../assets/visual-identity-public.css?v=20260913-vi1' : 'assets/visual-identity-public.css?v=20260913-vi1';
-  link.dataset.visualIdentityPublic = '1';
-  document.head.appendChild(link);
-  const modulePath = location.pathname.includes('/esteticas/') || location.pathname.includes('/otros/') ? '../assets/visual-identity-public.js?v=20260913-vi1' : 'assets/visual-identity-public.js?v=20260913-vi1';
-  import(modulePath).catch(() => {});
+  const current = document.currentScript?.src || '';
+  const assetUrl = (name) => current ? new URL(name, current).href : name;
+  const addCss = (name,id) => {
+    if(document.getElementById(id)) return;
+    const link=document.createElement('link');link.id=id;link.rel='stylesheet';link.href=assetUrl(name);document.head.appendChild(link);
+  };
+  const addModule = (name,id) => {
+    if(document.getElementById(id)) return;
+    const script=document.createElement('script');script.id=id;script.type='module';script.src=assetUrl(name);document.head.appendChild(script);
+  };
+  const admin=location.pathname.includes('/admin/');
+  addCss('visual-identity-fixes.css?v=20260913-vi2','vi-fixes-css');
+  if(admin){
+    addCss('visual-identity-admin.css?v=20260913-vi2','vi-admin-css');
+    addModule('visual-identity-admin.js?v=20260913-vi2','vi-admin-js');
+    addModule('visual-identity-admin-fix.js?v=20260913-vi2','vi-admin-fix-js');
+  }else{
+    addCss('visual-identity-public.css?v=20260913-vi2','vi-public-css');
+    addModule('visual-identity-public.js?v=20260913-vi2','vi-public-js');
+    addModule('visual-identity-public-fix.js?v=20260913-vi2','vi-public-fix-js');
+  }
 })();
