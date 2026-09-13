@@ -109,14 +109,16 @@ window.ADVISOR_FALLBACK_SERVICES = [
     const script=document.createElement('script');script.id=id;script.type='module';script.src=assetUrl(name);document.head.appendChild(script);
   };
   const admin=location.pathname.includes('/admin/');
-  addCss('visual-identity-fixes.css?v=20260913-vi2','vi-fixes-css');
+  addCss('visual-identity-fixes.css?v=20260913-vi3','vi-fixes-css');
   if(admin){
-    addCss('visual-identity-admin.css?v=20260913-vi2','vi-admin-css');
-    addModule('visual-identity-admin.js?v=20260913-vi2','vi-admin-js');
-    addModule('visual-identity-admin-fix.js?v=20260913-vi2','vi-admin-fix-js');
+    addCss('visual-identity-admin.css?v=20260913-vi3','vi-admin-css');
+    addCss('editor-floating-actions.css?v=20260913-rail1','editor-action-rail-css');
+    addModule('visual-identity-admin.js?v=20260913-vi3','vi-admin-js');
+    addModule('visual-identity-admin-fix.js?v=20260913-vi3','vi-admin-fix-js');
+    addModule('editor-floating-actions.js?v=20260913-rail1','editor-action-rail-js');
   }else{
-    addCss('visual-identity-public.css?v=20260913-vi2','vi-public-css');
-    addModule('visual-identity-public.js?v=20260913-vi2','vi-public-js');
-    addModule('visual-identity-public-fix.js?v=20260913-vi2','vi-public-fix-js');
+    addCss('visual-identity-public.css?v=20260913-vi3','vi-public-css');
+    addModule('visual-identity-public.js?v=20260913-vi3','vi-public-js');
+    addModule('visual-identity-public-fix.js?v=20260913-vi3','vi-public-fix-js');
   }
 })();
