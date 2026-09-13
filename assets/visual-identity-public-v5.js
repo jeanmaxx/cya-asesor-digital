@@ -60,7 +60,7 @@ function renderOtherIdentity(){
   renderProofLogo();
   setFavicon();
 }
-function renderProofLogo(){const box=document.querySelector('.proof-mark');if(!box)return;const src=currentTheme()==='dark'?(storageUrl(profile?.logo_dark_path)||storageUrl(profile?.logo_path)):(storageUrl(profile?.logo_path)||storageUrl(profile?.logo_dark_path));if(src){box.textContent='';let img=box.querySelector('img');if(!img){img=document.createElement('img');img.className='vi5-proof-logo';box.appendChild(img)}img.src=src;img.alt=`Logo de ${profile?.business_name||'TTD'}`}else box.textContent=(profile?.business_name||'TTD').slice(0,3).toUpperCase()}
+function renderProofLogo(){const box=document.querySelector('.proof-mark');if(!box)return;const src=storageUrl(profile?.logo_dark_path)||storageUrl(profile?.logo_path)||(profile?.logo_data_url||'');if(src){box.textContent='';let img=box.querySelector('img');if(!img){img=document.createElement('img');img.className='vi5-proof-logo';box.appendChild(img)}img.src=src;img.alt=`Logo de ${profile?.business_name||'TTD'}`}else box.textContent=(profile?.business_name||'TTD').slice(0,3).toUpperCase()}
 function setFavicon(){const src=storageUrl(profile?.logo_icon_path)||storageUrl(profile?.logo_path);if(!src)return;let link=document.querySelector('link[rel="icon"]');if(!link){link=document.createElement('link');link.rel='icon';document.head.appendChild(link)}link.href=src;link.type='image/png'}
 
 function systemTheme(){return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
