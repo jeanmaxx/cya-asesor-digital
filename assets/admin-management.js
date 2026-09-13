@@ -9,13 +9,13 @@ function initTheme(){const saved=localStorage.getItem('cya-admin-theme');const t
 function dateOnly(s){if(!s)return null;const d=new Date(`${s}T00:00:00`);return Number.isNaN(d.getTime())?null:d}
 function paymentState(c){if(c.payment_status==='paid')return{key:'paid',label:'Realizado',daysLate:0};if(c.payment_status==='unpaid')return{key:'unpaid',label:'No realizado',daysLate:null,manual:true};if(!c.payment_date)return{key:'neutral',label:'Sin programar',daysLate:0};const due=dateOnly(c.payment_date),today=new Date();today.setHours(0,0,0,0);const late=Math.floor((today-due)/86400000);if(late<=0)return{key:'pending',label:'Pendiente',daysLate:late};if(late<=Number(c.grace_days||5))return{key:'grace',label:`Periodo de gracia (día ${late} de ${c.grace_days||5})`,daysLate:late};return{key:'unpaid',label:'No realizado',daysLate:late,manual:false}}
 function pageState(r){const st=r.subscription?.status;if(st==='suspended')return{label:'Suspendida',cls:'is-off'};if(st==='cancelled')return{label:'Cancelada',cls:'is-off'};if(!r.profile?.is_published)return{label:'Borrador',cls:'is-draft'};return{label:'Publicada',cls:'is-live'}}
-function cardUrl(r){if(r.account_type==='business')return`../esteticas/?negocio=${encodeURIComponent(r.slug)}`;return`../?asesor=${encodeURIComponent(r.slug)}`}
+function cardUrl(r){if(r.account_type==='business'){const base=r.profile?.vertical==='other'?'../otros/':'../esteticas/';return`${base}?negocio=${encodeURIComponent(r.slug)}`}return`../?asesor=${encodeURIComponent(r.slug)}`}
 function fmtDate(s){if(!s)return'—';return new Intl.DateTimeFormat('es-MX',{day:'2-digit',month:'2-digit',year:'numeric'}).format(dateOnly(s))}
 function fmtMoney(v){if(v===null||v===undefined||v==='')return'—';return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(Number(v)||0)}
 async function load(){const {data:customers,error}=await supabase.from('customer_accounts').select('*').order('created_at');if(error)throw error;const aids=customers.filter(x=>x.account_type==='advisor').map(x=>x.account_id),bids=customers.filter(x=>x.account_type==='business').map(x=>x.account_id);
  const [aRes,bRes,sRes]=await Promise.all([
   aids.length?supabase.from('advisor_profiles').select('id,slug,first_names,last_names,company_name,is_published').in('id',aids):Promise.resolve({data:[]}),
-  bids.length?supabase.from('business_profiles').select('id,slug,business_name,is_published').in('id',bids):Promise.resolve({data:[]}),
+  bids.length?supabase.from('business_profiles').select('id,slug,business_name,is_published,vertical').in('id',bids):Promise.resolve({data:[]}),
   supabase.from('account_subscriptions').select('account_type,account_id,package_key,status')
  ]);
  const amap=new Map((aRes.data||[]).map(x=>[x.id,x])),bmap=new Map((bRes.data||[]).map(x=>[x.id,x])),smap=new Map((sRes.data||[]).map(x=>[`${x.account_type}:${x.account_id}`,x]));
@@ -30,7 +30,7 @@ function renderAlerts(){const root=$('payment-alerts');if(!root)return;const act
 function render(){renderSummary();renderAlerts();const data=filtered();$('active-tab').classList.toggle('is-active',view==='active');$('archive-tab').classList.toggle('is-active',view==='archived');$('archive-tab').textContent=`Archivados (${rows.filter(x=>x.archived_at).length})`;
  const body=$('management-body');if(!data.length){body.innerHTML=`<tr><td colspan="8"><div class="management-empty">${view==='archived'?'No hay clientes archivados.':'No hay clientes que coincidan con la búsqueda.'}</div></td></tr>`;return}
  body.innerHTML=data.map(r=>{const pay=paymentState(r),page=pageState(r),sub=r.subscription||{};return`<tr>
- <td data-label="Cliente"><strong>${esc(r.client_name||'Sin nombre')}</strong><small>${r.account_type==='advisor'?'Asesor':'Negocio'} · ${esc(r.slug)}</small></td>
+ <td data-label="Cliente"><strong>${esc(r.client_name||'Sin nombre')}</strong><small>${r.account_type==='advisor'?'Asesor':(r.profile?.vertical==='other'?'Otro negocio':'Negocio')} · ${esc(r.slug)}</small></td>
  <td data-label="Negocio"><strong>${esc(r.business_name||'—')}</strong></td>
  <td data-label="Paquete"><span class="page-pill">${esc(packages[sub.package_key]||sub.package_key||'—')}</span><small>${esc(sub.status||'—')}</small></td>
  <td data-label="Página"><span class="page-pill ${page.cls}">${page.label}</span></td>
