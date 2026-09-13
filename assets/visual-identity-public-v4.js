@@ -34,7 +34,8 @@ function beautyLayout(p,c){
   let stage=document.getElementById('vi4-beauty-stage');if(!stage){stage=document.createElement('div');stage.id='vi4-beauty-stage';stage.className='vi4-header-stage';hero.insertBefore(stage,tag);const text=document.createElement('div');text.className='vi4-text-block';text.id='vi4-beauty-text';text.append(tag,name);stage.append(logo,text)}
   stage.classList.remove('vi4-distributed','vi4-grouped-left','vi4-stacked');stage.classList.add(c.logo_position==='distributed'?'vi4-distributed':c.logo_position==='grouped_left'?'vi4-grouped-left':'vi4-stacked');
   logo.classList.add('vi4-logo-box');shapeClasses(logo,c.logo_shape,'vi4-logo-shape');applyMedia(logo,logoSrc(p,c),c.show_logo);logo.hidden=!c.show_logo||!logoSrc(p,c);
-  let photo=document.getElementById('vi4-beauty-photo');if(!photo){photo=document.createElement('img');photo.id='vi4-beauty-photo';photo.className='vi4-photo-box';stage.insertBefore(photo,document.getElementById('vi4-beauty-text'))}shapeClasses(photo,c.photo_shape,'vi4-photo-shape');applyMedia(photo,photoSrc(p),c.show_photo);photo.hidden=!c.show_photo||!photoSrc(p)
+  const src=photoSrc(p);let photo=document.getElementById('vi4-beauty-photo');
+  if(c.show_photo&&src){if(!photo){photo=document.createElement('img');photo.id='vi4-beauty-photo';photo.className='vi4-photo-box';stage.insertBefore(photo,document.getElementById('vi4-beauty-text'))}shapeClasses(photo,c.photo_shape,'vi4-photo-shape');applyMedia(photo,src,true);photo.hidden=false}else if(photo){photo.remove()}
 }
 function advisorLayout(p,c){
   const hero=document.querySelector('.hero'),top=document.querySelector('.hero-top'),brand=document.querySelector('.brand-lockup'),portrait=document.querySelector('.portrait-wrap'),logo=document.getElementById('brand-logo'),photo=document.getElementById('advisor-photo');if(!hero||!top||!brand||!portrait||!logo||!photo)return;
