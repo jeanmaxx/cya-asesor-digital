@@ -4,12 +4,14 @@ const cfg=window.SUPABASE_CONFIG||{};
 const supabase=createClient(cfg.url,cfg.publishableKey);
 const qs=new URLSearchParams(location.search);
 const storageUrl=p=>p?`${cfg.url}/storage/v1/object/public/${cfg.storageBucket}/${p}`:'';
-const defaultsAdvisor={preset:'personal',show_logo:true,show_photo:true,logo_size:'medium',photo_size:'large',logo_shape:'none',photo_shape:'circle',logo_fit:'contain',photo_fit:'cover',logo_position:'stacked',logo_asset:'main'};
+const defaultsAdvisor={preset:'personal',show_logo:true,show_photo:true,logo_size:'medium',photo_size:'large',logo_shape:'none',photo_shape:'circle',logo_fit:'contain',photo_fit:'cover',logo_position:'stacked',logo_asset:'main',header_text_size:'medium',header_text_align:'left'};
 const defaultsBusiness={preset:'corporate',show_logo:true,show_photo:false,logo_size:'large',photo_size:'medium',logo_shape:'none',photo_shape:'circle',logo_fit:'contain',photo_fit:'cover',logo_position:'distributed',logo_asset:'main'};
 
 function detect(){const p=location.pathname;if(p.includes('/admin/'))return null;if(p.includes('/esteticas/'))return{kind:'beauty',table:'business_profiles',slug:qs.get('negocio')||'studio-cavalier',vertical:'beauty'};if(p.includes('/otros/'))return{kind:'other',table:'business_profiles',slug:qs.get('negocio')||'tu-tarjeta-digital',vertical:'other'};return{kind:'advisor',table:'advisor_profiles',slug:qs.get('asesor')||cfg.defaultSlug||'demo-publica'}}
 function normalizeLayout(v){return v==='distributed'||v==='grouped_left'||v==='stacked'?v:v==='left'?'grouped_left':'stacked'}
-function cfgFor(p,kind){const d=kind==='advisor'?defaultsAdvisor:defaultsBusiness;return{...d,...(p.visual_identity||{}),logo_position:normalizeLayout(p.visual_identity?.logo_position)}}
+function normalizeTextSize(v){return ['small','medium','large'].includes(v)?v:'medium'}
+function normalizeTextAlign(v){return ['left','center','right'].includes(v)?v:'left'}
+function cfgFor(p,kind){const d=kind==='advisor'?defaultsAdvisor:defaultsBusiness;const c={...d,...(p.visual_identity||{}),logo_position:normalizeLayout(p.visual_identity?.logo_position)};if(kind==='advisor'){c.header_text_size=normalizeTextSize(c.header_text_size);c.header_text_align=normalizeTextAlign(c.header_text_align)}return c}
 function theme(){return document.documentElement.dataset.theme==='dark'?'dark':'light'}
 function logoSrc(p,c){if(c.logo_asset==='icon'&&p.logo_icon_path)return storageUrl(p.logo_icon_path);if(theme()==='dark'&&p.logo_dark_path)return storageUrl(p.logo_dark_path);return storageUrl(p.logo_path)||(p.logo_data_url||'')}
 function photoSrc(p){return storageUrl(p.photo_path)}
@@ -38,7 +40,9 @@ function advisorLayout(p,c){
   const hero=document.querySelector('.hero'),top=document.querySelector('.hero-top'),brand=document.querySelector('.brand-lockup'),portrait=document.querySelector('.portrait-wrap'),logo=document.getElementById('brand-logo'),photo=document.getElementById('advisor-photo');if(!hero||!top||!brand||!portrait||!logo||!photo)return;
   let stage=document.getElementById('vi4-advisor-stage');if(!stage){stage=document.createElement('div');stage.id='vi4-advisor-stage';stage.className='vi4-header-stage';top.insertAdjacentElement('afterend',stage);stage.append(brand,portrait)}
   stage.classList.remove('vi4-distributed','vi4-grouped-left','vi4-stacked');stage.classList.add(c.logo_position==='distributed'?'vi4-distributed':c.logo_position==='grouped_left'?'vi4-grouped-left':'vi4-stacked');
-  brand.hidden=!c.show_logo;portrait.hidden=!c.show_photo;brand.classList.add('vi4-advisor-brand');logo.classList.add('vi4-logo-box');shapeClasses(logo,c.logo_shape,'vi4-logo-shape');applyMedia(logo,logoSrc(p,c),c.show_logo);photo.classList.add('vi4-photo-box');shapeClasses(photo,c.photo_shape,'vi4-photo-shape');if(photoSrc(p))photo.src=photoSrc(p);photo.style.objectFit=c.photo_fit||'cover';const footer=document.getElementById('footer-logo');if(footer&&logoSrc(p,c))footer.src=logoSrc(p,c)
+  brand.hidden=!c.show_logo;portrait.hidden=!c.show_photo;brand.classList.add('vi4-advisor-brand');logo.classList.add('vi4-logo-box');shapeClasses(logo,c.logo_shape,'vi4-logo-shape');applyMedia(logo,logoSrc(p,c),c.show_logo);photo.classList.add('vi4-photo-box');shapeClasses(photo,c.photo_shape,'vi4-photo-shape');if(photoSrc(p))photo.src=photoSrc(p);photo.style.objectFit=c.photo_fit||'cover';
+  const ally=document.getElementById('ally-label');if(ally){const sizes={small:'clamp(.62rem,.95vw,.74rem)',medium:'clamp(.72rem,1.2vw,.86rem)',large:'clamp(.86rem,1.45vw,1.04rem)'};ally.style.setProperty('--advisor-header-text-size',sizes[normalizeTextSize(c.header_text_size)]);ally.style.setProperty('--advisor-header-text-align',normalizeTextAlign(c.header_text_align));ally.dataset.headerTextSize=normalizeTextSize(c.header_text_size);ally.dataset.headerTextAlign=normalizeTextAlign(c.header_text_align)}
+  const footer=document.getElementById('footer-logo');if(footer&&logoSrc(p,c))footer.src=logoSrc(p,c)
 }
 function apply(p,d){const c=cfgFor(p,d.kind);document.body.classList.add('vi4-enabled',`vi4-${d.kind}`);setVars(c);setFavicon(p);if(d.kind==='other')otherLayout(p,c);else if(d.kind==='beauty')beautyLayout(p,c);else advisorLayout(p,c);return c}
 async function waitRendered(d){for(let i=0;i<60;i++){if(d.kind==='advisor'){if(!document.body.classList.contains('profile-loading'))return}else if(d.kind==='beauty'){if(document.getElementById('business-name')?.textContent)return}else if(document.getElementById('hero-title')?.textContent)return;await new Promise(r=>setTimeout(r,100))}}
