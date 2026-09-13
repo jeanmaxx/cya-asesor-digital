@@ -64,11 +64,11 @@
     if (!document.querySelector('link[data-visual-identity-admin]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = '../assets/visual-identity-admin.css?v=20260913-vi1';
+      link.href = '../assets/visual-identity-admin.css?v=20260913-vi2';
       link.dataset.visualIdentityAdmin = '1';
       document.head.appendChild(link);
     }
-    import('../assets/visual-identity-admin.js?v=20260913-vi1').catch(err => console.error('No fue posible cargar Identidad visual', err));
+    import('../assets/visual-identity-admin-v2.js?v=20260913-vi2').catch(err => console.error('No fue posible cargar Identidad visual', err));
   };
 
   const boot = () => { watchMessages(); loadVisualIdentity(); };
