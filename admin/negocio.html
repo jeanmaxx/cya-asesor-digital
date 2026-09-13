@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>Editar negocio · Tarjetas Digitales</title>
-  <link rel="stylesheet" href="../assets/admin.css?v=20260913-ui2" />
-  <link rel="stylesheet" href="../assets/admin-packages.css?v=20260913-ui2" />
-  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260913-ui2" />
-  <link rel="stylesheet" href="../assets/admin-editor-ui.css?v=20260913-ui2" />
+  <link rel="stylesheet" href="../assets/admin.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/admin-packages.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/admin-editor-ui.css?v=20260913-ui3" />
 </head>
 <body>
   <main class="admin-shell">
@@ -27,14 +27,15 @@
         <fieldset><legend>Beneficios destacados</legend><p class="hint">Hasta cuatro bloques cortos que aparecen antes de los servicios.</p><div id="features-editor" class="services-editor"></div></fieldset>
         <fieldset><legend>Servicios y precios</legend><div id="business-services-editor" class="services-editor"></div><button id="add-business-service" class="secondary-btn" type="button">+ Agregar servicio</button></fieldset>
         <fieldset><legend>Agenda</legend><label class="switch-row"><input id="b-booking-enabled" type="checkbox" /><span>Mostrar calendario para solicitar citas</span></label><div class="two-col"><label>Apertura<input id="b-start" type="time" /></label><label>Cierre<input id="b-end" type="time" /></label></div><div class="two-col"><label>Inicio descanso<input id="b-break-start" type="time" /></label><label>Fin descanso<input id="b-break-end" type="time" /></label></div><div class="two-col"><label>Intervalos<select id="b-slot"><option value="15">15 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option></select></label><label>Duración predeterminada<select id="b-duration"><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option></select></label></div><div class="closed-days"><span class="hint">Días cerrados:</span><label><input type="checkbox" value="1" class="closed-day"> Lu</label><label><input type="checkbox" value="2" class="closed-day"> Ma</label><label><input type="checkbox" value="3" class="closed-day"> Mi</label><label><input type="checkbox" value="4" class="closed-day"> Ju</label><label><input type="checkbox" value="5" class="closed-day"> Vi</label><label><input type="checkbox" value="6" class="closed-day"> Sá</label><label><input type="checkbox" value="0" class="closed-day"> Do</label></div><p class="hint">La agenda actual solicita la cita por WhatsApp; no confirma automáticamente ni bloquea el horario hasta que el negocio lo confirme.</p></fieldset>
-        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="b-published" type="checkbox" /><span>Publicar esta tarjeta</span></label></fieldset>
+        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="b-published" type="checkbox" /><span>Publicar esta tarjeta</span></label><p class="hint">Puedes guardar cambios aunque la tarjeta permanezca en Borrador.</p></fieldset>
         <div class="save-row"><button id="save-business" class="primary-btn" type="submit">Guardar cambios</button><a id="business-preview" class="secondary-link" target="_blank" rel="noopener">Abrir tarjeta ↗</a><a class="secondary-link" href="esteticas.html">Volver al panel</a></div><p id="business-save-message" class="message" aria-live="polite"></p>
       </form>
     </section>
   </main>
-  <script src="../assets/config.js?v=20260913-ui2"></script>
+  <script src="../assets/config.js?v=20260913-ui3"></script>
+  <script src="../assets/admin-save-resilience.js?v=20260913-save1"></script>
   <script src="../assets/business-logo-data.js"></script>
-  <script type="module" src="../assets/business-admin-v2.js?v=20260913-ui2"></script>
-  <script type="module" src="../assets/business-editor-ui.js?v=20260913-ui2"></script>
+  <script type="module" src="../assets/business-admin-v2.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/business-editor-ui.js?v=20260913-ui3"></script>
 </body>
 </html>
