@@ -7,7 +7,28 @@ const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replac
 const storageUrl=p=>p?`${cfg.url}/storage/v1/object/public/${cfg.storageBucket}/${p}`:'';
 function waNumber(v){let d=String(v||'').replace(/\D/g,'');if(d.length===10)d='52'+d;return d}
 function systemTheme(){return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
-function setTheme(t,persist=false){t=t==='dark'?'dark':'light';document.documentElement.dataset.theme=t;$('theme-icon').textContent=t==='dark'?'☀':'☾';if(profile){document.documentElement.style.setProperty('--brand',profile.primary_color||'#0B1F36');document.documentElement.style.setProperty('--accent',profile.accent_color||'#27C2C7');if(t==='light'){document.documentElement.style.setProperty('--bg',profile.background_color||'#F5F8FB');document.documentElement.style.setProperty('--surface',profile.surface_color||'#FFFFFF')}}if(persist)localStorage.setItem(`other-theme:${slug}`,t)}
+function setTheme(t,persist=false){
+  t=t==='dark'?'dark':'light';
+  document.documentElement.dataset.theme=t;
+  const toggle=$('theme-toggle'),icon=$('theme-icon');
+  if(icon)icon.textContent=t==='dark'?'☀':'☾';
+  if(toggle){
+    toggle.setAttribute('aria-label',t==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro');
+    toggle.setAttribute('title',t==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro');
+  }
+  if(profile){
+    document.documentElement.style.setProperty('--brand',profile.primary_color||'#0B1F36');
+    document.documentElement.style.setProperty('--accent',profile.accent_color||'#27C2C7');
+    if(t==='light'){
+      document.documentElement.style.setProperty('--bg',profile.background_color||'#F5F8FB');
+      document.documentElement.style.setProperty('--surface',profile.surface_color||'#FFFFFF');
+    }else{
+      document.documentElement.style.removeProperty('--bg');
+      document.documentElement.style.removeProperty('--surface');
+    }
+  }
+  if(persist)localStorage.setItem(`other-theme:${slug}`,t);
+}
 $('theme-toggle').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark',true);
 function baseMessage(extra=''){const b=String(profile?.whatsapp_message||`Hola, quiero información sobre ${profile?.business_name||'sus servicios'}.`).trim();return extra?`${b}\n\n${extra}`:b}
 function waLink(message=''){const n=waNumber(profile?.whatsapp);return n?`https://wa.me/${n}?text=${encodeURIComponent(message||baseMessage())}`:'#'}
