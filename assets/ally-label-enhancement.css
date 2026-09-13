@@ -1,0 +1,3 @@
+#ally-label{display:inline-block;min-width:124px;max-width:178px;white-space:pre-line;text-align:center;line-height:1.28}
+#ally-label.is-multiline{line-height:1.2}
+@media(max-width:480px){#ally-label{min-width:108px;max-width:150px}}
