@@ -1,27 +1,4 @@
 const $=id=>document.getElementById(id);
-function detect(){
-  if($('profile-form'))return{form:$('profile-form'),panel:$('editor-panel'),save:$('save-profile'),preview:$('profile-preview-link'),back:$('back-to-accounts')||$('cancel-edit')};
-  if($('business-form'))return{form:$('business-form'),panel:$('business-editor'),save:$('save-business'),preview:$('business-preview'),back:document.querySelector('a[href="esteticas.html"]')};
-  if($('other-form'))return{form:$('other-form'),panel:$('other-editor'),save:$('save-other'),preview:$('other-preview'),back:document.querySelector('a[href="otros.html"]')};
-  return null;
-}
-function init(){
-  const ctx=detect();if(!ctx||document.querySelector('.editor-action-rail'))return;
-  const rail=document.createElement('aside');rail.className='editor-action-rail';rail.innerHTML=`<button type="button" class="rail-save">Guardar cambios</button><a class="rail-open" href="#" target="_blank" rel="noopener">Abrir tarjeta ↗</a><button type="button" class="rail-back">Regresar al panel</button><small>Acciones del editor</small>`;
-  document.body.appendChild(rail);
-  const save=rail.querySelector('.rail-save'),open=rail.querySelector('.rail-open'),back=rail.querySelector('.rail-back');
-  save.addEventListener('click',()=>ctx.form.requestSubmit());
-  open.addEventListener('click',e=>{if(open.getAttribute('aria-disabled')==='true'){e.preventDefault();return}});
-  back.addEventListener('click',()=>{if(ctx.back?.tagName==='A'&&ctx.back.href){location.href=ctx.back.href;return}ctx.back?.click()});
-  const sync=()=>{
-    const visible=!ctx.panel||!ctx.panel.classList.contains('is-hidden');rail.classList.toggle('is-hidden',!visible);
-    const href=ctx.preview?.href||ctx.preview?.getAttribute?.('href')||'';const usable=!!href&&href!=='#'&&!href.endsWith('#');open.href=usable?href:'#';open.setAttribute('aria-disabled',usable?'false':'true');
-    save.disabled=!!ctx.save?.disabled;
-  };
-  sync();
-  if(ctx.panel)new MutationObserver(sync).observe(ctx.panel,{attributes:true,attributeFilter:['class']});
-  if(ctx.preview)new MutationObserver(sync).observe(ctx.preview,{attributes:true,attributeFilter:['href']});
-  if(ctx.save)new MutationObserver(sync).observe(ctx.save,{attributes:true,attributeFilter:['disabled']});
-  setInterval(sync,800);
-}
+function detect(){if($('profile-form'))return{form:$('profile-form'),panel:$('editor-panel'),save:$('save-profile'),preview:$('profile-preview-link'),back:$('back-to-accounts')||$('cancel-edit')};if($('business-form'))return{form:$('business-form'),panel:$('business-editor'),save:$('save-business'),preview:$('business-preview'),back:document.querySelector('a[href="esteticas.html"]')};if($('other-form'))return{form:$('other-form'),panel:$('other-editor'),save:$('save-other'),preview:$('other-preview'),back:document.querySelector('a[href="otros.html"]')};return null}
+function init(){const ctx=detect();if(!ctx||document.querySelector('.editor-action-rail'))return;const rail=document.createElement('aside');rail.className='editor-action-rail';rail.innerHTML=`<span class="rail-save-check" aria-hidden="true">✓</span><button type="button" class="rail-save">Guardar cambios</button><a class="rail-open" href="#" target="_blank" rel="noopener">Abrir tarjeta ↗</a><button type="button" class="rail-back">Regresar al panel</button><small>Acciones del editor</small>`;document.body.appendChild(rail);const save=rail.querySelector('.rail-save'),check=rail.querySelector('.rail-save-check'),open=rail.querySelector('.rail-open'),back=rail.querySelector('.rail-back');let waiting=false,sawDisabled=false,timer=null;const reset=()=>{clearTimeout(timer);timer=setTimeout(()=>{save.textContent='Guardar cambios';save.classList.remove('is-saving','is-saved','is-error');check.classList.remove('is-visible')},1800)};const done=()=>{if(!waiting)return;waiting=false;save.textContent='Guardado';save.classList.remove('is-saving','is-error');save.classList.add('is-saved');check.classList.add('is-visible');reset()};const fail=()=>{if(!waiting)return;waiting=false;save.textContent='Error al guardar';save.classList.remove('is-saving','is-saved');save.classList.add('is-error');check.classList.remove('is-visible');reset()};save.addEventListener('click',()=>{waiting=true;sawDisabled=false;clearTimeout(timer);save.textContent='Guardando…';save.classList.remove('is-saved','is-error');save.classList.add('is-saving');check.classList.remove('is-visible');ctx.form.requestSubmit()});open.addEventListener('click',e=>{if(open.getAttribute('aria-disabled')==='true')e.preventDefault()});back.addEventListener('click',()=>{if(ctx.back?.tagName==='A'&&ctx.back.href){location.href=ctx.back.href;return}ctx.back?.click()});const sync=()=>{const visible=!ctx.panel||!ctx.panel.classList.contains('is-hidden');rail.classList.toggle('is-hidden',!visible);const href=ctx.preview?.href||ctx.preview?.getAttribute?.('href')||'';const usable=!!href&&href!=='#'&&!href.endsWith('#');open.href=usable?href:'#';open.setAttribute('aria-disabled',usable?'false':'true');const disabled=!!ctx.save?.disabled;if(waiting&&disabled)sawDisabled=true;if(waiting&&sawDisabled&&!disabled)setTimeout(done,300);if(!waiting)save.disabled=disabled};sync();if(ctx.panel)new MutationObserver(sync).observe(ctx.panel,{attributes:true,attributeFilter:['class']});if(ctx.preview)new MutationObserver(sync).observe(ctx.preview,{attributes:true,attributeFilter:['href']});if(ctx.save)new MutationObserver(sync).observe(ctx.save,{attributes:true,attributeFilter:['disabled']});new MutationObserver(()=>{if(!waiting)return;const error=[...ctx.form.querySelectorAll('.is-error,[data-kind="error"]')].some(x=>(x.textContent||'').trim());if(error)fail()}).observe(ctx.form,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class','data-kind']});setInterval(sync,900)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
