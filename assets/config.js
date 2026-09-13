@@ -114,6 +114,7 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addCss('visual-identity-admin-v4.css?v=20260913-vi4b','vi4-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail2','editor-action-rail-css');
     addModule('visual-identity-admin-v4.js?v=20260913-vi4b','vi4-admin-js');
+    addModule('visual-identity-admin-diagnostics.js?v=20260913-diag1','vi4-admin-diag-js');
     addModule('editor-floating-actions.js?v=20260913-rail2','editor-action-rail-js');
   }else if(otros){
     addCss('visual-identity-public-v5.css?v=20260913-vi5','vi5-public-css');
