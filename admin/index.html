@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <title>Panel de Tarjetas Digitales · Casillas & Asociados</title>
-  <link rel="stylesheet" href="../assets/admin.css?v=20260913-ui2" />
-  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260913-ui2" />
-  <link rel="stylesheet" href="../assets/admin-editor-ui.css?v=20260913-ui2" />
+  <link rel="stylesheet" href="../assets/admin.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/admin-editor-ui.css?v=20260913-ui3" />
 </head>
 <body>
   <main class="admin-shell">
@@ -32,21 +32,22 @@
       <div class="editor-toolbar"><div class="editor-title-row"><button id="back-to-accounts" class="back-btn" type="button" aria-label="Volver al panel de cuentas">←</button><div><p class="kicker">Editar tarjeta</p><h2 id="editor-account-name">Configuración</h2></div></div><a id="profile-preview-link" class="secondary-link" href="../" target="_blank" rel="noopener">Abrir tarjeta ↗</a></div>
       <form id="profile-form" class="form-grid">
         <fieldset id="plan-fieldset"><legend>Paquete contratado</legend><div class="two-col"><label>Paquete<select id="package-key"></select></label><label>Estado<select id="package-status"><option value="trial">Prueba</option><option value="active">Activo</option><option value="suspended">Suspendido</option><option value="cancelled">Cancelado</option></select></label></div><p id="package-description" class="package-description"></p><div id="package-features" class="feature-chips" aria-label="Funciones incluidas"></div><p id="package-permission-note" class="hint"></p></fieldset>
-        <fieldset><legend>Identidad</legend><div class="two-col"><label>Nombre(s)<input id="first-names" type="text" maxlength="80" required /></label><label>Apellidos<input id="last-names" type="text" maxlength="80" required /></label></div><label>Título de la pestaña del navegador<input id="page-title" type="text" maxlength="120" placeholder="JEAN - Asesor Previsional" /></label><label>Cargo<input id="title" type="text" maxlength="100" value="Asesor Previsional" required /></label><label>Empresa / respaldo<input id="company-name" type="text" maxlength="120" value="Casillas & Asociados" required /></label><label>Texto junto al logo<input id="ally-label" type="text" maxlength="60" value="Asesor Aliado" /></label><label>Texto breve<textarea id="bio" rows="3" maxlength="260"></textarea></label><label>Identificador de página<div class="slug-row"><span>?asesor=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div></label></fieldset>
+        <fieldset><legend>Identidad</legend><div class="two-col"><label>Nombre(s)<input id="first-names" type="text" maxlength="80" required /></label><label>Apellidos<input id="last-names" type="text" maxlength="80" required /></label></div><label>Título de la pestaña del navegador<input id="page-title" type="text" maxlength="120" placeholder="JEAN - Asesor Previsional" /></label><label>Cargo<input id="title" type="text" maxlength="100" value="Asesor Previsional" required /></label><label>Empresa / respaldo<input id="company-name" type="text" maxlength="120" value="Casillas & Asociados" required /></label><label>Texto junto al logo<input id="ally-label" type="text" maxlength="60" value="Asesor Aliado" placeholder="Ej. Asesor | Previsional" /></label><p class="hint">Usa el símbolo <strong>|</strong> para definir un salto de renglón exacto. Ejemplo: <code>Asesor | Previsional</code>.</p><label>Texto breve<textarea id="bio" rows="3" maxlength="260"></textarea></label><label>Identificador de página<div class="slug-row"><span>?asesor=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div></label></fieldset>
         <fieldset><legend>Contacto</legend><div class="two-col"><label>Teléfono<input id="phone" type="tel" inputmode="tel" /></label><label>WhatsApp<input id="whatsapp" type="tel" inputmode="tel" /></label></div><label>Mensaje inicial de WhatsApp<textarea id="whatsapp-message" rows="3" maxlength="500" placeholder="Hola, vi tu tarjeta digital y me gustaría recibir información."></textarea></label><p class="hint">Este mensaje se precarga en los botones generales de WhatsApp. Cuando se entra desde un servicio, se agrega automáticamente el nombre del servicio.</p><label>Instagram<input id="instagram" type="url" placeholder="https://instagram.com/..." /></label><label>Facebook<input id="facebook" type="url" placeholder="https://facebook.com/..." /></label></fieldset>
         <fieldset><legend>Fotografía y logo</legend><div class="asset-grid"><div><div class="asset-preview"><img id="photo-preview" src="../assets/profile-placeholder.svg" alt="Vista previa de fotografía" /></div><label>Fotografía de perfil<input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" /></label></div><div><div class="asset-preview asset-preview--logo"><img id="logo-preview" src="../assets/logo-placeholder.svg" alt="Vista previa del logo" /></div><label>Logo<input id="logo-file" type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml" /></label></div></div></fieldset>
         <fieldset><legend>Apariencia</legend><div class="color-grid"><label>Color principal <input id="primary-color" type="color" value="#0E223D" /></label><label>Dorado / acento <input id="accent-color" type="color" value="#C9A96E" /></label><label>Fondo <input id="background-color" type="color" value="#F7F5F0" /></label><label>Tarjetas <input id="surface-color" type="color" value="#FFFFFF" /></label></div><label>Tipografía<select id="font-family"><option value="helvetica">Helvetica / Helvetica Neue</option><option value="arial">Arial</option><option value="tahoma">Tahoma</option><option value="verdana">Verdana</option><option value="trebuchet">Trebuchet MS</option><option value="system">Sistema</option></select></label><label>Modo de color predeterminado<select id="theme-mode"><option value="system">Seguir sistema del dispositivo</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></fieldset>
         <fieldset><legend>Contenido destacado</legend><p class="hint">Textos de confianza y bloque final de contacto.</p><div class="three-col"><label>Etiqueta 1<input id="trust-item-1" type="text" maxlength="80" /></label><label>Etiqueta 2<input id="trust-item-2" type="text" maxlength="80" /></label><label>Etiqueta 3<input id="trust-item-3" type="text" maxlength="80" /></label></div><label>Encabezado pequeño del cierre<input id="closing-kicker-input" type="text" maxlength="80" /></label><label>Título del cierre<input id="closing-title-input" type="text" maxlength="120" /></label><label>Texto del cierre<textarea id="closing-text-input" rows="3" maxlength="320"></textarea></label><label>Texto del botón final<input id="closing-cta-input" type="text" maxlength="100" /></label></fieldset>
         <fieldset><legend>Servicios</legend><p class="hint service-editor-help">Edita los textos visibles de cada tarjeta. Escribe un requisito por línea.</p><div id="services-editor" class="services-editor"></div></fieldset>
-        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="is-published" type="checkbox" /><span>Publicar este perfil para que la landing pueda leerlo.</span></label><p class="hint">La cuenta demo puede usarse en la URL raíz; las demás se abren con <code>?asesor=identificador</code>.</p></fieldset>
+        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="is-published" type="checkbox" /><span>Publicar este perfil para que la landing pueda leerlo.</span></label><p class="hint">Puedes guardar todos los cambios aunque la tarjeta permanezca en Borrador. Publicar solo controla si la página es visible al público.</p></fieldset>
         <div class="save-row"><button id="save-profile" class="primary-btn" type="submit">Guardar cambios</button><button id="cancel-edit" class="secondary-btn" type="button">Volver a cuentas</button></div><p id="save-message" class="message" aria-live="polite"></p>
       </form>
     </section>
   </main>
-  <script src="../assets/config.js?v=20260913-ui2"></script>
-  <script type="module" src="../assets/admin-session-shell.js?v=20260913-ui2"></script>
-  <script type="module" src="../assets/admin-v2.js?v=20260913-ui2"></script>
-  <script type="module" src="../assets/admin-phase1.js?v=20260913-ui2"></script>
+  <script src="../assets/config.js?v=20260913-ui3"></script>
+  <script src="../assets/admin-save-resilience.js?v=20260913-save1"></script>
+  <script type="module" src="../assets/admin-session-shell.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/admin-v2.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/admin-phase1.js?v=20260913-ui3"></script>
   <script>
     window.addEventListener('load', () => {
       const original = document.getElementById('package-key');if (!original || original.dataset.packageFix === '1') return;
@@ -54,8 +55,8 @@
       const roleBadge = document.getElementById('admin-role-badge');if (roleBadge?.textContent === 'Administrador principal') {select.disabled = false;const status = document.getElementById('package-status');if (status) status.disabled = false;}
     });
   </script>
-  <script type="module" src="../assets/admin-editor-ui.js?v=20260913-ui2"></script>
-  <script type="module" src="../assets/admin-package-sync.js?v=20260913-ui2"></script>
-  <script type="module" src="../assets/account-duplicate.js?v=20260913-ui2"></script>
+  <script type="module" src="../assets/admin-editor-ui.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/admin-package-sync.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/account-duplicate.js?v=20260913-ui3"></script>
 </body>
 </html>
