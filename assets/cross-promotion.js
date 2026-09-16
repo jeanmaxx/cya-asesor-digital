@@ -3,7 +3,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const cfg=window.SUPABASE_CONFIG||{};
 if(!cfg.url||!cfg.publishableKey) throw new Error('TTD cross-promotion: Supabase no configurado.');
 
-const TTD_HOME='https://ttd-alvasd.pages.dev/';
 const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 const qs=new URLSearchParams(location.search);
 const path=location.pathname.toLowerCase();
@@ -15,7 +14,7 @@ function resolveAccount(){
 }
 
 function referralUrl(account){
-  const u=new URL(TTD_HOME);
+  const u=new URL('/',location.origin);
   u.searchParams.set('ref',account.slug);
   u.searchParams.set('src','cross-promo');
   u.searchParams.set('type',account.type);
@@ -30,7 +29,26 @@ function renderButton(account){
   a.target='_blank';
   a.rel='noopener';
   a.setAttribute('aria-label','¿Quieres una tarjeta digital? Conoce TTD');
-  a.innerHTML=`<img class="ttd-cross-promo__logo" src="/assets/favicon-ttd.png?v=20260916-cross1" alt="" aria-hidden="true"><span class="ttd-cross-promo__copy"><strong>¿Quieres una tarjeta digital?</strong><small>Conoce TTD · Tu Tarjeta Digital</small></span>`;
+
+  const logoWrap=document.createElement('span');
+  logoWrap.className='ttd-cross-promo__logo-wrap';
+  const img=document.createElement('img');
+  img.className='ttd-cross-promo__logo';
+  img.src='/favicon.png?v=20260916-cross2';
+  img.alt='';
+  img.setAttribute('aria-hidden','true');
+  img.addEventListener('error',()=>{
+    img.remove();
+    logoWrap.classList.add('is-fallback');
+    logoWrap.textContent='TTD';
+  },{once:true});
+  logoWrap.appendChild(img);
+
+  const copy=document.createElement('span');
+  copy.className='ttd-cross-promo__copy';
+  copy.innerHTML='<strong>¿Quieres una tarjeta digital?</strong><small>Conoce TTD · Tu Tarjeta Digital</small>';
+
+  a.append(logoWrap,copy);
   a.addEventListener('click',()=>{
     supabase.rpc('track_card_event',{
       p_account_type:account.type,
