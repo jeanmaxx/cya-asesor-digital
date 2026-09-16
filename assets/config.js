@@ -47,6 +47,7 @@ window.ADVISOR_FALLBACK_SERVICES = [
   const addCss=(name,id)=>{if(document.getElementById(id))return;const l=document.createElement('link');l.id=id;l.rel='stylesheet';l.href=assetUrl(name);document.head.appendChild(l)};
   const addModule=(name,id)=>{if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.type='module';s.src=assetUrl(name);document.head.appendChild(s)};
   const admin=location.pathname.includes('/admin/'),otros=location.pathname.includes('/otros/');
+  const publicCard=['/asesores/','/negocios/','/esteticas/','/otros/'].some(route=>location.pathname.includes(route));
   if(admin){
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail3','editor-action-rail-css');
@@ -55,5 +56,9 @@ window.ADVISOR_FALLBACK_SERVICES = [
   }else if(!otros){
     addCss('visual-identity-public-v4.css?v=20260913-beautyfix1','vi4-public-css');
     addModule('visual-identity-public-v4.js?v=20260913-beautyfix1','vi4-public-js');
+  }
+  if(!admin&&publicCard){
+    addCss('cross-promotion.css?v=20260916-cross1','ttd-cross-promo-css');
+    addModule('cross-promotion.js?v=20260916-cross1','ttd-cross-promo-js');
   }
 })();
