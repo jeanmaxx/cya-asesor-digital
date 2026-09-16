@@ -28,11 +28,13 @@ if(cfg.url&&cfg.publishableKey){
     const raw=location.hash.startsWith('#')?location.hash.slice(1):location.hash;
     const params=new URLSearchParams(raw);
     const tokenHash=params.get('alva_sso');
+    const requestedType=params.get('alva_sso_type')||'email';
+    const verificationType=['email','magiclink'].includes(requestedType)?requestedType:'email';
     if(!tokenHash)return false;
 
     history.replaceState(null,'',location.pathname+location.search);
     try{
-      const {data,error}=await supabase.auth.verifyOtp({token_hash:tokenHash,type:'email'});
+      const {data,error}=await supabase.auth.verifyOtp({token_hash:tokenHash,type:verificationType});
       if(error||!data?.session)return false;
       const {data:isAdmin}=await supabase.rpc('is_super_admin');
       if(!isAdmin){await supabase.auth.signOut();return false}
