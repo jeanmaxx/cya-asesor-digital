@@ -3,114 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0E223D" id="theme-color-meta" />
-  <meta name="robots" content="noindex,nofollow,noarchive" />
-  <meta name="description" content="Tarjeta digital de asesoría previsional con respaldo de Casillas & Asociados." />
-  <meta property="og:title" content="Tarjeta Digital · Asesor Previsional" />
-  <meta property="og:description" content="Tarjeta digital para asesores de Casillas & Asociados." />
+  <meta name="theme-color" content="#0B1F36" id="theme-color-meta" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="TTD · Tu Tarjeta Digital: crea una tarjeta profesional, comparte tus datos en un solo enlace y elige el plan que mejor se adapte a tu negocio." />
+  <meta property="og:title" content="TTD · Tu Tarjeta Digital" />
+  <meta property="og:description" content="Tu presencia digital en un solo enlace: tarjetas profesionales, QR, WhatsApp, redes, analíticas y más." />
   <meta property="og:type" content="website" />
-  <title>Tarjeta Digital · Asesor Previsional</title>
-  <link rel="icon" href="assets/logo-placeholder.svg" type="image/png" />
-  <link rel="stylesheet" href="assets/styles.css?v=20260913-state2" />
-  <link rel="stylesheet" href="assets/ally-label-enhancement.css?v=20260913-header3" />
-  <link rel="stylesheet" href="assets/phase1.css?v=20260913-state2" />
+  <meta property="og:url" content="https://ttd-alvasd.pages.dev/" />
+  <link rel="canonical" href="https://ttd-alvasd.pages.dev/" />
+  <title>TTD · Tu Tarjeta Digital</title>
+  <link rel="icon" href="/favicon.ico?v=20260916-7" sizes="any" data-ttd-official="primary" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png?v=20260916-7" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260916-7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/other.css?v=20260913-fix3" />
+  <link rel="stylesheet" href="assets/other-identity.css?v=20260913-fix4" />
   <link rel="stylesheet" href="assets/photo-border-public.css?v=20260913-border1" />
-  <style>
-    html[data-theme="dark"] .qr-actions .qr-secondary{background:#173353;color:#fff;border:1px solid rgba(255,255,255,.16)}
-    html[data-theme="dark"] .qr-actions .qr-primary{background:var(--navy,#0e223d);color:#fff;border:1px solid rgba(255,255,255,.12)}
-    html[data-theme="light"] .qr-actions .qr-primary{background:#f4f7fb;color:var(--navy,#0e223d);border:1px solid rgba(14,34,61,.18)}
-    html[data-theme="light"] .qr-actions .qr-secondary{background:#eef1f4;color:var(--navy,#0e223d);border:1px solid rgba(14,34,61,.10)}
-  </style>
+  <link rel="stylesheet" href="assets/other-footer-brand.css?v=20260913-footer1" />
 </head>
-<body class="profile-loading">
-  <a class="skip-link" href="#servicios">Ir a servicios</a>
+<body>
+  <main id="other-card" class="other-card is-loading">
+    <header class="other-hero">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Cambiar tema"><span id="theme-icon">☾</span></button>
+      <div id="brand-row" class="brand-row"><div id="brand-mark" class="brand-mark">TTD</div><div><p id="brand-tagline" class="brand-tagline"></p><strong id="brand-name" class="brand-name"></strong></div></div>
+      <p id="hero-badge" class="hero-badge"></p>
+      <h1 id="hero-title"></h1>
+      <p id="hero-text" class="hero-text"></p>
+      <div class="hero-actions"><a id="hero-whatsapp" class="btn btn--primary" target="_blank" rel="noopener"></a><a id="hero-secondary" class="btn btn--outline" href="#packages"></a></div>
+      <div id="feature-strip" class="feature-strip"></div>
+    </header>
 
-  <main>
-    <section class="hero" aria-labelledby="advisor-name">
-      <div class="hero__glow hero__glow--one" aria-hidden="true"></div>
-      <div class="hero__glow hero__glow--two" aria-hidden="true"></div>
-
-      <div class="hero-top">
-        <div class="brand-lockup" aria-label="Casillas y Asociados">
-          <img id="brand-logo" src="assets/logo-placeholder.svg" alt="Casillas & Asociados" />
-          <span id="ally-label">Asesor Aliado</span>
-        </div>
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar tema">
-          <span id="theme-toggle-icon" aria-hidden="true">☾</span>
-        </button>
-      </div>
-
-      <div class="portrait-wrap">
-        <img id="advisor-photo" class="portrait" src="assets/profile-placeholder.svg" alt="Fotografía de perfil" />
-      </div>
-
-      <p id="advisor-role" class="eyebrow">Asesor Previsional</p>
-      <h1 id="advisor-name">
-        <span id="advisor-first"></span>
-        <span id="advisor-last"></span>
-      </h1>
-      <p id="advisor-bio" class="hero__subtitle"></p>
-
-      <a id="whatsapp-primary" class="btn btn--whatsapp" href="#" target="_blank" rel="noopener">
-        <img id="whatsapp-icon" class="whatsapp-icon" alt="" aria-hidden="true" />
-        Hablar por WhatsApp
-      </a>
-
-      <div class="social-row" aria-label="Contacto y redes sociales">
-        <a id="call-link" class="social-btn" href="#" aria-label="Llamar por teléfono">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.12.37 2.32.57 3.56.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.58 21 3 13.42 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.44.57 3.56a1 1 0 0 1-.25 1.02L6.6 10.8Z"/></svg>
-          <span>Llamar</span>
-        </a>
-        <a id="instagram-link" class="social-btn" href="#" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-          <span>Instagram</span>
-        </a>
-        <a id="facebook-link" class="social-btn" href="#" target="_blank" rel="noopener" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5A15 15 0 0 0 14.3 4C11.7 4 10 5.6 10 8.5V11H7v4h3v7h4v-7h3l.5-4H14V8.7c0-.9.3-.7 0-.7Z"/></svg>
-          <span>Facebook</span>
-        </a>
-      </div>
-
-      <div class="trust-strip" aria-label="Beneficios de la atención">
-        <span id="trust-item-1">Atención personalizada</span>
-        <span id="trust-item-2">Acompañamiento</span>
-        <span id="trust-item-3">Información clara</span>
-      </div>
-    </section>
-
-    <section id="servicios" class="section services" aria-labelledby="services-title">
-      <div class="section-heading">
-        <p class="eyebrow eyebrow--dark">Servicios</p>
-        <h2 id="services-title">¿En qué puedo orientarte?</h2>
-        <p>Selecciona un servicio para conocer lo esencial antes de iniciar.</p>
-      </div>
-
-      <div id="service-grid" class="service-grid" aria-live="polite"></div>
-    </section>
-
-    <section class="section closing-card" aria-labelledby="closing-title">
-      <div>
-        <p id="closing-kicker" class="eyebrow eyebrow--dark">Orientación inicial</p>
-        <h2 id="closing-title">Cuéntame tu caso</h2>
-        <p id="closing-text"></p>
-      </div>
-      <a id="whatsapp-closing" class="btn btn--navy" href="#" target="_blank" rel="noopener">Escribirme por WhatsApp</a>
-    </section>
+    <section id="about-section" class="section section--split"><div><p class="eyebrow">Tu presencia digital</p><h2 id="about-title"></h2></div><div><p id="about-text" class="section-copy"></p></div></section>
+    <section id="proof-section" class="section proof-card"><div class="proof-mark">TTD</div><div><p class="eyebrow">Demostración real</p><h2 id="proof-title"></h2><p id="proof-text"></p></div></section>
+    <section id="examples-section" class="section"><div class="section-head"><p class="eyebrow">Ejemplos</p><h2>Conoce cómo puede adaptarse</h2></div><div id="examples-grid" class="examples-grid"></div></section>
+    <section id="packages" class="section"><div class="section-head"><p class="eyebrow">Paquetes</p><h2>Elige el nivel que necesita tu negocio</h2><p>Todos incluyen una tarjeta profesional; las funciones crecen contigo.</p></div><div id="packages-grid" class="packages-grid"></div></section>
+    <section class="section"><div class="section-head"><p class="eyebrow">Cómo funciona</p><h2>De información a tarjeta en tres pasos</h2></div><div id="process-grid" class="process-grid"></div></section>
+    <section class="section"><div class="section-head"><p class="eyebrow">Para quién</p><h2>Una base flexible para distintos negocios</h2></div><div id="audiences" class="audience-cloud"></div></section>
+    <section class="section"><div class="section-head"><p class="eyebrow">Comparación</p><h2>Más flexible que una tarjeta tradicional</h2></div><div class="compare-grid"><article><span class="compare-label">Tarjeta tradicional</span><ul id="traditional-list"></ul></article><article class="compare-card--accent"><span class="compare-label">Tu Tarjeta Digital</span><ul id="digital-list"></ul></article></div></section>
+    <section class="section"><div class="section-head"><p class="eyebrow">Pruébala</p><h2>Comparte esta misma tarjeta</h2><p>Estas herramientas forman parte de la experiencia digital.</p></div><div class="tool-grid"><button id="share-card" class="tool-card" type="button"><strong>Compartir</strong><span>Envía este enlace desde tu celular</span></button><button id="save-contact" class="tool-card" type="button"><strong>Guardar contacto</strong><span>Descarga una vCard de TTD</span></button><button id="show-qr" class="tool-card" type="button"><strong>Ver QR</strong><span>Escanéalo desde otro dispositivo</span></button></div></section>
+    <section class="section"><div class="section-head"><p class="eyebrow">Preguntas frecuentes</p><h2>Lo más importante antes de contratar</h2></div><div id="faq-list" class="faq-list"></div></section>
+    <section class="section final-cta"><div><p class="eyebrow">Hablemos</p><h2 id="final-title"></h2><p id="final-text"></p></div><a id="final-whatsapp" class="btn btn--primary" target="_blank" rel="noopener"></a></section>
+    <footer><strong id="footer-name"></strong><span id="footer-category"></span><small>Tu negocio en un solo enlace.</small></footer>
   </main>
 
-  <footer>
-    <img id="footer-logo" src="assets/logo-placeholder.svg" alt="Casillas & Asociados" />
-    <p><strong id="footer-name"></strong><br /><span id="footer-role">Asesor Previsional</span></p>
-    <p class="legal">La información de este sitio es de carácter general y de orientación. La procedencia, documentación y resolución final de cada trámite corresponde al IMSS, AFORE o institución competente. No se garantizan montos, tiempos ni resoluciones.</p>
-  </footer>
+  <dialog id="qr-dialog" class="qr-dialog"><div class="qr-dialog-card"><button id="qr-close" class="qr-close" type="button" aria-label="Cerrar">×</button><p class="eyebrow">Código QR</p><h3>Comparte esta tarjeta</h3><canvas id="qr-canvas"></canvas><p id="qr-link"></p><div class="qr-actions"><button id="qr-copy" class="btn btn--outline" type="button">Copiar enlace</button><button id="qr-download" class="btn btn--primary" type="button">Descargar QR</button></div></div></dialog>
 
-  <a id="floating-whatsapp" class="floating-whatsapp" href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp"><img id="floating-whatsapp-icon" alt="" aria-hidden="true" /><span>WhatsApp</span></a>
-
-  <script src="assets/config.js?v=20260913-state3"></script>
-  <script src="assets/whatsapp-icon.js"></script>
-  <script src="assets/ally-label-enhancement.js?v=20260913-header3"></script>
-  <script type="module" src="assets/app.js?v=20260913-state2"></script>
-  <script type="module" src="assets/phase1.js?v=20260913-state2"></script>
+  <script src="assets/config.js?v=20260913-fix3"></script>
+  <script type="module" src="assets/other.js?v=20260913-fix3"></script>
+  <script type="module" src="assets/other-identity-text.js?v=20260913-fix3"></script>
+  <script type="module" src="assets/other-analytics.js?v=20260913-other2"></script>
   <script type="module" src="assets/photo-border-public.js?v=20260913-border1"></script>
+  <script src="assets/other-footer-brand.js?v=20260916-favicon5"></script>
+  <script src="assets/ttd-favicon-lock.js?v=20260916-7"></script>
 </body>
 </html>
