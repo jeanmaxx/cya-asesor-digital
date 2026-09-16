@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const cfg=window.SUPABASE_CONFIG||{};
 if(!cfg.url||!cfg.publishableKey) throw new Error('TTD cross-promotion: Supabase no configurado.');
 
+const TTD_HOME='https://ttd-alvasd.pages.dev/';
 const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 const qs=new URLSearchParams(location.search);
 const path=location.pathname.toLowerCase();
@@ -14,7 +15,7 @@ function resolveAccount(){
 }
 
 function referralUrl(account){
-  const u=new URL('/',location.origin);
+  const u=new URL(TTD_HOME);
   u.searchParams.set('ref',account.slug);
   u.searchParams.set('src','cross-promo');
   u.searchParams.set('type',account.type);
