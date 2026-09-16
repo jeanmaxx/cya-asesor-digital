@@ -8,13 +8,4 @@
     new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     sync();setTimeout(sync,400);setTimeout(sync,1200);
   }
-
-  document.querySelectorAll('link[rel~="icon"]').forEach(el=>el.remove());
-  const icon=document.createElement('link');
-  icon.rel='icon';icon.type='image/png';icon.sizes='64x64';
-  icon.href='/assets/favicon-ttd.png?v=20260916-3';
-  document.head.appendChild(icon);
-  const shortcut=document.createElement('link');
-  shortcut.rel='shortcut icon';shortcut.href='/assets/favicon-ttd.png?v=20260916-3';
-  document.head.appendChild(shortcut);
 })();
