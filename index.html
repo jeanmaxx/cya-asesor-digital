@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    (()=>{const q=new URLSearchParams(location.search);if(q.has('asesor')){location.replace('/asesores/?'+q.toString());}})();
+  </script>
   <meta name="theme-color" content="#0B1F36" id="theme-color-meta" />
   <meta name="robots" content="index,follow" />
   <meta name="description" content="TTD · Tu Tarjeta Digital: crea una tarjeta profesional, comparte tus datos en un solo enlace y elige el plan que mejor se adapte a tu negocio." />
@@ -28,13 +31,9 @@
     <header class="other-hero">
       <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Cambiar tema"><span id="theme-icon">☾</span></button>
       <div id="brand-row" class="brand-row"><div id="brand-mark" class="brand-mark">TTD</div><div><p id="brand-tagline" class="brand-tagline"></p><strong id="brand-name" class="brand-name"></strong></div></div>
-      <p id="hero-badge" class="hero-badge"></p>
-      <h1 id="hero-title"></h1>
-      <p id="hero-text" class="hero-text"></p>
-      <div class="hero-actions"><a id="hero-whatsapp" class="btn btn--primary" target="_blank" rel="noopener"></a><a id="hero-secondary" class="btn btn--outline" href="#packages"></a></div>
-      <div id="feature-strip" class="feature-strip"></div>
+      <p id="hero-badge" class="hero-badge"></p><h1 id="hero-title"></h1><p id="hero-text" class="hero-text"></p>
+      <div class="hero-actions"><a id="hero-whatsapp" class="btn btn--primary" target="_blank" rel="noopener"></a><a id="hero-secondary" class="btn btn--outline" href="#packages"></a></div><div id="feature-strip" class="feature-strip"></div>
     </header>
-
     <section id="about-section" class="section section--split"><div><p class="eyebrow">Tu presencia digital</p><h2 id="about-title"></h2></div><div><p id="about-text" class="section-copy"></p></div></section>
     <section id="proof-section" class="section proof-card"><div class="proof-mark">TTD</div><div><p class="eyebrow">Demostración real</p><h2 id="proof-title"></h2><p id="proof-text"></p></div></section>
     <section id="examples-section" class="section"><div class="section-head"><p class="eyebrow">Ejemplos</p><h2>Conoce cómo puede adaptarse</h2></div><div id="examples-grid" class="examples-grid"></div></section>
@@ -47,15 +46,7 @@
     <section class="section final-cta"><div><p class="eyebrow">Hablemos</p><h2 id="final-title"></h2><p id="final-text"></p></div><a id="final-whatsapp" class="btn btn--primary" target="_blank" rel="noopener"></a></section>
     <footer><strong id="footer-name"></strong><span id="footer-category"></span><small>Tu negocio en un solo enlace.</small></footer>
   </main>
-
   <dialog id="qr-dialog" class="qr-dialog"><div class="qr-dialog-card"><button id="qr-close" class="qr-close" type="button" aria-label="Cerrar">×</button><p class="eyebrow">Código QR</p><h3>Comparte esta tarjeta</h3><canvas id="qr-canvas"></canvas><p id="qr-link"></p><div class="qr-actions"><button id="qr-copy" class="btn btn--outline" type="button">Copiar enlace</button><button id="qr-download" class="btn btn--primary" type="button">Descargar QR</button></div></div></dialog>
-
-  <script src="assets/config.js?v=20260913-fix3"></script>
-  <script type="module" src="assets/other.js?v=20260913-fix3"></script>
-  <script type="module" src="assets/other-identity-text.js?v=20260913-fix3"></script>
-  <script type="module" src="assets/other-analytics.js?v=20260913-other2"></script>
-  <script type="module" src="assets/photo-border-public.js?v=20260913-border1"></script>
-  <script src="assets/other-footer-brand.js?v=20260916-favicon5"></script>
-  <script src="assets/ttd-favicon-lock.js?v=20260916-7"></script>
+  <script src="assets/config.js?v=20260913-fix3"></script><script type="module" src="assets/other.js?v=20260913-fix3"></script><script type="module" src="assets/other-identity-text.js?v=20260913-fix3"></script><script type="module" src="assets/other-analytics.js?v=20260913-other2"></script><script type="module" src="assets/photo-border-public.js?v=20260913-border1"></script><script src="assets/other-footer-brand.js?v=20260916-favicon5"></script><script src="assets/ttd-favicon-lock.js?v=20260916-7"></script>
 </body>
 </html>
