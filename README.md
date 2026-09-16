@@ -1,29 +1,32 @@
-# CyA Asesor Digital
+# TTD · Tu Tarjeta Digital
 
-Tarjeta digital / landing móvil para asesores de Casillas & Asociados.
+Plataforma de tarjetas digitales para profesionales y negocios. El repositorio conserva el nombre histórico `cya-asesor-digital`, pero el producto forma parte del ecosistema **ALVA Soluciones Digitales**.
 
 ## Arquitectura
+- **Cloudflare Pages:** frontend público y panel `/admin/`.
+- **Supabase:** Auth, perfiles, configuración visual, servicios, paquetes, analíticas y Storage.
+- **RLS:** acceso limitado por usuario, membresía y rol.
+- **Lectura pública:** solo perfiles publicados.
 
-- **GitHub Pages:** frontend público y panel `/admin/`.
-- **Supabase:** Auth, perfiles, configuración visual, servicios y Storage.
-- **RLS:** cada asesor autenticado solo puede editar su propio perfil y archivos.
-- **Lectura pública:** solo perfiles marcados como publicados.
+## URLs de producción
+- Página comercial TTD: `https://ttd-alvasd.pages.dev/otros/?negocio=tu-tarjeta-digital`
+- Panel: `https://ttd-alvasd.pages.dev/admin/`
+- Tarjetas de asesores: `/?asesor=slug`
+- Estéticas/barberías: `/esteticas/?negocio=slug`
 
-## URLs
+## Administración
+El panel TTD conserva la operación propia del producto: cuentas, tarjetas, contenido, apariencia, servicios, paquetes, respaldos y verticales.
 
-- Landing: `https://jeanmaxx.github.io/cya-asesor-digital/`
-- Panel: `https://jeanmaxx.github.io/cya-asesor-digital/admin/`
-- Perfiles: `?asesor=slug-del-asesor`
+ALVA Admin funciona como control central comercial y administrativo. Desde ALVA se puede abrir TTD Admin con la misma identidad de Supabase mediante un handoff de sesión seguro; TTD valida nuevamente que el usuario sea administrador principal.
 
-## Personalización desde /admin
+## Paquetes técnicos
+- Básico
+- Pro
+- Premium
+- Publicidad cruzada (`cross_promo`)
 
-- Nombre y apellidos
-- Cargo y empresa
-- Teléfono y WhatsApp
-- Instagram y Facebook
-- Fotografía y logo
-- Colores
-- Tipografía
-- Estado de publicación
+`cross_promo` conserva las funciones Premium e incorpora la bandera `cross_promotion_cta`. El CTA público de promoción TTD queda pendiente de implementación visual.
 
-La landing conserva un perfil local de respaldo para José Emmanuel Álvarez Nieto mientras se crea y publica el primer usuario en Supabase.
+## Pendientes visuales
+- CTA flotante **¿Quieres una tarjeta digital?** para Publicidad cruzada, con atribución de origen.
+- Revisión del favicon para mejorar contraste en pestañas del navegador.
