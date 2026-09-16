@@ -41,21 +41,25 @@ if(cfg.url&&cfg.publishableKey){
   }
 
   try{
-    await consumeAlvaSso();
-    const {data:{session}}=await supabase.auth.getSession();
-    if(!session){auth?.classList.remove('is-hidden')}
-    else{
-      try{
-        const {data:isAdmin}=await supabase.rpc('is_super_admin');
-        if(isAdmin){
-          const nav=document.querySelector('.product-tabs');
-          if(nav&&!nav.querySelector('[data-management-tab]')){
-            const a=document.createElement('a');
-            a.className='product-tab';a.dataset.managementTab='1';a.href='administracion.html';a.textContent='ADMINISTRACIÓN';
-            nav.prepend(a);
+    const ssoConsumed=await consumeAlvaSso();
+    if(ssoConsumed){
+      location.reload();
+    }else{
+      const {data:{session}}=await supabase.auth.getSession();
+      if(!session){auth?.classList.remove('is-hidden')}
+      else{
+        try{
+          const {data:isAdmin}=await supabase.rpc('is_super_admin');
+          if(isAdmin){
+            const nav=document.querySelector('.product-tabs');
+            if(nav&&!nav.querySelector('[data-management-tab]')){
+              const a=document.createElement('a');
+              a.className='product-tab';a.dataset.managementTab='1';a.href='administracion.html';a.textContent='ADMINISTRACIÓN';
+              nav.prepend(a);
+            }
           }
-        }
-      }catch{}
+        }catch{}
+      }
     }
   }catch{auth?.classList.remove('is-hidden')}
 }
