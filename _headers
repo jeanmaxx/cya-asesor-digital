@@ -2,11 +2,15 @@
   Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-admin-theme.js
   Cache-Control: no-cache, no-store, must-revalidate
+/assets/ttd-admin-home.js
+  Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-admin-fixed-shell.css
   Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-admin-unified.css
   Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-admin-visual-fix.css
+  Cache-Control: no-cache, no-store, must-revalidate
+/assets/ttd-mark.svg
   Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-barber-route.js
   Cache-Control: no-cache, no-store, must-revalidate
