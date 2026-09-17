@@ -1,5 +1,15 @@
 /admin/*
   Cache-Control: no-cache, no-store, must-revalidate
+/assets/config.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/assets/ttd-favicon-lock.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/assets/cross-promotion.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/assets/cross-promotion.css
+  Cache-Control: no-cache, no-store, must-revalidate
+/assets/visual-identity-public-v4.js
+  Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-admin-theme.js
   Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-admin-home.js
@@ -15,4 +25,8 @@
 /assets/ttd-barber-route.js
   Cache-Control: no-cache, no-store, must-revalidate
 /assets/ttd-other-route.js
+  Cache-Control: no-cache, no-store, must-revalidate
+/favicon.png
+  Cache-Control: no-cache, no-store, must-revalidate
+/favicon.ico
   Cache-Control: no-cache, no-store, must-revalidate
