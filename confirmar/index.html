@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es-MX" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="theme-color" content="#071522" />
+  <title>Confirmar cita · TTD</title>
+  <link rel="stylesheet" href="../assets/business-confirm.css?v=20260916-1" />
+</head>
+<body>
+  <main class="confirm-shell">
+    <section class="confirm-card">
+      <div class="confirm-brand"><strong>TTD</strong><span>Tu Tarjeta Digital</span></div>
+      <section id="confirm-loading"><p>Verificando cita…</p></section>
+      <section id="confirm-login" hidden>
+        <p class="eyebrow">ACCESO DEL NEGOCIO</p>
+        <h1>Confirma tu cita</h1>
+        <p>Por seguridad, inicia sesión con la cuenta autorizada del negocio.</p>
+        <form id="confirm-login-form">
+          <label>Correo<input id="confirm-email" type="email" autocomplete="username" required></label>
+          <label>Contraseña<input id="confirm-password" type="password" autocomplete="current-password" required></label>
+          <button type="submit">Iniciar sesión</button>
+          <p id="confirm-login-error" class="error"></p>
+        </form>
+      </section>
+      <section id="confirm-content" hidden>
+        <p class="eyebrow">SOLICITUD DE CITA</p>
+        <h1 id="confirm-business"></h1>
+        <div id="confirm-details" class="appointment-details"></div>
+        <div class="confirm-actions">
+          <button id="confirm-accept" class="primary" type="button">Confirmar cita</button>
+          <button id="confirm-reject" class="danger" type="button">Rechazar</button>
+        </div>
+        <a id="confirm-calendar" class="calendar-link" target="_blank" rel="noopener" hidden>Agregar a Google Calendar ↗</a>
+        <a class="admin-link" href="../admin/esteticas.html">Abrir panel TTD</a>
+        <p id="confirm-message" class="message"></p>
+      </section>
+      <section id="confirm-denied" hidden>
+        <h1>No fue posible abrir esta cita</h1>
+        <p>El enlace puede ser inválido o tu cuenta no tiene acceso a este negocio.</p>
+      </section>
+    </section>
+  </main>
+  <script src="../assets/config.js?v=20260916-confirm1"></script>
+  <script type="module" src="../assets/business-confirm.js?v=20260916-confirm1"></script>
+</body>
+</html>
