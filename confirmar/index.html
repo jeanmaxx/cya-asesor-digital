@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow,noarchive" />
   <meta name="theme-color" content="#071522" />
   <title>Confirmar cita · TTD</title>
-  <link rel="stylesheet" href="../assets/business-confirm.css?v=20260916-1" />
+  <link rel="stylesheet" href="../assets/business-confirm.css?v=20260916-2" />
 </head>
 <body>
   <main class="confirm-shell">
@@ -14,9 +14,9 @@
       <div class="confirm-brand"><strong>TTD</strong><span>Tu Tarjeta Digital</span></div>
       <section id="confirm-loading"><p>Verificando cita…</p></section>
       <section id="confirm-login" hidden>
-        <p class="eyebrow">ACCESO DEL NEGOCIO</p>
-        <h1>Confirma tu cita</h1>
-        <p>Por seguridad, inicia sesión con la cuenta autorizada del negocio.</p>
+        <p class="eyebrow">ACCESO AUTORIZADO</p>
+        <h1>Confirma la cita</h1>
+        <p>Por seguridad, inicia sesión con la cuenta autorizada para administrar esta cita.</p>
         <form id="confirm-login-form">
           <label>Correo<input id="confirm-email" type="email" autocomplete="username" required></label>
           <label>Contraseña<input id="confirm-password" type="password" autocomplete="current-password" required></label>
@@ -33,16 +33,16 @@
           <button id="confirm-reject" class="danger" type="button">Rechazar</button>
         </div>
         <a id="confirm-calendar" class="calendar-link" target="_blank" rel="noopener" hidden>Agregar a Google Calendar ↗</a>
-        <a class="admin-link" href="../admin/esteticas.html">Abrir panel TTD</a>
+        <a id="confirm-admin-link" class="admin-link" href="../admin/">Abrir panel TTD</a>
         <p id="confirm-message" class="message"></p>
       </section>
       <section id="confirm-denied" hidden>
         <h1>No fue posible abrir esta cita</h1>
-        <p>El enlace puede ser inválido o tu cuenta no tiene acceso a este negocio.</p>
+        <p>El enlace puede ser inválido o tu cuenta no tiene acceso para administrar esta solicitud.</p>
       </section>
     </section>
   </main>
-  <script src="../assets/config.js?v=20260916-confirm1"></script>
-  <script type="module" src="../assets/business-confirm.js?v=20260916-confirm1"></script>
+  <script src="../assets/config.js?v=20260916-confirm2"></script>
+  <script type="module" src="../assets/business-confirm.js?v=20260916-confirm2"></script>
 </body>
 </html>
