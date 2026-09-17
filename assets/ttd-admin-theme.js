@@ -5,7 +5,7 @@
   if (!document.querySelector('link[data-ttd-fixed-shell]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/ttd-admin-fixed-shell.css?v=20260917-shell1';
+    link.href = '/assets/ttd-admin-fixed-shell.css?v=20260917-shell2';
     link.dataset.ttdFixedShell = '1';
     document.head.appendChild(link);
   }
@@ -32,9 +32,13 @@
     const p = location.pathname.toLowerCase();
     if (p.includes('/personales')) return 'personales';
     if (p.includes('/barberias') || p.includes('barberia-editor')) return 'barberias';
-    if (p.includes('/otros') || p.includes('otro-negocio')) return 'otros';
+    if (p.includes('/otros') || p.includes('otro-negocio') || p.includes('otro-editor')) return 'otros';
     return 'admin';
   };
+
+  function logoMarkup() {
+    return `<span class="ttd-shell-mark" aria-label="TTD"><img src="/favicon.ico?v=20260917-logo1" alt="TTD" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="ttd-shell-mark-fallback">TTD</span></span>`;
+  }
 
   function buildLegacyShell() {
     if (!document.body.classList.contains('ttd-legacy-shell')) return;
@@ -45,10 +49,11 @@
 
     const actions = document.querySelector('.admin-header-actions');
     const moved = actions ? [...actions.children] : [];
-    banner.innerHTML = `<div class="ttd-shell-brand"><img src="/assets/favicon-ttd.png" alt="TTD"><div class="ttd-shell-brand-copy"><small>PANEL DE ADMINISTRACIÓN DE</small><strong>Tu Tarjeta Digital</strong></div></div><div class="ttd-shell-actions"><div class="ttd-shell-alva"><span>Una solución de</span><img class="alva-mark" src="/assets/alva-isotipo.svg" alt=""><img class="alva-word" src="/assets/alva-logotipo.svg" alt="ALVA"><span>Soluciones Digitales</span></div></div>`;
+    banner.innerHTML = `<div class="ttd-shell-brand">${logoMarkup()}<div class="ttd-shell-brand-copy"><small>PANEL DE ADMINISTRACIÓN DE</small><strong>Tu Tarjeta Digital</strong></div></div><div class="ttd-shell-actions"><div class="ttd-shell-alva"><span>Una solución de</span><img class="alva-mark" src="/assets/alva-isotipo.svg" alt=""><img class="alva-word" src="/assets/alva-logotipo.svg" alt="ALVA"><span>Soluciones Digitales</span></div></div>`;
     const host = banner.querySelector('.ttd-shell-actions');
     moved.forEach(node => host.appendChild(node));
 
+    document.querySelectorAll('.ttd-global-tabs').forEach(n => n.remove());
     const navItems = [
       ['admin','ADMINISTRACIÓN','/admin/'],
       ['personales','TARJETAS PERSONALES','/admin/personales/'],
@@ -64,16 +69,11 @@
     document.querySelectorAll('.product-tabs').forEach(el => el.setAttribute('aria-hidden','true'));
   }
 
-  // El primer acceso a TTD Admin queda fijado en modo oscuro; después se respeta la elección manual.
-  if (!saved) {
-    localStorage.setItem('ttd-admin-theme', 'dark');
-    localStorage.setItem('cya-admin-theme', 'dark');
-  }
+  if (!saved) localStorage.setItem('ttd-admin-theme', 'dark');
   apply(saved || 'dark');
 
-  window.addEventListener('DOMContentLoaded', () => {
+  const boot = () => {
     buildLegacyShell();
-    // El dashboard principal usa el controlador compartido. Los módulos heredados conservan su propio listener para evitar doble alternancia.
     document.querySelectorAll('[data-ttd-theme-toggle]').forEach(btn => {
       if (btn.dataset.ttdThemeBound === '1') return;
       btn.dataset.ttdThemeBound = '1';
@@ -83,5 +83,6 @@
     const sidebar = document.querySelector('.ttd-sidebar');
     document.querySelectorAll('[data-ttd-sidebar-toggle]').forEach(btn => btn.addEventListener('click', () => sidebar?.classList.toggle('is-open')));
     document.querySelectorAll('.ttd-nav-link').forEach(link => link.addEventListener('click', () => sidebar?.classList.remove('is-open')));
-  });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true }); else boot();
 })();
