@@ -18,7 +18,7 @@ const modeLabels = {
   video: 'Videollamada',
   whatsapp: 'WhatsApp'
 };
-const ADMIN_URL = 'https://ttd-alvasd.pages.dev/admin/';
+const CONFIRM_BASE_URL = 'https://ttd-alvasd.pages.dev/confirmar/';
 
 let ctx = null;
 let profile = null;
@@ -386,8 +386,9 @@ async function submitBooking(e) {
   const when = `${mxDate(date)} · ${selectedSlot.start}`;
   const status = data?.status === 'confirmed' ? 'Confirmada' : 'Pendiente de confirmación';
   const place = `${selectedLocation.city || selectedLocation.name}, ${selectedLocation.state || ''}`;
+  const confirmUrl = data?.manage_token ? `${CONFIRM_BASE_URL}?token=${encodeURIComponent(data.manage_token)}&tipo=asesor` : CONFIRM_BASE_URL;
 
-  const waText = `Hola, mi nombre es: ${customerName}.\n\nAcabo de solicitar una asesoría desde TTD sobre: ${service}.\n\n📍 ${place}\n📅 ${when}\n💬 Modalidad: ${modeLabel}\n\nEstado: ${status}.\n\nConfirma aquí:\n${ADMIN_URL}`;
+  const waText = `Hola, mi nombre es: ${customerName}.\n\nAcabo de solicitar una asesoría desde TTD sobre: ${service}.\n\n📍 ${place}\n📅 ${when}\n💬 Modalidad: ${modeLabel}\n\nEstado: ${status}.\n\nConfirma aquí:\n${confirmUrl}`;
 
   const cal = calendarUrl(
     data.starts_at,
