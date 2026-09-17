@@ -46,7 +46,8 @@ window.ADVISOR_FALLBACK_SERVICES = [
   const assetUrl=name=>current?new URL(name,current).href:name;
   const addCss=(name,id)=>{if(document.getElementById(id))return;const l=document.createElement('link');l.id=id;l.rel='stylesheet';l.href=assetUrl(name);document.head.appendChild(l)};
   const addModule=(name,id)=>{if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.type='module';s.src=assetUrl(name);document.head.appendChild(s)};
-  const admin=location.pathname.includes('/admin/'),otros=location.pathname.includes('/otros/'),asesores=location.pathname.includes('/asesores/');
+  const admin=location.pathname.includes('/admin/'),otros=location.pathname.includes('/otros/'),asesores=location.pathname.includes('/asesores/'),esteticas=location.pathname.includes('/esteticas/');
+  const negocioAdmin=location.pathname.includes('/admin/negocio');
   const publicCard=['/asesores/','/negocios/','/esteticas/','/otros/'].some(route=>location.pathname.includes(route));
   if(admin){
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
@@ -58,7 +59,11 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addModule('advisor-booking-admin-v2.js?v=20260916-booking5','ttd-booking-admin-js');
     addModule('advisor-booking-layout-fix.js?v=20260916-booking5','ttd-booking-layout-fix-js');
     addModule('coverage-admin-accordion.js?v=20260916-coverage2','ttd-coverage-accordion-js');
-  }else if(!otros){
+    if(negocioAdmin){
+      addCss('business-booking-admin-v1.css?v=20260916-biz1','ttd-business-booking-admin-css');
+      addModule('business-booking-admin-v1.js?v=20260916-biz1','ttd-business-booking-admin-js');
+    }
+  }else if(!otros&&publicCard){
     addCss('visual-identity-public-v4.css?v=20260913-beautyfix1','vi4-public-css');
     addModule('visual-identity-public-v4.js?v=20260913-beautyfix1','vi4-public-js');
   }
@@ -71,5 +76,9 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addCss('advisor-month-calendar.css?v=20260916-cal1','ttd-advisor-month-calendar-css');
     addModule('advisor-booking-v2.js?v=20260916-booking7','ttd-advisor-booking-js');
     addModule('advisor-month-calendar.js?v=20260916-cal1','ttd-advisor-month-calendar-js');
+  }
+  if(!admin&&esteticas){
+    addCss('business-booking-v1.css?v=20260916-biz1','ttd-business-booking-public-css');
+    addModule('business-booking-v1.js?v=20260916-biz1','ttd-business-booking-public-js');
   }
 })();
