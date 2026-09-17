@@ -46,8 +46,13 @@ window.ADVISOR_FALLBACK_SERVICES = [
   const assetUrl=name=>current?new URL(name,current).href:name;
   const addCss=(name,id)=>{if(document.getElementById(id))return;const l=document.createElement('link');l.id=id;l.rel='stylesheet';l.href=assetUrl(name);document.head.appendChild(l)};
   const addModule=(name,id)=>{if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.type='module';s.src=assetUrl(name);document.head.appendChild(s)};
-  const admin=location.pathname.includes('/admin/'),otros=location.pathname.includes('/otros/'),asesores=location.pathname.includes('/asesores/');
-  const publicCard=['/asesores/','/negocios/','/esteticas/','/otros/'].some(route=>location.pathname.includes(route));
+  const path=location.pathname.toLowerCase();
+  const admin=path.includes('/admin/'),otros=path.includes('/otros/'),asesores=path.includes('/asesores/');
+  const publicCard=['/asesores/','/negocios/','/esteticas/','/barberias/','/otros/'].some(route=>path.includes(route));
+
+  // El favicon es identidad del producto TTD y nunca debe cambiar por el logo de una tarjeta o negocio.
+  addModule('ttd-favicon-lock.js?v=20260917-favicon9','ttd-favicon-lock-js');
+
   if(admin){
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail3','editor-action-rail-css');
@@ -59,12 +64,12 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addModule('advisor-booking-layout-fix.js?v=20260916-booking5','ttd-booking-layout-fix-js');
     addModule('coverage-admin-accordion.js?v=20260916-coverage2','ttd-coverage-accordion-js');
   }else if(!otros){
-    addCss('visual-identity-public-v4.css?v=20260913-beautyfix1','vi4-public-css');
-    addModule('visual-identity-public-v4.js?v=20260913-beautyfix1','vi4-public-js');
+    addCss('visual-identity-public-v4.css?v=20260917-barberias1','vi4-public-css');
+    addModule('visual-identity-public-v4.js?v=20260917-barberias1','vi4-public-js');
   }
   if(!admin&&publicCard){
-    addCss('cross-promotion.css?v=20260916-cross1','ttd-cross-promo-css');
-    addModule('cross-promotion.js?v=20260916-cross1','ttd-cross-promo-js');
+    addCss('cross-promotion.css?v=20260917-cross3','ttd-cross-promo-css');
+    addModule('cross-promotion.js?v=20260917-cross3','ttd-cross-promo-js');
   }
   if(!admin&&asesores){
     addCss('advisor-booking.css?v=20260916-booking8','ttd-advisor-booking-css');
