@@ -67,7 +67,7 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addModule('cross-promotion.js?v=20260916-cross1','ttd-cross-promo-js');
   }
   if(!admin&&asesores){
-    addCss('advisor-booking.css?v=20260916-booking5','ttd-advisor-booking-css');
-    addModule('advisor-booking-v2.js?v=20260916-booking5','ttd-advisor-booking-js');
+    addCss('advisor-booking.css?v=20260916-booking6','ttd-advisor-booking-css');
+    addModule('advisor-booking-v2.js?v=20260916-booking6','ttd-advisor-booking-js');
   }
 })();
