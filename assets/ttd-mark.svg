@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Tu Tarjeta Digital</title>
+  <desc id="desc">Isotipo TTD de alta resolución</desc>
+  <defs>
+    <linearGradient id="g" x1="42" y1="74" x2="216" y2="188" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#28C6CC"/>
+      <stop offset="0.48" stop-color="#167A9F"/>
+      <stop offset="1" stop-color="#0B3158"/>
+    </linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#07111D" flood-opacity=".16"/>
+    </filter>
+  </defs>
+  <circle cx="128" cy="128" r="116" fill="#fff" stroke="#DCE7EF" stroke-width="5" filter="url(#s)"/>
+  <path d="M50 78h63v22H93v78H70v-78H50z" fill="url(#g)"/>
+  <path d="M105 78h63v22h-20v78h-23v-78h-20z" fill="url(#g)"/>
+  <path d="M160 78h31c34 0 52 18 52 50 0 32-18 50-52 50h-31zm23 22v56h8c18 0 28-9 28-28s-10-28-28-28z" fill="url(#g)"/>
+  <path d="M51 68h62M106 68h62" stroke="#0B3158" stroke-width="7" stroke-linecap="round" opacity=".92"/>
+</svg>
