@@ -1,0 +1,7 @@
+.ttd-alva-credit{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ttd-alva-credit img:nth-of-type(1){width:24px!important;height:20px!important;max-width:24px!important;object-fit:contain;flex:0 0 24px}
+.ttd-alva-credit img:nth-of-type(2){width:58px!important;height:auto!important;max-width:58px!important;object-fit:contain;flex:0 0 58px;filter:brightness(0) invert(1)}
+.ttd-hero-panel .ttd-alva-credit{margin-top:22px;min-height:20px}
+.ttd-login-card .ttd-alva-credit{color:var(--muted);margin-top:22px}
+.ttd-login-card .ttd-alva-credit img:nth-of-type(2){filter:none}
+.ttd-brand>img,.ttd-hero-brandline>img,.ttd-login-brand>img{object-fit:contain}
