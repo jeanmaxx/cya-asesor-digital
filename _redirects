@@ -1,0 +1,6 @@
+/admin/personales/ /admin/personales/index.html 200
+/admin/personales/* /admin/personales/index.html 200
+/admin/barberias/ /admin/barberias/index.html 200
+/admin/barberias/* /admin/barberia-editor.html 200
+/esteticas/ /barberias/ 301
+/esteticas/* /barberias/:splat 301
