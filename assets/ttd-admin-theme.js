@@ -2,7 +2,6 @@
   const root = document.documentElement;
   const saved = localStorage.getItem('ttd-admin-theme') || localStorage.getItem('cya-admin-theme');
 
-  // Capa visual compartida del shell administrativo TTD.
   if (!document.querySelector('link[data-ttd-fixed-shell]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -65,7 +64,11 @@
     document.querySelectorAll('.product-tabs').forEach(el => el.setAttribute('aria-hidden','true'));
   }
 
-  // TTD Admin abre en oscuro por defecto; una elección explícita del usuario siempre se respeta.
+  // El primer acceso a TTD Admin queda fijado en modo oscuro; después se respeta la elección manual.
+  if (!saved) {
+    localStorage.setItem('ttd-admin-theme', 'dark');
+    localStorage.setItem('cya-admin-theme', 'dark');
+  }
   apply(saved || 'dark');
 
   window.addEventListener('DOMContentLoaded', () => {
