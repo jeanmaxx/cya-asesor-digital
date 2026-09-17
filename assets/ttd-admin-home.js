@@ -1,58 +1,10 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-const cfg = window.SUPABASE_CONFIG || {};
-const supabase = createClient(cfg.url, cfg.publishableKey);
-const $ = id => document.getElementById(id);
-
-function initials(email='') {
-  const base = email.split('@')[0] || 'TTD';
-  return base.split(/[._-]+/).map(x => x[0] || '').join('').slice(0,2).toUpperCase() || 'TT';
-}
-function showLogin(show) {
-  $('ttd-login-screen').hidden = !show;
-  $('ttd-admin-app').hidden = show;
-}
-function setError(text='') { $('ttd-login-error').textContent = text; }
-async function loadCounts() {
-  const [{ data: personal, error: e1 }, { data: barberias, error: e2 }, { data: otros, error: e3 }] = await Promise.all([
-    supabase.from('advisor_profiles').select('id', { count:'exact' }).eq('product_type','advisor'),
-    supabase.from('business_profiles').select('id', { count:'exact' }).eq('vertical','beauty'),
-    supabase.from('business_profiles').select('id', { count:'exact' }).eq('vertical','other')
-  ]);
-  if (e1 || e2 || e3) throw (e1 || e2 || e3);
-  const p = personal?.length || 0, b = barberias?.length || 0, o = otros?.length || 0;
-  $('metric-personales').textContent = p;
-  $('metric-barberias').textContent = b;
-  $('metric-otros').textContent = o;
-  $('card-personales-count').textContent = `${p} tarjeta${p===1?'':'s'}`;
-  $('card-barberias-count').textContent = `${b} negocio${b===1?'':'s'}`;
-  $('card-otros-count').textContent = `${o} negocio${o===1?'':'s'}`;
-}
-async function boot() {
-  const { data:{ user }, error } = await supabase.auth.getUser();
-  if (error || !user) { showLogin(true); return; }
-  showLogin(false);
-  $('ttd-session-user').textContent = user.email || '';
-  $('ttd-avatar').textContent = initials(user.email);
-  try { await loadCounts(); }
-  catch (err) {
-    console.warn('TTD Admin:', err);
-    ['metric-personales','metric-barberias','metric-otros'].forEach(id => $(id).textContent = '—');
-  }
-}
-
-$('ttd-login-form').addEventListener('submit', async e => {
-  e.preventDefault(); setError('');
-  const email = $('ttd-login-email').value.trim();
-  const password = $('ttd-login-password').value;
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) { setError('No fue posible iniciar sesión. Verifica tus datos.'); return; }
-  await boot();
-});
-$('ttd-avatar').addEventListener('click', async () => {
-  await supabase.auth.signOut();
-  location.reload();
-});
-
-const { data:{ session } } = await supabase.auth.getSession();
-if (session) await boot(); else showLogin(true);
+const cfg=window.SUPABASE_CONFIG||{};const supabase=createClient(cfg.url,cfg.publishableKey);const $=id=>document.getElementById(id);
+function initials(email=''){const base=email.split('@')[0]||'TTD';return base.split(/[._-]+/).map(x=>x[0]||'').join('').slice(0,2).toUpperCase()||'TT'}
+function systemTheme(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}function setTheme(t,p=false){document.documentElement.dataset.theme=t;if(p)localStorage.setItem('ttd-admin-theme',t);const i=$('ttd-theme-icon');if(i)i.textContent=t==='dark'?'☀':'☾'}setTheme(localStorage.getItem('ttd-admin-theme')||systemTheme());$('ttd-theme-toggle')?.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark',true));
+function showLogin(show){$('ttd-login-screen').hidden=!show;$('ttd-admin-app').hidden=show}function setError(text=''){$('ttd-login-error').textContent=text}
+async function loadCounts(){const [{count:p,error:e1},{count:b,error:e2},{count:o,error:e3}]=await Promise.all([supabase.from('advisor_profiles').select('id',{count:'exact',head:true}).eq('product_type','advisor'),supabase.from('business_profiles').select('id',{count:'exact',head:true}).eq('vertical','beauty'),supabase.from('business_profiles').select('id',{count:'exact',head:true}).eq('vertical','other')]);if(e1||e2||e3)throw(e1||e2||e3);$('metric-personales').textContent=p??'—';$('metric-barberias').textContent=b??'—';$('metric-otros').textContent=o??'—';$('card-personales-count').textContent=`${p??0} tarjeta${p===1?'':'s'}`;$('card-barberias-count').textContent=`${b??0} negocio${b===1?'':'s'}`;$('card-otros-count').textContent=`${o??0} negocio${o===1?'':'s'}`}
+async function boot(){const {data:{user},error}=await supabase.auth.getUser();if(error||!user){showLogin(true);return}showLogin(false);$('ttd-session-user').textContent=user.email||'';$('ttd-avatar').textContent=initials(user.email);try{await loadCounts()}catch(err){console.warn('TTD Admin:',err)}}
+$('ttd-login-form')?.addEventListener('submit',async e=>{e.preventDefault();setError('');const {error}=await supabase.auth.signInWithPassword({email:$('ttd-login-email').value.trim(),password:$('ttd-login-password').value});if(error){setError('No fue posible iniciar sesión. Verifica tus datos.');return}await boot()});
+$('ttd-avatar')?.addEventListener('click',async()=>{await supabase.auth.signOut();location.reload()});
+const {data:{session}}=await supabase.auth.getSession();if(session)await boot();else showLogin(true);
