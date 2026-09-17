@@ -10,7 +10,7 @@
     document.head.appendChild(link);
   }
 
-  const toggles = () => document.querySelectorAll('[data-ttd-theme-toggle], #admin-theme-toggle');
+  const allToggles = () => document.querySelectorAll('[data-ttd-theme-toggle], #admin-theme-toggle');
   const apply = (value, persist = false) => {
     const theme = value === 'light' ? 'light' : 'dark';
     root.dataset.theme = theme;
@@ -18,7 +18,7 @@
       localStorage.setItem('ttd-admin-theme', theme);
       localStorage.setItem('cya-admin-theme', theme);
     }
-    toggles().forEach(btn => {
+    allToggles().forEach(btn => {
       btn.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
       btn.setAttribute('title', theme === 'dark' ? 'Tema claro' : 'Tema oscuro');
       const icon = btn.querySelector('span') || document.getElementById('admin-theme-icon');
@@ -73,7 +73,8 @@
 
   window.addEventListener('DOMContentLoaded', () => {
     buildLegacyShell();
-    toggles().forEach(btn => {
+    // El dashboard principal usa el controlador compartido. Los módulos heredados conservan su propio listener para evitar doble alternancia.
+    document.querySelectorAll('[data-ttd-theme-toggle]').forEach(btn => {
       if (btn.dataset.ttdThemeBound === '1') return;
       btn.dataset.ttdThemeBound = '1';
       btn.addEventListener('click', () => apply(root.dataset.theme === 'dark' ? 'light' : 'dark', true));
