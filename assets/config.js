@@ -67,7 +67,9 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addModule('cross-promotion.js?v=20260916-cross1','ttd-cross-promo-js');
   }
   if(!admin&&asesores){
-    addCss('advisor-booking.css?v=20260916-booking6','ttd-advisor-booking-css');
-    addModule('advisor-booking-v2.js?v=20260916-booking6','ttd-advisor-booking-js');
+    addCss('advisor-booking.css?v=20260916-booking7','ttd-advisor-booking-css');
+    addCss('advisor-month-calendar.css?v=20260916-cal1','ttd-advisor-month-calendar-css');
+    addModule('advisor-booking-v2.js?v=20260916-booking7','ttd-advisor-booking-js');
+    addModule('advisor-month-calendar.js?v=20260916-cal1','ttd-advisor-month-calendar-js');
   }
 })();
