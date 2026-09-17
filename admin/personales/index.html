@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es-MX" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="theme-color" content="#F5F8FB" />
+  <base href="/admin/" />
+  <title>Tarjetas Digitales Personales · TTD Admin</title>
+  <link rel="icon" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/admin.css?v=20260916-standard1" />
+  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/admin-editor-ui.css?v=20260913-ui3" />
+  <link rel="stylesheet" href="../assets/photo-border-admin.css?v=20260913-border1" />
+  <link rel="stylesheet" href="../assets/ttd-admin-unified.css?v=20260916-standard1" />
+  <script src="../assets/ttd-admin-theme.js?v=20260916-standard1"></script>
+</head>
+<body class="ttd-legacy-shell">
+  <main class="admin-shell">
+    <div class="ttd-context-banner">
+      <div class="ttd-context-brand"><img src="/favicon.png" alt=""><div><p>Panel de administración de</p><strong>Tu Tarjeta Digital</strong></div></div>
+      <div class="ttd-context-alva"><span>Una solución de</span><img src="../assets/alva-isotipo.svg" alt=""><img src="../assets/alva-logotipo.svg" alt="ALVA"><span>Soluciones Digitales</span></div>
+    </div>
+    <header class="admin-header">
+      <div><p class="kicker">TTD · TARJETAS PERSONALES</p><h1>Tarjetas Digitales Personales</h1><p>Personas, profesionistas, asesores y perfiles individuales administrados desde una misma estructura.</p></div>
+      <div class="admin-header-actions"><span id="admin-role-badge" class="badge badge--plan is-hidden"></span><button id="admin-theme-toggle" class="admin-theme-toggle" type="button" aria-label="Cambiar tema"><span id="admin-theme-icon">☾</span></button><a class="ghost-link" href="/admin/">Inicio TTD</a><button id="global-signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button></div>
+    </header>
+
+    <section id="auth-panel" class="panel auth-panel is-hidden">
+      <div class="tabs" role="tablist" aria-label="Acceso"><button id="tab-login" class="tab is-active" type="button">Ingresar</button><button id="tab-signup" class="tab" type="button">Crear acceso</button></div>
+      <form id="auth-form" class="form-grid form-grid--single"><label>Correo electrónico<input id="auth-email" type="email" autocomplete="email" required /></label><label>Contraseña<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required /></label><button id="auth-submit" class="primary-btn" type="submit">Ingresar</button></form>
+      <p id="auth-message" class="message" aria-live="polite"></p><p class="hint">Un acceso de cliente solo puede ver las cuentas que le hayan sido asignadas.</p>
+    </section>
+
+    <section id="hub-panel" class="is-hidden">
+      <nav class="product-tabs" aria-label="Tipos de tarjetas digitales"><a class="product-tab is-active" href="/admin/personales/">TARJETAS PERSONALES</a><a class="product-tab" href="/admin/barberias/">BARBERÍAS</a><a class="product-tab" href="/admin/otros/">OTROS NEGOCIOS</a></nav>
+      <section class="panel accounts-panel"><div class="section-toolbar"><div><p class="kicker">Cuentas</p><h2>Tarjetas personales</h2><p class="subtle">Cada persona conserva sus datos, paquete, servicios, agenda, cobertura y apariencia de forma independiente.</p></div><button id="new-account" class="primary-btn" type="button">+ Nueva tarjeta personal</button></div><div id="accounts-list" class="accounts-grid"></div><p id="accounts-message" class="message" aria-live="polite"></p></section>
+      <section id="backups-panel" class="panel backups-panel"><div class="section-toolbar"><div><p class="kicker">Seguridad</p><h2>Respaldos de todas las cuentas</h2><p class="subtle">Disponible únicamente para el administrador principal.</p></div><button id="manual-backup" class="secondary-btn" type="button">Crear respaldo manual</button></div><div class="backup-settings"><label class="switch-row"><input id="automatic-backups" type="checkbox" /><span>Crear respaldo automático después de cada guardado</span></label><label>Conservar los últimos<select id="backup-keep-count"><option value="10">10 respaldos</option><option value="20">20 respaldos</option><option value="30">30 respaldos</option><option value="50">50 respaldos</option><option value="100">100 respaldos</option></select></label></div><div class="backup-list-head"><strong>Respaldos recientes</strong><button id="refresh-backups" class="text-btn" type="button">Actualizar</button></div><div id="backups-list" class="backups-list"></div><p id="backup-message" class="message" aria-live="polite"></p></section>
+    </section>
+
+    <section id="editor-panel" class="panel is-hidden">
+      <div class="editor-toolbar"><div class="editor-title-row"><button id="back-to-accounts" class="back-btn" type="button" aria-label="Volver a tarjetas personales">←</button><div><p class="kicker">Editar tarjeta personal</p><h2 id="editor-account-name">Configuración</h2></div></div><a id="profile-preview-link" class="secondary-link" href="../" target="_blank" rel="noopener">Abrir tarjeta ↗</a></div>
+      <form id="profile-form" class="form-grid">
+        <fieldset id="plan-fieldset"><legend>Paquete contratado</legend><div class="two-col"><label>Paquete<select id="package-key"></select></label><label>Estado<select id="package-status"><option value="trial">Prueba</option><option value="active">Activo</option><option value="suspended">Suspendido</option><option value="cancelled">Cancelado</option></select></label></div><p id="package-description" class="package-description"></p><div id="package-features" class="feature-chips" aria-label="Funciones incluidas"></div><p id="package-permission-note" class="hint"></p></fieldset>
+        <fieldset><legend>Identidad</legend><div class="two-col"><label>Nombre(s)<input id="first-names" type="text" maxlength="80" required /></label><label>Apellidos<input id="last-names" type="text" maxlength="80" required /></label></div><label>Título de la pestaña del navegador<input id="page-title" type="text" maxlength="120" /></label><label>Cargo / profesión<input id="title" type="text" maxlength="100" required /></label><label>Empresa / respaldo<input id="company-name" type="text" maxlength="120" required /></label><label>Texto junto al logo<input id="ally-label" type="text" maxlength="60" /></label><p class="hint">Usa <strong>|</strong> para definir un salto de renglón exacto.</p><label>Texto breve<textarea id="bio" rows="3" maxlength="260"></textarea></label><label>Identificador de página<div class="slug-row"><span>?asesor=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div></label></fieldset>
+        <fieldset><legend>Contacto</legend><div class="two-col"><label>Teléfono<input id="phone" type="tel" inputmode="tel" /></label><label>WhatsApp<input id="whatsapp" type="tel" inputmode="tel" /></label></div><label>Mensaje inicial de WhatsApp<textarea id="whatsapp-message" rows="3" maxlength="500"></textarea></label><p class="hint">Cuando se entra desde un servicio se agrega automáticamente el nombre del servicio.</p><label>Instagram<input id="instagram" type="url" /></label><label>Facebook<input id="facebook" type="url" /></label></fieldset>
+        <fieldset><legend>Fotografía y logo</legend><div class="asset-grid"><div><div class="asset-preview"><img id="photo-preview" src="../assets/profile-placeholder.svg" alt="Vista previa de fotografía" /></div><label>Fotografía de perfil<input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" /></label></div><div><div class="asset-preview asset-preview--logo"><img id="logo-preview" src="../assets/logo-placeholder.svg" alt="Vista previa del logo" /></div><label>Logo<input id="logo-file" type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml" /></label></div></div></fieldset>
+        <fieldset><legend>Apariencia</legend><div class="color-grid"><label>Color principal <input id="primary-color" type="color" /></label><label>Acento <input id="accent-color" type="color" /></label><label>Fondo <input id="background-color" type="color" /></label><label>Tarjetas <input id="surface-color" type="color" /></label></div><label>Tipografía<select id="font-family"><option value="helvetica">Helvetica / Helvetica Neue</option><option value="arial">Arial</option><option value="tahoma">Tahoma</option><option value="verdana">Verdana</option><option value="trebuchet">Trebuchet MS</option><option value="system">Sistema</option></select></label><label>Modo de color predeterminado<select id="theme-mode"><option value="system">Seguir sistema del dispositivo</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></fieldset>
+        <fieldset><legend>Contenido destacado</legend><p class="hint">Textos de confianza y bloque final de contacto.</p><div class="three-col"><label>Etiqueta 1<input id="trust-item-1" type="text" maxlength="80" /></label><label>Etiqueta 2<input id="trust-item-2" type="text" maxlength="80" /></label><label>Etiqueta 3<input id="trust-item-3" type="text" maxlength="80" /></label></div><label>Encabezado pequeño del cierre<input id="closing-kicker-input" type="text" maxlength="80" /></label><label>Título del cierre<input id="closing-title-input" type="text" maxlength="120" /></label><label>Texto del cierre<textarea id="closing-text-input" rows="3" maxlength="320"></textarea></label><label>Texto del botón final<input id="closing-cta-input" type="text" maxlength="100" /></label></fieldset>
+        <fieldset><legend>Servicios</legend><p class="hint service-editor-help">Edita los textos visibles de cada tarjeta. Escribe un requisito por línea.</p><div id="services-editor" class="services-editor"></div></fieldset>
+        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="is-published" type="checkbox" /><span>Publicar este perfil.</span></label><p class="hint">Puedes guardar cambios aunque la tarjeta permanezca en Borrador.</p></fieldset>
+        <div class="save-row"><button id="save-profile" class="primary-btn" type="submit">Guardar cambios</button><button id="cancel-edit" class="secondary-btn" type="button">Volver a tarjetas personales</button></div><p id="save-message" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <script src="../assets/config.js?v=20260916-standard1"></script>
+  <script src="../assets/admin-save-resilience.js?v=20260913-save1"></script>
+  <script type="module" src="../assets/admin-session-shell.js?v=20260913-ui3"></script>
+  <script src="../assets/ttd-personal-route.js?v=20260916-standard1"></script>
+  <script type="module" src="../assets/admin-v2.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/admin-phase1.js?v=20260913-ui3"></script>
+  <script>
+    window.addEventListener('load', () => {
+      const original=document.getElementById('package-key');if(!original||original.dataset.packageFix==='1')return;
+      const select=original.cloneNode(true);select.id='package-key';select.dataset.packageFix='1';original.replaceWith(select);
+      const roleBadge=document.getElementById('admin-role-badge');if(roleBadge?.textContent==='Administrador principal'){select.disabled=false;const status=document.getElementById('package-status');if(status)status.disabled=false;}
+    });
+  </script>
+  <script type="module" src="../assets/admin-editor-ui.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/admin-package-sync.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/account-duplicate.js?v=20260913-ui3"></script>
+  <script type="module" src="../assets/advisor-booking-admin-v2.js?v=20260916-booking5"></script>
+  <script type="module" src="../assets/advisor-booking-layout-fix.js?v=20260916-booking5"></script>
+  <script type="module" src="../assets/coverage-admin-accordion.js?v=20260916-coverage2"></script>
+</body>
+</html>
