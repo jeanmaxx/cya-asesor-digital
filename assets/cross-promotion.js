@@ -9,7 +9,7 @@ const path=location.pathname.toLowerCase();
 
 function resolveAccount(){
   if(path.includes('/asesores/')) return {type:'advisor',slug:qs.get('asesor')||''};
-  if(path.includes('/negocios/')||path.includes('/esteticas/')||path.includes('/otros/')) return {type:'business',slug:qs.get('negocio')||''};
+  if(path.includes('/negocios/')||path.includes('/esteticas/')||path.includes('/barberias/')||path.includes('/otros/')) return {type:'business',slug:qs.get('negocio')||''};
   return null;
 }
 
@@ -34,7 +34,7 @@ function renderButton(account){
   logoWrap.className='ttd-cross-promo__logo-wrap';
   const img=document.createElement('img');
   img.className='ttd-cross-promo__logo';
-  img.src='/favicon.png?v=20260916-cross2';
+  img.src='/favicon.png?v=20260917-official1';
   img.alt='';
   img.setAttribute('aria-hidden','true');
   img.addEventListener('error',()=>{
