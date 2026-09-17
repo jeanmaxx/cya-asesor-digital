@@ -51,7 +51,7 @@ window.ADVISOR_FALLBACK_SERVICES = [
   const publicCard=['/asesores/','/negocios/','/esteticas/','/barberias/','/otros/'].some(route=>path.includes(route));
 
   // El favicon es identidad del producto TTD y nunca debe cambiar por el logo de una tarjeta o negocio.
-  addModule('ttd-favicon-lock.js?v=20260917-favicon9','ttd-favicon-lock-js');
+  addModule('ttd-favicon-lock.js?v=20260917-favicon10','ttd-favicon-lock-js');
 
   if(admin){
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
