@@ -5,7 +5,7 @@
   if (!document.querySelector('link[data-ttd-fixed-shell]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/ttd-admin-fixed-shell.css?v=20260917-shell2';
+    link.href = '/assets/ttd-admin-fixed-shell.css?v=20260917-shell3';
     link.dataset.ttdFixedShell = '1';
     document.head.appendChild(link);
   }
@@ -37,7 +37,7 @@
   };
 
   function logoMarkup() {
-    return `<span class="ttd-shell-mark" aria-label="TTD"><img src="/favicon.ico?v=20260917-logo1" alt="TTD" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="ttd-shell-mark-fallback">TTD</span></span>`;
+    return `<span class="ttd-shell-mark" aria-label="TTD"><img src="/assets/ttd-mark.svg?v=20260917-mark1" alt="TTD" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="ttd-shell-mark-fallback">TTD</span></span>`;
   }
 
   function buildLegacyShell() {
