@@ -323,7 +323,8 @@ async function submitBooking(e) {
 }
 
 async function boot() {
-  if (!location.pathname.includes('/esteticas/')) return;
+  const supportedRoute = location.pathname.includes('/esteticas/') || location.pathname.includes('/barberias/');
+  if (!supportedRoute) return;
   const [{ data: p, error }, { data: s }] = await Promise.all([
     supabase.from('business_profiles').select('*').eq('slug', slug).eq('is_published', true).maybeSingle(),
     supabase.from('business_services').select('*').eq('is_visible', true).order('sort_order')
