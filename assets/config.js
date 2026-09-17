@@ -51,10 +51,11 @@ window.ADVISOR_FALLBACK_SERVICES = [
   if(admin){
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail3','editor-action-rail-css');
-    addCss('advisor-booking-admin.css?v=20260916-booking1','ttd-booking-admin-css');
+    addCss('advisor-booking-admin.css?v=20260916-booking2','ttd-booking-admin-css');
     addModule('visual-identity-admin-v5.js?v=20260913-vi6','vi5-admin-js');
     addModule('editor-floating-actions.js?v=20260913-rail3','editor-action-rail-js');
-    addModule('advisor-booking-admin.js?v=20260916-booking1','ttd-booking-admin-js');
+    addModule('advisor-booking-admin.js?v=20260916-booking2','ttd-booking-admin-js');
+    addModule('advisor-booking-layout-fix.js?v=20260916-booking2','ttd-booking-layout-fix-js');
   }else if(!otros){
     addCss('visual-identity-public-v4.css?v=20260913-beautyfix1','vi4-public-css');
     addModule('visual-identity-public-v4.js?v=20260913-beautyfix1','vi4-public-js');
