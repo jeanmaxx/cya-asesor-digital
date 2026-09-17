@@ -1,9 +1,5 @@
 (()=>{
-  const params=new URLSearchParams(location.search);
-  const negocio=params.get('negocio')||'tu-tarjeta-digital';
-  if(negocio!=='tu-tarjeta-digital') return;
-
-  const official='/favicon.ico?v=20260916-6';
+  const official='/favicon.png?v=20260917-official1';
   const absolute=new URL(official,location.origin).href;
   let enforcing=false;
 
@@ -22,19 +18,23 @@
         primary.dataset.ttdOfficial='primary';
       }
       if(primary.href!==absolute) primary.setAttribute('href',official);
-      primary.setAttribute('sizes','any');
-      primary.removeAttribute('type');
+      primary.setAttribute('type','image/png');
+      primary.setAttribute('sizes','64x64');
+
+      document.querySelectorAll('link[rel="icon"]').forEach(link=>{
+        if(link!==primary) link.remove();
+      });
     } finally {
       enforcing=false;
     }
   };
 
   const observer=new MutationObserver(()=>queueMicrotask(enforce));
-  observer.observe(document.head,{subtree:true,childList:true,attributes:true,attributeFilter:['href','rel']});
+  observer.observe(document.head,{subtree:true,childList:true,attributes:true,attributeFilter:['href','rel','type']});
 
   enforce();
   window.addEventListener('load',enforce,{once:true});
-  setTimeout(enforce,250);
-  setTimeout(enforce,1000);
-  setTimeout(enforce,2500);
+  setTimeout(enforce,150);
+  setTimeout(enforce,600);
+  setTimeout(enforce,1800);
 })();
