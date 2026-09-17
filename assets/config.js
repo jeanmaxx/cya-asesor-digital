@@ -52,12 +52,12 @@ window.ADVISOR_FALLBACK_SERVICES = [
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
     addCss('editor-floating-actions.css?v=20260913-rail3','editor-action-rail-css');
     addCss('advisor-booking-admin-v2.css?v=20260916-booking5','ttd-booking-admin-css');
-    addCss('coverage-admin-accordion.css?v=20260916-coverage1','ttd-coverage-accordion-css');
+    addCss('coverage-admin-accordion.css?v=20260916-coverage2','ttd-coverage-accordion-css');
     addModule('visual-identity-admin-v5.js?v=20260913-vi6','vi5-admin-js');
     addModule('editor-floating-actions.js?v=20260913-rail3','editor-action-rail-js');
     addModule('advisor-booking-admin-v2.js?v=20260916-booking5','ttd-booking-admin-js');
     addModule('advisor-booking-layout-fix.js?v=20260916-booking5','ttd-booking-layout-fix-js');
-    addModule('coverage-admin-accordion.js?v=20260916-coverage1','ttd-coverage-accordion-js');
+    addModule('coverage-admin-accordion.js?v=20260916-coverage2','ttd-coverage-accordion-js');
   }else if(!otros){
     addCss('visual-identity-public-v4.css?v=20260913-beautyfix1','vi4-public-css');
     addModule('visual-identity-public-v4.js?v=20260913-beautyfix1','vi4-public-js');
