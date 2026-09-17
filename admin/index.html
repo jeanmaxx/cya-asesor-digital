@@ -1,64 +1,47 @@
 <!doctype html>
-<html lang="es-MX">
+<html lang="es-MX" data-theme="light">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,nofollow,noarchive" />
-  <title>Panel de Tarjetas Digitales · Casillas & Asociados</title>
-  <link rel="stylesheet" href="../assets/admin.css?v=20260913-ui3" />
-  <link rel="stylesheet" href="../assets/admin-phase1.css?v=20260913-ui3" />
-  <link rel="stylesheet" href="../assets/admin-editor-ui.css?v=20260913-ui3" />
-  <link rel="stylesheet" href="../assets/photo-border-admin.css?v=20260913-border1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0e223d" />
+  <title>TTD Admin · Tu Tarjeta Digital</title>
+  <link rel="icon" href="../favicon.png" />
+  <script>(()=>{try{document.documentElement.dataset.theme=localStorage.getItem('ttd-admin-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(_){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/ttd-admin-system.css?v=20260916-std1" />
 </head>
-<body>
-  <main class="admin-shell">
-    <header class="admin-header">
-      <div><p class="kicker">Casillas & Asociados</p><h1>Panel de Tarjetas Digitales</h1><p>Administra cuentas, personalización, paquetes y respaldos desde un solo lugar.</p></div>
-      <div class="admin-header-actions"><span id="admin-role-badge" class="badge badge--plan is-hidden"></span><button id="admin-theme-toggle" class="admin-theme-toggle" type="button" aria-label="Cambiar a modo oscuro" title="Cambiar tema"><span id="admin-theme-icon" aria-hidden="true">☾</span></button><a class="ghost-link" href="../" target="_blank" rel="noopener">Ver demo pública ↗</a><button id="global-signout" class="secondary-btn is-hidden" type="button">Cerrar sesión</button></div>
-    </header>
+<body class="ttd-admin-app">
+  <section id="ttd-login-screen" class="ttd-login-screen" hidden>
+    <div class="ttd-login-card">
+      <div class="ttd-login-brand"><img src="../favicon.png" alt="TTD"><div><span class="ttd-eyebrow">PANEL DE ADMINISTRACIÓN DE</span><h1>Tu Tarjeta Digital</h1></div></div>
+      <p>Administra tarjetas personales, barberías y otros negocios desde un solo punto de entrada.</p>
+      <form id="ttd-login-form" class="ttd-form"><label>Correo<input id="ttd-login-email" type="email" autocomplete="username" required></label><label>Contraseña<input id="ttd-login-password" type="password" autocomplete="current-password" required></label><button class="ttd-btn" type="submit">Iniciar sesión</button><p id="ttd-login-error"></p></form>
+      <div class="ttd-alva-credit" style="margin-top:24px"><span>Una solución de</span><img src="../assets/brand/alva-isotipo.svg" alt=""><img src="../assets/brand/alva-logotipo.svg" alt="ALVA"><strong>Soluciones Digitales</strong></div>
+    </div>
+  </section>
 
-    <section id="auth-panel" class="panel auth-panel is-hidden">
-      <div class="tabs" role="tablist" aria-label="Acceso"><button id="tab-login" class="tab is-active" type="button">Ingresar</button><button id="tab-signup" class="tab" type="button">Crear acceso</button></div>
-      <form id="auth-form" class="form-grid form-grid--single"><label>Correo electrónico<input id="auth-email" type="email" autocomplete="email" required /></label><label>Contraseña<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required /></label><button id="auth-submit" class="primary-btn" type="submit">Ingresar</button></form>
-      <p id="auth-message" class="message" aria-live="polite"></p><p class="hint">Un acceso de cliente solo puede ver las cuentas que el administrador principal le haya asignado.</p>
-    </section>
-
-    <section id="hub-panel" class="is-hidden">
-      <nav class="product-tabs" aria-label="Tipos de tarjetas digitales"><a class="product-tab is-active" href="./">TARJETAS DIGITALES ASESORES</a><button class="product-tab" type="button" disabled>TRANSPORTE <span>Próximamente</span></button><a class="product-tab" href="esteticas.html">ESTÉTICAS Y BARBERÍAS</a></nav>
-      <section class="panel accounts-panel"><div class="section-toolbar"><div><p class="kicker">Cuentas</p><h2>Tarjetas digitales de asesores</h2><p class="subtle">Cada cuenta conserva de forma independiente sus datos, paquete, servicios y apariencia.</p></div><button id="new-account" class="primary-btn" type="button">+ Nueva tarjeta</button></div><div id="accounts-list" class="accounts-grid"></div><p id="accounts-message" class="message" aria-live="polite"></p></section>
-      <section id="backups-panel" class="panel backups-panel"><div class="section-toolbar"><div><p class="kicker">Seguridad</p><h2>Respaldos de todas las cuentas</h2><p class="subtle">Disponible únicamente para el administrador principal.</p></div><button id="manual-backup" class="secondary-btn" type="button">Crear respaldo manual</button></div><div class="backup-settings"><label class="switch-row"><input id="automatic-backups" type="checkbox" /><span>Crear respaldo automático después de cada guardado</span></label><label>Conservar los últimos<select id="backup-keep-count"><option value="10">10 respaldos</option><option value="20">20 respaldos</option><option value="30">30 respaldos</option><option value="50">50 respaldos</option><option value="100">100 respaldos</option></select></label></div><div class="backup-list-head"><strong>Respaldos recientes</strong><button id="refresh-backups" class="text-btn" type="button">Actualizar</button></div><div id="backups-list" class="backups-list"></div><p id="backup-message" class="message" aria-live="polite"></p></section>
-    </section>
-
-    <section id="editor-panel" class="panel is-hidden">
-      <div class="editor-toolbar"><div class="editor-title-row"><button id="back-to-accounts" class="back-btn" type="button" aria-label="Volver al panel de cuentas">←</button><div><p class="kicker">Editar tarjeta</p><h2 id="editor-account-name">Configuración</h2></div></div><a id="profile-preview-link" class="secondary-link" href="../" target="_blank" rel="noopener">Abrir tarjeta ↗</a></div>
-      <form id="profile-form" class="form-grid">
-        <fieldset id="plan-fieldset"><legend>Paquete contratado</legend><div class="two-col"><label>Paquete<select id="package-key"></select></label><label>Estado<select id="package-status"><option value="trial">Prueba</option><option value="active">Activo</option><option value="suspended">Suspendido</option><option value="cancelled">Cancelado</option></select></label></div><p id="package-description" class="package-description"></p><div id="package-features" class="feature-chips" aria-label="Funciones incluidas"></div><p id="package-permission-note" class="hint"></p></fieldset>
-        <fieldset><legend>Identidad</legend><div class="two-col"><label>Nombre(s)<input id="first-names" type="text" maxlength="80" required /></label><label>Apellidos<input id="last-names" type="text" maxlength="80" required /></label></div><label>Título de la pestaña del navegador<input id="page-title" type="text" maxlength="120" placeholder="JEAN - Asesor Previsional" /></label><label>Cargo<input id="title" type="text" maxlength="100" value="Asesor Previsional" required /></label><label>Empresa / respaldo<input id="company-name" type="text" maxlength="120" value="Casillas & Asociados" required /></label><label>Texto junto al logo<input id="ally-label" type="text" maxlength="60" value="Asesor Aliado" placeholder="Ej. Asesor | Previsional" /></label><p class="hint">Usa el símbolo <strong>|</strong> para definir un salto de renglón exacto. Ejemplo: <code>Asesor | Previsional</code>.</p><label>Texto breve<textarea id="bio" rows="3" maxlength="260"></textarea></label><label>Identificador de página<div class="slug-row"><span>?asesor=</span><input id="slug" type="text" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required /></div></label></fieldset>
-        <fieldset><legend>Contacto</legend><div class="two-col"><label>Teléfono<input id="phone" type="tel" inputmode="tel" /></label><label>WhatsApp<input id="whatsapp" type="tel" inputmode="tel" /></label></div><label>Mensaje inicial de WhatsApp<textarea id="whatsapp-message" rows="3" maxlength="500" placeholder="Hola, vi tu tarjeta digital y me gustaría recibir información."></textarea></label><p class="hint">Este mensaje se precarga en los botones generales de WhatsApp. Cuando se entra desde un servicio, se agrega automáticamente el nombre del servicio.</p><label>Instagram<input id="instagram" type="url" placeholder="https://instagram.com/..." /></label><label>Facebook<input id="facebook" type="url" placeholder="https://facebook.com/..." /></label></fieldset>
-        <fieldset><legend>Fotografía y logo</legend><div class="asset-grid"><div><div class="asset-preview"><img id="photo-preview" src="../assets/profile-placeholder.svg" alt="Vista previa de fotografía" /></div><label>Fotografía de perfil<input id="photo-file" type="file" accept="image/jpeg,image/png,image/webp" /></label></div><div><div class="asset-preview asset-preview--logo"><img id="logo-preview" src="../assets/logo-placeholder.svg" alt="Vista previa del logo" /></div><label>Logo<input id="logo-file" type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml" /></label></div></div></fieldset>
-        <fieldset><legend>Apariencia</legend><div class="color-grid"><label>Color principal <input id="primary-color" type="color" value="#0E223D" /></label><label>Dorado / acento <input id="accent-color" type="color" value="#C9A96E" /></label><label>Fondo <input id="background-color" type="color" value="#F7F5F0" /></label><label>Tarjetas <input id="surface-color" type="color" value="#FFFFFF" /></label></div><label>Tipografía<select id="font-family"><option value="helvetica">Helvetica / Helvetica Neue</option><option value="arial">Arial</option><option value="tahoma">Tahoma</option><option value="verdana">Verdana</option><option value="trebuchet">Trebuchet MS</option><option value="system">Sistema</option></select></label><label>Modo de color predeterminado<select id="theme-mode"><option value="system">Seguir sistema del dispositivo</option><option value="light">Claro</option><option value="dark">Oscuro</option></select></label></fieldset>
-        <fieldset><legend>Contenido destacado</legend><p class="hint">Textos de confianza y bloque final de contacto.</p><div class="three-col"><label>Etiqueta 1<input id="trust-item-1" type="text" maxlength="80" /></label><label>Etiqueta 2<input id="trust-item-2" type="text" maxlength="80" /></label><label>Etiqueta 3<input id="trust-item-3" type="text" maxlength="80" /></label></div><label>Encabezado pequeño del cierre<input id="closing-kicker-input" type="text" maxlength="80" /></label><label>Título del cierre<input id="closing-title-input" type="text" maxlength="120" /></label><label>Texto del cierre<textarea id="closing-text-input" rows="3" maxlength="320"></textarea></label><label>Texto del botón final<input id="closing-cta-input" type="text" maxlength="100" /></label></fieldset>
-        <fieldset><legend>Servicios</legend><p class="hint service-editor-help">Edita los textos visibles de cada tarjeta. Escribe un requisito por línea.</p><div id="services-editor" class="services-editor"></div></fieldset>
-        <fieldset><legend>Publicación</legend><label class="switch-row"><input id="is-published" type="checkbox" /><span>Publicar este perfil para que la landing pueda leerlo.</span></label><p class="hint">Puedes guardar todos los cambios aunque la tarjeta permanezca en Borrador. Publicar solo controla si la página es visible al público.</p></fieldset>
-        <div class="save-row"><button id="save-profile" class="primary-btn" type="submit">Guardar cambios</button><button id="cancel-edit" class="secondary-btn" type="button">Volver a cuentas</button></div><p id="save-message" class="message" aria-live="polite"></p>
-      </form>
-    </section>
-  </main>
-  <script src="../assets/config.js?v=20260913-ui4"></script>
-  <script src="../assets/admin-save-resilience.js?v=20260913-save1"></script>
-  <script type="module" src="../assets/admin-session-shell.js?v=20260913-ui3"></script>
-  <script type="module" src="../assets/admin-v2.js?v=20260913-ui3"></script>
-  <script type="module" src="../assets/admin-phase1.js?v=20260913-ui3"></script>
-  <script type="module" src="../assets/photo-border-admin.js?v=20260913-border1"></script>
-  <script>
-    window.addEventListener('load', () => {
-      const original = document.getElementById('package-key');if (!original || original.dataset.packageFix === '1') return;
-      const select = original.cloneNode(true);select.id = 'package-key';select.dataset.packageFix = '1';original.replaceWith(select);
-      const roleBadge = document.getElementById('admin-role-badge');if (roleBadge?.textContent === 'Administrador principal') {select.disabled = false;const status = document.getElementById('package-status');if (status) status.disabled = false;}
-    });
-  </script>
-  <script type="module" src="../assets/admin-editor-ui.js?v=20260913-ui3"></script>
-  <script type="module" src="../assets/admin-package-sync.js?v=20260913-ui3"></script>
-  <script type="module" src="../assets/account-duplicate.js?v=20260913-ui3"></script>
-</body>
-</html>
+  <div id="ttd-admin-app" class="ttd-admin-shell" hidden>
+    <aside class="ttd-sidebar">
+      <a class="ttd-brand" href="./"><img class="ttd-brand-mark" src="../favicon.png" alt="TTD"><span class="ttd-brand-copy"><strong>Tu Tarjeta Digital</strong><span>Panel de administración</span></span></a>
+      <nav class="ttd-nav"><a class="is-active" href="./">Resumen</a><a href="./personales/">Tarjetas personales</a><a href="./barberias/">Barberías</a><a href="./otros/">Otros negocios</a></nav>
+      <div class="ttd-sidebar-foot">TTD · Una solución de ALVA Soluciones Digitales</div>
+    </aside>
+    <main class="ttd-main">
+      <header class="ttd-topbar"><div class="ttd-topbar-copy"><span class="ttd-eyebrow">PANEL DE ADMINISTRACIÓN DE</span><h1>Tu Tarjeta Digital</h1></div><div class="ttd-topbar-actions"><span id="ttd-session-user" class="ttd-session"></span><a class="ttd-btn-secondary" href="../" target="_blank" rel="noopener">Ver TTD</a><button id="ttd-theme-toggle" class="ttd-icon-btn" type="button" aria-label="Cambiar tema"><span id="ttd-theme-icon">◐</span></button><button id="ttd-avatar" class="ttd-icon-btn" type="button" title="Cerrar sesión">TT</button></div></header>
+      <div class="ttd-content">
+        <section class="ttd-hero-admin"><div class="ttd-hero-title"><img src="../favicon.png" alt="TTD"><div><span class="ttd-eyebrow">ECOSISTEMA TTD</span><h2>Administra todas tus tarjetas desde aquí</h2><p>Un mismo estándar de acceso, organización, agenda y configuración.</p></div></div><div class="ttd-alva-credit"><span>Una solución de</span><img src="../assets/brand/alva-isotipo.svg" alt=""><img src="../assets/brand/alva-logotipo.svg" alt="ALVA"><strong>Soluciones Digitales</strong></div></section>
+        <section class="ttd-grid">
+          <article class="ttd-product-card"><div class="ttd-card-icon">◎</div><h3>Tarjetas personales</h3><p>Personas, profesionistas, asesores y perfiles individuales con servicios, cobertura y agenda.</p><div class="ttd-card-meta"><span id="card-personales-count" class="ttd-badge live">—</span><span class="ttd-badge">Activa</span></div><div class="ttd-card-actions"><a class="ttd-btn" href="./personales/">Administrar</a></div></article>
+          <article class="ttd-product-card"><div class="ttd-card-icon">✂</div><h3>Barberías</h3><p>Negocios especializados con sucursal, catálogo de servicios, agenda y confirmación de citas.</p><div class="ttd-card-meta"><span id="card-barberias-count" class="ttd-badge live">—</span><span class="ttd-badge">Activa</span></div><div class="ttd-card-actions"><a class="ttd-btn" href="./barberias/">Administrar</a></div></article>
+          <article class="ttd-product-card"><div class="ttd-card-icon">▦</div><h3>Otros negocios</h3><p>Tarjetas flexibles para comercios y actividades que no requieren un vertical especializado.</p><div class="ttd-card-meta"><span id="card-otros-count" class="ttd-badge">—</span></div><div class="ttd-card-actions"><a class="ttd-btn-secondary" href="./otros/">Administrar</a></div></article>
+        </section>
+        <section class="ttd-section"><div class="ttd-section-head"><div><span class="ttd-eyebrow">RESUMEN</span><h2>Estado del producto</h2><p>La administración de TTD queda separada de la operación central de ALVA, conservando la misma esencia visual y de navegación.</p></div></div><div class="ttd-grid" style="margin-top:18px"><article class="ttd-product-card" style="min-height:auto"><span>Personales</span><strong id="metric-personales" style="font-size:2rem">—</strong></article><article class="ttd-product-card" style="min-height:auto"><span>Barberías</span><strong id="metric-barberias" style="font-size:2rem">—</strong></article><article class="ttd-product-card" style="min-height:auto"><span>Otros negocios</span><strong id="metric-otros" style="font-size:2rem">—</strong></article></div></section>
+      </div>
+    </main>
+  </div>
+  <script src="../assets/config.js?v=20260916-std1"></script>
+  <script type="module" src="../assets/ttd-admin-home.js?v=20260916-std1"></script>
+</body></html>
