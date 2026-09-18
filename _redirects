@@ -1,10 +1,3 @@
-/admin/esteticas.html /admin/barberias/ 301
-/admin/otros.html /admin/otros/ 301
-/admin/barberia-editor /admin/barberias/ 302
-/admin/otro-editor /admin/otros/ 302
-/admin/otro-negocio.html /admin/otros/ 302
 /admin/personales/:slug /admin/personales/index.html 200
 /admin/barberias/:slug /admin/barberia-editor.html 200
 /admin/otros/:slug /admin/otro-editor.html 200
-/esteticas/ /barberias/ 301
-/esteticas/* /barberias/:splat 301
