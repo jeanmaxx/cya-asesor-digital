@@ -9,7 +9,7 @@ const path=location.pathname.toLowerCase();
 
 function resolveAccount(){
   if(path.includes('/asesores/')) return {type:'advisor',slug:qs.get('asesor')||''};
-  if(path.includes('/negocios/')||path.includes('/esteticas/')||path.includes('/barberias/')||path.includes('/otros/')) return {type:'business',slug:qs.get('negocio')||''};
+  if(path.includes('/barberias/')||path.includes('/otros/')) return {type:'business',slug:qs.get('negocio')||''};
   return null;
 }
 
