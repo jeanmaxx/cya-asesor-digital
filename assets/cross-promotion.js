@@ -34,7 +34,7 @@ function renderButton(account){
   logoWrap.className='ttd-cross-promo__logo-wrap';
   const img=document.createElement('img');
   img.className='ttd-cross-promo__logo';
-  img.src='/favicon.png?v=20260917-official1';
+  img.src='/assets/favicon-ttd.png?v=20260917-brandfinal1';
   img.alt='';
   img.setAttribute('aria-hidden','true');
   img.addEventListener('error',()=>{
