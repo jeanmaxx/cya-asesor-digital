@@ -48,7 +48,7 @@ window.ADVISOR_FALLBACK_SERVICES = [
   const addModule=(name,id)=>{if(document.getElementById(id))return;const s=document.createElement('script');s.id=id;s.type='module';s.src=assetUrl(name);document.head.appendChild(s)};
   const path=location.pathname.toLowerCase();
   const admin=path.includes('/admin/'),otros=path.includes('/otros/'),asesores=path.includes('/asesores/');
-  const publicCard=['/asesores/','/negocios/','/barberias/','/otros/'].some(route=>path.includes(route));
+  const publicCard=['/asesores/','/barberias/','/otros/'].some(route=>path.includes(route));
 
   if(admin){
     addCss('visual-identity-admin-v4.css?v=20260913-vi6','vi5-admin-css');
