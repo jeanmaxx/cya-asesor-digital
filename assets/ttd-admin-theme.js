@@ -37,7 +37,7 @@
   };
 
   function logoMarkup() {
-    return `<span class="ttd-shell-mark" aria-label="TTD"><img src="/assets/favicon-ttd.png?v=20260917-brandfinal1" alt="TTD" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="ttd-shell-mark-fallback">TTD</span></span>`;
+    return `<span class="ttd-shell-mark" aria-label="TTD"><img src="/assets/favicon-ttd.png?v=20260917-exact2" alt="TTD" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="ttd-shell-mark-fallback">TTD</span></span>`;
   }
 
   function buildLegacyShell() {
