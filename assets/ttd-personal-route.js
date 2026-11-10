@@ -1,7 +1,8 @@
 (() => {
   const basePath = '/admin/personales/';
   const raw = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : '';
-  const slug = decodeURIComponent(raw.replace(/^\/+|\/+$/g,''));
+  const initialSlug = decodeURIComponent(raw.replace(/^\/+|\/+$/g,''));
+  const routeSlug = () => decodeURIComponent(location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length).replace(/^\/+|\/+$/g,'') : '');
   const list = document.getElementById('accounts-list');
 
   document.body.classList.add('ttd-legacy-shell');
@@ -15,6 +16,7 @@
     });
   }
   function openFromRoute(){
+    const slug = routeSlug();
     if (!slug || !list) return false;
     const card = [...list.querySelectorAll('.account-card')].find(c => cardSlug(c) === slug);
     const button = card?.querySelector('.edit-account');
@@ -31,26 +33,29 @@
     if (!button) return;
     const card = button.closest('.account-card');
     const targetSlug = cardSlug(card);
-    if (!targetSlug || targetSlug === slug) return;
-    e.preventDefault(); e.stopImmediatePropagation();
-    location.href = `${basePath}${encodeURIComponent(targetSlug)}`;
+    if (!targetSlug) return;
+    // Keep the native editor click handler: navigating first used to cancel it.
+    // Updating the URL without reloading also preserves the authenticated session.
+    if (targetSlug !== routeSlug()) history.pushState({ttdEditor:targetSlug},'',`${basePath}${encodeURIComponent(targetSlug)}/`);
   }, true);
 
   ['back-to-accounts','cancel-edit'].forEach(id => {
     document.getElementById(id)?.addEventListener('click', e => {
-      if (!slug) return;
-      e.preventDefault(); e.stopImmediatePropagation();
-      location.href = basePath;
+      if (!routeSlug()) return;
+      // Let admin-v2.js close the editor normally; only synchronize the URL.
+      history.pushState({ttdEditor:null},'',basePath);
     }, true);
   });
 
   if (list) {
     normalizePublicLinks();
-    const observer = new MutationObserver(() => { normalizePublicLinks(); if (slug && openFromRoute()) observer.disconnect(); });
+    const observer = new MutationObserver(() => { normalizePublicLinks(); if (initialSlug && openFromRoute()) observer.disconnect(); });
     observer.observe(list, { childList:true });
-    if (slug) {
+    if (initialSlug) {
       if (openFromRoute()) observer.disconnect();
       else setTimeout(() => observer.disconnect(), 12000);
     }
   }
+  // Browser Back/Forward must restore the corresponding editor or list view.
+  window.addEventListener('popstate', () => location.reload());
 })();
