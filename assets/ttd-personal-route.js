@@ -1,8 +1,9 @@
 (() => {
   const basePath = '/admin/personales/';
-  const raw = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : '';
-  const initialSlug = decodeURIComponent(raw.replace(/^\/+|\/+$/g,''));
-  const routeSlug = () => decodeURIComponent(location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length).replace(/^\/+|\/+$/g,'') : '');
+  // Query routes resolve to the real /admin/personales/index.html on hard refresh.
+  // Cloudflare's fallback served the marketing homepage for deep slug paths.
+  const routeSlug = () => new URLSearchParams(location.search).get('editar') || '';
+  const initialSlug = routeSlug();
   const list = document.getElementById('accounts-list');
 
   document.body.classList.add('ttd-legacy-shell');
@@ -36,7 +37,7 @@
     if (!targetSlug) return;
     // Keep the native editor click handler: navigating first used to cancel it.
     // Updating the URL without reloading also preserves the authenticated session.
-    if (targetSlug !== routeSlug()) history.pushState({ttdEditor:targetSlug},'',`${basePath}${encodeURIComponent(targetSlug)}/`);
+    if (targetSlug !== routeSlug()) history.pushState({ttdEditor:targetSlug},'',`${basePath}?editar=${encodeURIComponent(targetSlug)}`);
   }, true);
 
   ['back-to-accounts','cancel-edit'].forEach(id => {
