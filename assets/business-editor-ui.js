@@ -35,7 +35,7 @@ function sectionKey(fs){
 function packageByKey(k){return packages.find(p=>p.package_key===k)||packages[0]||null}
 function packageHasAll(pkg,features){const set=new Set(Array.isArray(pkg?.features)?pkg.features:[]);return features.every(f=>set.has(f))}
 function minimumPackage(group){return packages.find(p=>packageHasAll(p,group.features))||packages.at(-1)||null}
-function publicUrl(source=''){const u=new URL('../esteticas/',location.href);u.search='';u.searchParams.set('negocio',$('b-slug')?.value.trim()||'');if(source)u.searchParams.set('src',source);return u.toString()}
+function publicUrl(source=''){const u=new URL('/barberias/',location.href);u.search='';u.searchParams.set('negocio',$('b-slug')?.value.trim()||'');if(source)u.searchParams.set('src',source);return u.toString()}
 function setText(id,text,type=''){const el=$(id);if(!el)return;el.textContent=text;el.classList.toggle('is-error',type==='error');el.classList.toggle('is-success',type==='success')}
 function downloadBlob(content,type,name){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
 
